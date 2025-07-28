@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1e3c72">
+  <meta name="description" content="Bluebird Fence - Professional Fence Quote Form">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Bluebird Fence">
+  <meta name="msapplication-TileColor" content="#1e3c72">
+  <meta name="msapplication-tileimage" content="logo.jpg">
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="logo.jpg">
+  <link rel="icon" type="image/jpeg" href="logo.jpg">
+  <link rel="shortcut icon" href="logo.jpg">
+  <title>Blue Fence</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #f7fbff;
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+    .container,
+    .half-container,
+    .product-type-wrapper {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .container {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto 32px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(30,60,114,0.08);
+      padding: 40px 32px;
+      box-sizing: border-box;
+      text-align: left;
+    }
+    .half-container {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto 32px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(30,60,114,0.08);
+      padding: 40px 32px;
+      box-sizing: border-box;
+    }
+    .half-container .input-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 20px;
+    }
+    .header-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-row img {
+      height: 80px;
+    }
+    h1, h2 {
+      font-family: "Montserrat", Arial, sans-serif;
+      font-weight: 700;
+      color: #1e3c72;
+      letter-spacing: 2px;
+      margin-top: 0;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.2em;
+    }
+    h2 {
+      font-size: 1.5em;
+      margin-bottom: 0;
+    }
+    .blue-line {
+      border: none;
+      border-top: 3px solid #2a5298;
+      width: 100%;
+      margin: 10px 0 28px;
+    }
+    .quote-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    p.title {
+      color: #2a5298;
+      font-size: 2em;
+      font-weight: bold;
+      margin: 0;
+    }
+    #grand-total-box {
+      background-color: #1e3c72;
+      color: #fff;
+      font-family: "Montserrat", Arial, sans-serif;
+      font-weight: 700;
+      font-size: 1.75em;
+      padding: 12px 24px;
+      border-radius: 8px;
+      min-width: 150px;
+      text-align: right;
+      white-space: nowrap;
+    }
+    label {
+      font-family: "Montserrat", Arial, sans-serif;
+      color: #1e3c72;
+      font-weight: 600;
+      margin-right: 2px;
+    }
+    input[type="text"], textarea {
+      font-size: 0.9em;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #2a5298;
+      background: #fff;
+      min-width: 300px;
+      max-width: 800px;
+      transition: width 0.1s;
+    }
+    #estimate-attendance, #site-contact, #job-address, #Name, #Billing-Address, #Email, #Phone {
+      width: 365px;
+    }
+    .product-type-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      align-items: center;
+      max-width: 940px;
+      margin: auto;
+    }
+    .product-type-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: fit-content;
+    }
+    .product-type-container {
+      width: 500px;
+      min-width: 300px;
+      max-width: 1500px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(30,60,114,0.08);
+      padding: 24px;
+      box-sizing: border-box;
+      position: relative;
+      transition: width 0.15s;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+    }
+    .card-total {
+      background-color: #eef4ff;
+      color: #1e3c72;
+      font-family: "Montserrat", Arial, sans-serif;
+      font-weight: 700;
+      font-size: 1.25em;
+      padding: 8px 16px;
+      border-radius: 8px;
+      min-width: 100px;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .product-type-container .dropdown-container, .product-type-container .input-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .product-type-container select {
+      font-size: 0.9em;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #2a5298;
+      background: #fff;
+      max-width: 100%;
+    }
+    .resize-controls {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+    .resize-controls button, .plus-btn {
+      background: #1e3c72;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background 0.2s;
+    }
+    .resize-controls button {
+        border-radius: 4px;
+        padding: 4px 8px;
+    }
+    .resize-controls button:hover, .plus-btn:hover {
+      background: #2a5298;
+    }
+    #plus-btn-wrapper { text-align: center; }
+    .plus-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1.8em;
+    }
+    .delete-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #e74c3c;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      font-size: 1em;
+      line-height: 24px;
+      text-align: center;
+      cursor: pointer;
+      display: none;
+      transition: background 0.2s;
+    }
+    .delete-btn.show { display: inline-flex; }
+    .delete-btn:hover { background: #c0392b; }
+
+    /* Responsive Design */
+    /* Tablet Styles */
+    @media (max-width: 768px) {
+      body {
+        padding: 15px;
+      }
+      .container, .half-container {
+        padding: 30px 20px;
+        margin-bottom: 20px;
+      }
+      .header-row {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+      }
+      .header-row img {
+        height: 60px;
+      }
+      h1 {
+        font-size: 2em;
+        text-align: center;
+      }
+      h2 {
+        font-size: 1.3em;
+      }
+      .quote-header {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      p.title {
+        font-size: 1.6em;
+        text-align: center;
+      }
+      #grand-total-box {
+        font-size: 1.5em;
+        padding: 10px 20px;
+        min-width: 120px;
+      }
+      input[type="text"], textarea {
+        min-width: 250px;
+        max-width: 100%;
+      }
+      #estimate-attendance, #site-contact, #job-address, #Name, #Billing-Address, #Email, #Phone {
+        width: 100%;
+        max-width: 400px;
+      }
+      .half-container .input-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .product-type-container {
+        width: 100%;
+        max-width: 600px;
+        padding: 20px;
+      }
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .card-total {
+        align-self: flex-end;
+        font-size: 1.1em;
+        padding: 6px 12px;
+      }
+      .product-type-container .dropdown-container, .product-type-container .input-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .product-type-container select, .product-type-container input[type="text"] {
+        width: 100%;
+        max-width: 100%;
+      }
+      .resize-controls {
+        justify-content: center;
+        margin-top: 10px;
+      }
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+      .container, .half-container {
+        padding: 20px 15px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+      }
+      .header-row img {
+        height: 50px;
+      }
+      h1 {
+        font-size: 1.8em;
+        letter-spacing: 1px;
+      }
+      h2 {
+        font-size: 1.2em;
+      }
+      p.title {
+        font-size: 1.4em;
+      }
+      #grand-total-box {
+        font-size: 1.3em;
+        padding: 8px 16px;
+        min-width: 100px;
+      }
+      input[type="text"], textarea {
+        min-width: 200px;
+        font-size: 0.85em;
+        padding: 8px 10px;
+      }
+      .product-type-container {
+        padding: 15px;
+        border-radius: 8px;
+      }
+      .card-total {
+        font-size: 1em;
+        padding: 5px 10px;
+        min-width: 80px;
+      }
+      .product-type-container select {
+        font-size: 0.85em;
+        padding: 8px 10px;
+      }
+      .plus-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1.6em;
+      }
+      .resize-controls button {
+        padding: 6px 10px;
+        font-size: 0.8em;
+      }
+      .fence-preview-image {
+        max-height: 150px !important;
+      }
+    }
+
+    /* Large Desktop Styles */
+    @media (min-width: 1200px) {
+      .container, .half-container {
+        max-width: 1100px;
+        padding: 50px 40px;
+      }
+      .product-type-container {
+        max-width: 800px;
+      }
+      h1 {
+        font-size: 2.8em;
+      }
+      h2 {
+        font-size: 1.7em;
+      }
+      p.title {
+        font-size: 2.2em;
+      }
+      #grand-total-box {
+        font-size: 1.9em;
+        padding: 15px 30px;
+      }
+    }
+
+    /* Landscape Mobile */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .header-row {
+        flex-direction: row;
+        text-align: left;
+      }
+      h1 {
+        text-align: left;
+      }
+      .quote-header {
+        flex-direction: row;
+        align-items: baseline;
+      }
+      p.title {
+        text-align: left;
+      }
+    }
+  </style>
+  <script>
+    const MIN_W = 300, MAX_W = 900, STEP = 50;
+
+    function formatCurrency(value) {
+        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    }
+
+    function updateGrandTotal() {
+      const allTotals = document.querySelectorAll('.card-total');
+      let grandTotal = 0;
+      allTotals.forEach(box => {
+        const value = parseFloat(box.textContent.replace(/[^\d.-]/g, ''));
+        if (!isNaN(value)) {
+          grandTotal += value;
+        }
+      });
+      const grandTotalBox = document.getElementById('grand-total-box');
+      if(grandTotalBox) {
+        grandTotalBox.textContent = formatCurrency(grandTotal);
+      }
+    }
+
+    function addProductType() {
+      const grid = document.getElementById('product-type-grid');
+      const tpl = grid.querySelector('.product-type-wrapper');
+      const clone = tpl.cloneNode(true);
+
+      clone.querySelectorAll('input[type=text], select').forEach(el => {
+        if (el.tagName === 'SELECT') { el.selectedIndex = 0; } 
+        else { el.value = ''; }
+      });
+      clone.querySelector('.card-total').textContent = formatCurrency(0);
+      clone.querySelector('.delete-btn').classList.add('show');
+      grid.insertBefore(clone, document.getElementById('plus-btn-wrapper'));
+      bindCardLogic(clone); // IMPORTANT: Bind logic to the new card
+    }
+
+    // Fence style options by material
+    const FENCE_STYLE_OPTIONS = {
+      wood: [
+        { value: 'lattice', label: 'Lattice' },
+        { value: 'closed-top-baluster', label: 'Closed Top Baluster' },
+        { value: 'privacy-lattice', label: 'Privacy & Lattice' },
+        { value: 'universal-privacy', label: 'Universal Privacy' },
+        { value: 'traditional-scalloped', label: 'Traditional Scalloped' },
+        { value: 'tongue-groove', label: 'Tongue & Groove' },
+        { value: 'stockade', label: 'Stockade' },
+        { value: 'horizontal-boards', label: 'Horizontal Boards' },
+        { value: 'open-top-baluster', label: 'Open top Baluster' }
+      ],
+      vinyl: [
+        { value: 'solid-privacy', label: 'Solid Privacy' },
+        { value: 'privacy-baluster', label: 'Privacy & Baluster' },
+        { value: 'privacy-lattice', label: 'Privacy & Lattice' },
+        { value: 'scalloped-baluster', label: 'Scalloped Baluster' },
+        { value: 'closed-top-baluster', label: 'Closed Top Baluster & Arbor' },
+        { value: 'lattice', label: 'Lattice' },
+        { value: 'semi-privacy', label: 'Semi Privacy' },
+        { value: 'pergola', label: 'Pergola' },
+        { value: 'straight-top-baluster-arbor', label: 'Straight Top Baluster' },
+        {value: 'privacy-mini-lattice', label: 'Privacy & Mini Latice'}
+      ]
+    };
+
+    // Pricing configuration
+    const PRICING = {
+      materials: {
+        wood: 44,
+        vinyl: 45
+      },
+      heights: {
+        '6H': 15,
+        '4H': 10
+      },
+      styles: {
+        // Wood styles
+        'wood-lattice': 30,
+        'wood-closed-top-baluster': 35,
+        'wood-privacy-lattice': 50,
+        'wood-universal-privacy': 55,
+        'wood-traditional-scalloped': 40,
+        'wood-tongue-groove': 25,
+        'wood-stockade': 20,
+        'wood-horizontal-boards': 30,
+        'wood-open-top-baluster': 35,
+        // Vinyl styles
+        'vinyl-solid-privacy': 40,
+        'vinyl-privacy-baluster': 50,
+        'vinyl-privacy-lattice': 55,
+        'vinyl-scalloped-baluster': 45,
+        'vinyl-closed-top-baluster': 35,
+        'vinyl-lattice': 30,
+        'vinyl-semi-privacy': 25,
+        'vinyl-pergola': 60,
+        'vinyl-straight-top-baluster-arbor': 40,
+        'vinyl-privacy-mini-lattice': 45
+      }
+    };
+
+    function updateFenceStyleOptions(materialSelect, styleSelect) {
+      const material = materialSelect.value;
+      styleSelect.innerHTML = '<option value="0">Please Select</option>';
+      if (FENCE_STYLE_OPTIONS[material]) {
+        FENCE_STYLE_OPTIONS[material].forEach(opt => {
+          const option = document.createElement('option');
+          option.value = opt.value;
+          option.textContent = opt.label;
+          styleSelect.appendChild(option);
+        });
+      }
+    }
+
+    // Helper: get image path for a given material and style
+    function getFenceImageSrc(material, style) {
+      if (!material || !style || material === '0' || style === '0') return '';
+      // Example: images/wood-lattice.png
+      return `images/${material}-${style}.png`;
+    }
+
+    // Helper: calculate price for a card
+    function calculateCardPrice(material, height, style) {
+      let total = 0;
+      
+      // Add material cost
+      if (material && material !== '0' && PRICING.materials[material]) {
+        total += PRICING.materials[material];
+      }
+      
+      // Add height cost
+      if (height && height !== '0' && PRICING.heights[height]) {
+        total += PRICING.heights[height];
+      }
+      
+      // Add style cost
+      if (material && style && material !== '0' && style !== '0') {
+        const styleKey = `${material}-${style}`;
+        if (PRICING.styles[styleKey]) {
+          total += PRICING.styles[styleKey];
+        }
+      }
+      
+      return total;
+    }
+
+    // This is the main function that gives each card its functionality
+    function bindCardLogic(wrapper) {
+        const selects = wrapper.querySelectorAll('select');
+        const cardTotalEl = wrapper.querySelector('.card-total');
+        const deleteBtn = wrapper.querySelector('.delete-btn');
+        const resizePlusBtn = wrapper.querySelector('.resize-plus');
+        const resizeMinusBtn = wrapper.querySelector('.resize-minus');
+        const materialSelect = wrapper.querySelector('.fence-material-select');
+        const styleSelect = wrapper.querySelector('.fence-style-select');
+        const heightSelect = wrapper.querySelector('select:not(.fence-material-select):not(.fence-style-select)');
+        const imageEl = wrapper.querySelector('.fence-preview-image');
+
+        // --- Pricing Logic ---
+        function updateCardPrice() {
+            const material = materialSelect ? materialSelect.value : '0';
+            const height = heightSelect ? heightSelect.value : '0';
+            const style = styleSelect ? styleSelect.value : '0';
+            
+            const currentPrice = calculateCardPrice(material, height, style);
+            cardTotalEl.textContent = formatCurrency(currentPrice);
+            updateGrandTotal(); // Update the main total whenever a card changes
+        }
+
+        selects.forEach(select => {
+            select.addEventListener('change', updateCardPrice);
+        });
+
+        // --- Fence Material/Style Filtering ---
+        if (materialSelect && styleSelect) {
+          materialSelect.addEventListener('change', function() {
+            updateFenceStyleOptions(materialSelect, styleSelect);
+            // Reset style selection when material changes
+            styleSelect.value = '0';
+            updateCardPrice();
+            updateFenceImage();
+          });
+          styleSelect.addEventListener('change', function() {
+            updateCardPrice();
+            updateFenceImage();
+          });
+        }
+
+        // --- Fence Image Logic ---
+        function updateFenceImage() {
+          if (!imageEl) return;
+          const mat = materialSelect ? materialSelect.value : '';
+          const sty = styleSelect ? styleSelect.value : '';
+          const src = getFenceImageSrc(mat, sty);
+          if (src && mat !== '0' && sty !== '0') {
+            imageEl.src = src;
+            imageEl.style.display = '';
+          } else {
+            imageEl.src = '';
+            imageEl.style.display = 'none';
+          }
+        }
+
+        // --- Button Logic ---
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', () => {
+                const grid = document.getElementById('product-type-grid');
+                if (grid.querySelectorAll('.product-type-wrapper').length > 1) {
+                    wrapper.remove();
+                    updateGrandTotal();
+                }
+            });
+        }
+        if (resizePlusBtn && resizeMinusBtn) {
+            const container = wrapper.querySelector('.product-type-container');
+            resizePlusBtn.addEventListener('click', () => {
+                let w = container.offsetWidth + STEP;
+                container.style.width = Math.max(MIN_W, Math.min(w, MAX_W)) + 'px';
+            });
+            resizeMinusBtn.addEventListener('click', () => {
+                let w = container.offsetWidth - STEP;
+                container.style.width = Math.max(MIN_W, Math.min(w, MAX_W)) + 'px';
+            });
+        }
+        updateCardPrice(); // Calculate initial price for the card
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.product-type-wrapper').forEach(bindCardLogic);
+        document.getElementById('add-card-btn').addEventListener('click', addProductType);
+    });
+
+    // PWA Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then((registration) => {
+            console.log('SW registered: ', registration);
+          })
+          .catch((registrationError) => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+
+    // PWA Install Prompt
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      // You can show an install button here if desired
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="header-row">
+      <img src="logo.jpg" alt="Company Logo">
+      <h1>Bluebird Fence</h1>
+    </div>
+    <hr class="blue-line">
+    <div class="quote-header">
+      <p class="title">Client Quote Form</p>
+      <div id="grand-total-box">$0.00</div>
+    </div>
+  </div>
+
+  <div class="half-container">
+    <h2>Customer Information</h2><hr class="blue-line">
+    <div class="input-row"><label>Name:</label><input type="text" id="Name" placeholder="Enter Name"></div>
+    <div class="input-row"><label>Billing Address:</label><input type="text" id="Billing-Address"placeholder="Enter Billing Address"></div>
+    <div class="input-row"><label>Email:</label><input type="text" id="Email"placeholder="Enter Email"></div>
+    <div class="input-row"><label>Phone:</label><input type="text" id="Phone"placeholder="Enter Phone"></div>
+  </div>
+
+  <div class="half-container">
+    <h2>Project / Site Details</h2><hr class="blue-line">
+    <div class="input-row"><label>Job Address:</label><input type="text" id="job-address"placeholder="Enter Address"></div>
+    <div class="input-row"><label>Site Contact:</label><input type="text" id="site-contact" placeholder="Enter Name & Phone"></div>
+    <div class="input-row"><label>Estimate Attendance:</label><input type="text" id="estimate-attendance" placeholder="Enter Estimate Attendance"></div>
+  </div>
+
+  <div class="product-type-grid" id="product-type-grid">
+    <div class="product-type-wrapper">
+      <div class="product-type-container">
+        <button class="delete-btn">✕</button>
+        <div class="card-header">
+          <h2>Product Type</h2>
+          <div class="card-total">$0.00</div>
+        </div>
+        <hr class="blue-line">
+        <div class="dropdown-container"><label>Fence Material:</label><select class="fence-material-select"><option value="0">Please Select</option><option value="wood">Wood</option><option value="vinyl">Vinyl</option></select></div>
+        <div class="dropdown-container"><label>Fence Height:</label><select><option value="0">Please Select</option><option value="6H">6'H</option><option value="4H">4'H</option></select></div>
+        <div class="dropdown-container"><label>Fence Style:</label><select class="fence-style-select">
+          <option value="0">Please Select</option>
+        </select></div>
+        <div class="input-row"><label>Linear Footage:</label><input type="text" placeholder="Write Here"></div>
+        <div class="input-row"><label>Single Gates N.:</label><input type="text" placeholder="Write Here"></div>
+        <div class="input-row"><label>Double Gates N.:</label><input type="text" placeholder="Write Here"></div>
+        <div class="input-row"><label>Gate Style:</label><input type="text" placeholder="Write Here"></div>
+        <div class="input-row"><label>Gate Size:</label><input type="text" placeholder="Write Here"></div>
+        <div class="input-row"><label>Labor, # of Days:</label><input type="text" placeholder="Write Here"></div>
+        <div class="fence-image-wrapper" style="text-align:center; margin-top:20px;">
+          <img class="fence-preview-image" src="" alt="Fence Preview" style="max-width:100%; max-height:200px; display:none; border-radius:8px; box-shadow:0 2px 8px rgba(30,60,114,0.08);">
+        </div>
+      </div>
+      <div class="resize-controls">
+        <button class="resize-plus">+</button>
+        <button class="resize-minus">−</button>
+      </div>
+    </div>
+    <!-- ADD BUTTON MOVED OUTSIDE THE REPEATING GRID -->
+    <div id="plus-btn-wrapper">
+      <button class="plus-btn" id="add-card-btn">+</button>
+    </div>
+  </div>
+</body>
+</html>
