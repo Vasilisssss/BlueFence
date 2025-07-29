@@ -606,69 +606,103 @@
       .product-type-grid, .product-type-wrapper, .product-type-container, .resize-controls, .plus-btn, #plus-btn-wrapper, .drawing-tools {
         display: none !important;
       }
-      .fence-images-display {
-        display: flex !important;
-        flex-wrap: wrap;
-        gap: 20px;
-        justify-content: center;
-        margin-top: 20px;
-      }
-      .fence-image-item {
-        text-align: center;
-        margin: 10px;
-        page-break-inside: avoid;
-      }
-      .fence-image-item img {
-        max-width: 200px;
-        max-height: 150px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-      }
-      .fence-details {
-        font-size: 12px;
-        color: #666;
-        margin-top: 8px;
-        line-height: 1.3;
-      }
-      .drawing-canvas {
-        border: 1px solid #ccc !important;
-        width: 100% !important;
-        height: 400px !important;
-        page-break-before: always;
-      }
-      .signature-canvas {
-        border: 1px solid #ccc !important;
-        width: 300px !important;
-        height: 100px !important;
-      }
-      .container, .half-container {
+      .container {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
         margin: 0 !important;
-        padding: 40px 32px !important;
+        padding: 20px !important;
         width: 100% !important;
         max-width: 100% !important;
         page-break-inside: avoid;
       }
       .professional-header {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
-        padding: 30px !important;
-        margin: -40px -32px 30px -32px !important;
+        padding: 15px !important;
+        margin: -20px -20px 15px -20px !important;
       }
-      .bordered-info {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+      /* Adjust container sizes for first page */
+      .container:first-of-type {
+        padding: 15px !important;
       }
-      .info-grid {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+      .container:nth-of-type(2) {
+        padding: 15px !important;
+        margin-bottom: 10px !important;
+      }
+      .container:nth-of-type(3) {
+        padding: 15px !important;
+        margin-bottom: 10px !important;
+      }
+      .fence-images-display {
+        display: flex !important;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .fence-image-item {
+        text-align: center;
+        margin: 5px;
+        page-break-inside: avoid;
+      }
+      .fence-image-item img {
+        max-width: 150px;
+        max-height: 120px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+      .fence-details {
+        font-size: 10px;
+        color: #666;
+        margin-top: 5px;
+        line-height: 1.3;
+      }
+      /* Split fence images into two columns */
+      .fence-images-display {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 15px;
+      }
+      .drawing-canvas {
+        border: 1px solid #ccc !important;
+        width: 100% !important;
+        height: 350px !important;
+        page-break-before: always;
+      }
+      .signature-canvas {
+        border: 1px solid #ccc !important;
+        width: 250px !important;
+        height: 80px !important;
+      }
+      /* Adjust drawing and signature layout for better fit */
+      .drawing-signature-container {
+        display: flex !important;
+        flex-direction: column;
+        height: 100vh;
+        padding: 20px !important;
+      }
+      .drawing-section {
+        flex: 1;
+        margin-bottom: 20px;
+      }
+      .signature-section {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+      }
+      .signature-section h2 {
+        margin-right: 20px;
+        margin-bottom: 0;
       }
       h2 {
         color: #333333 !important;
+        font-size: 1.2em !important;
       }
       .blue-line {
         display: none !important;
       }
       @page {
         size: A4 portrait;
-        margin: 0.5cm;
+        margin: 0.3cm;
       }
     }
     
@@ -986,6 +1020,7 @@
     let currentTool = 'pen';
     let currentColor = '#000000';
     let currentLineWidth = 2;
+    let startX, startY;
     
     function initializeCanvas(canvasId) {
       const canvas = document.getElementById(canvasId);
@@ -999,26 +1034,58 @@
       function startDrawing(e) {
         isDrawing = true;
         const rect = canvas.getBoundingClientRect();
-        ctx.beginPath();
-        ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        startX = e.clientX - rect.left;
+        startY = e.clientY - rect.top;
+        
+        if (currentTool === 'pen' || currentTool === 'eraser') {
+          ctx.beginPath();
+          ctx.moveTo(startX, startY);
+        }
       }
       
       function draw(e) {
         if (!isDrawing) return;
         
         const rect = canvas.getBoundingClientRect();
+        const currentX = e.clientX - rect.left;
+        const currentY = e.clientY - rect.top;
+        
         ctx.lineWidth = currentLineWidth;
         ctx.lineCap = 'round';
         ctx.strokeStyle = currentTool === 'eraser' ? '#ffffff' : currentColor;
         
-        ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        if (currentTool === 'pen' || currentTool === 'eraser') {
+          ctx.lineTo(currentX, currentY);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(currentX, currentY);
+        }
       }
       
       function stopDrawing() {
+        if (!isDrawing) return;
         isDrawing = false;
+        
+        if (currentTool === 'line' || currentTool === 'rectangle') {
+          const rect = canvas.getBoundingClientRect();
+          const endX = event.clientX - rect.left;
+          const endY = event.clientY - rect.top;
+          
+          ctx.lineWidth = currentLineWidth;
+          ctx.strokeStyle = currentColor;
+          
+          if (currentTool === 'line') {
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
+            ctx.stroke();
+          } else if (currentTool === 'rectangle') {
+            ctx.beginPath();
+            ctx.rect(startX, startY, endX - startX, endY - startY);
+            ctx.stroke();
+          }
+        }
+        
         ctx.beginPath();
       }
     }
@@ -1101,30 +1168,26 @@
   </div>
 
   <!-- Drawing and Signature Sections - Visible in HTML -->
-  <div class="container">
+  <div class="container drawing-signature-container">
+    <div class="drawing-section">
     <h2>Project Drawing</h2>
     <div class="drawing-tools">
       <button onclick="setDrawingTool('pen')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Pen</button>
+      <button onclick="setDrawingTool('line')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Line</button>
+      <button onclick="setDrawingTool('rectangle')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Rectangle</button>
       <button onclick="setDrawingTool('eraser')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Eraser</button>
       <input type="color" value="#000000" onchange="setDrawingColor(this.value)" style="margin-right:10px;">
       <button onclick="clearCanvas('drawing-canvas')" style="background:#666;color:white;border:none;padding:8px 16px;cursor:pointer;">Clear</button>
     </div>
     <canvas id="drawing-canvas" class="drawing-canvas" width="800" height="400" style="border:1px solid #ccc;cursor:crosshair;width:100%;max-width:800px;height:400px;background:white;margin-top:15px;"></canvas>
-  </div>
-
-  <div class="container">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-      <div style="flex:1;">
-        <h2>Additional Notes</h2>
-        <div style="height:100px;"></div>
-      </div>
-      <div style="text-align:right;">
+    </div>
+    
+    <div class="signature-section">
         <h2>Customer Signature</h2>
         <div style="margin-bottom:10px;">
           <button onclick="clearCanvas('signature-canvas')" style="background:#666;color:white;border:none;padding:5px 10px;cursor:pointer;">Clear</button>
         </div>
         <canvas id="signature-canvas" class="signature-canvas" width="300" height="100" style="border:1px solid #ccc;cursor:crosshair;background:white;"></canvas>
-      </div>
     </div>
   </div>
 
