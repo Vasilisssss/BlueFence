@@ -19,10 +19,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
-      background: #f7fbff;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       margin: 0;
       padding: 20px;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
     }
     .container,
     .half-container,
@@ -34,22 +35,24 @@
       width: 100%;
       max-width: 900px;
       margin: 0 auto 32px auto;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 24px rgba(30,60,114,0.08);
+      background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.05);
       padding: 40px 32px;
       box-sizing: border-box;
       text-align: left;
+      border: 1px solid rgba(255,255,255,0.2);
     }
     .half-container {
       width: 100%;
       max-width: 900px;
       margin: 0 auto 32px auto;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 24px rgba(30,60,114,0.08);
+      background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.05);
       padding: 40px 32px;
       box-sizing: border-box;
+      border: 1px solid rgba(255,255,255,0.2);
     }
     .half-container .input-row {
       display: flex;
@@ -68,23 +71,30 @@
     h1, h2 {
       font-family: "Montserrat", Arial, sans-serif;
       font-weight: 700;
-      color: #1e3c72;
+      color: #2c3e50;
       letter-spacing: 2px;
       margin-top: 0;
     }
     h1 {
       font-size: 2.5em;
       margin-bottom: 0.2em;
+      background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     h2 {
       font-size: 1.5em;
       margin-bottom: 0;
+      color: #34495e;
     }
     .blue-line {
       border: none;
-      border-top: 3px solid #2a5298;
+      background: linear-gradient(90deg, #3498db 0%, #2980b9 50%, #3498db 100%);
+      height: 3px;
       width: 100%;
       margin: 10px 0 28px;
+      border-radius: 2px;
     }
     .quote-header {
       display: flex;
@@ -94,38 +104,48 @@
       flex-wrap: wrap;
     }
     p.title {
-      color: #2a5298;
+      color: #2c3e50;
       font-size: 2em;
       font-weight: bold;
       margin: 0;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     #grand-total-box {
-      background-color: #1e3c72;
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
       color: #fff;
       font-family: "Montserrat", Arial, sans-serif;
       font-weight: 700;
       font-size: 1.75em;
       padding: 12px 24px;
-      border-radius: 8px;
+      border-radius: 12px;
       min-width: 150px;
       text-align: right;
       white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(44,62,80,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
     }
     label {
       font-family: "Montserrat", Arial, sans-serif;
-      color: #1e3c72;
+      color: #2c3e50;
       font-weight: 600;
       margin-right: 2px;
     }
     input[type="text"], textarea {
       font-size: 0.9em;
       padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid #2a5298;
-      background: #fff;
+      border-radius: 8px;
+      border: 2px solid #e0e6ed;
+      background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
       min-width: 300px;
       max-width: 800px;
-      transition: width 0.1s;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+    input[type="text"]:focus, textarea:focus {
+      border-color: #3498db;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(52,152,219,0.1), inset 0 2px 4px rgba(0,0,0,0.05);
+      transform: translateY(-1px);
     }
     #estimate-attendance, #site-contact, #job-address, #Name, #Billing-Address, #Email, #Phone {
       width: 365px;
@@ -148,13 +168,18 @@
       width: 500px;
       min-width: 300px;
       max-width: 1500px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 24px rgba(30,60,114,0.08);
+      background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.05);
       padding: 24px;
       box-sizing: border-box;
       position: relative;
       transition: width 0.15s;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .product-type-container:hover {
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
     }
     .card-header {
       display: flex;
@@ -163,16 +188,18 @@
       gap: 16px;
     }
     .card-total {
-      background-color: #eef4ff;
-      color: #1e3c72;
+      background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%);
+      color: #2c3e50;
       font-family: "Montserrat", Arial, sans-serif;
       font-weight: 700;
       font-size: 1.25em;
       padding: 8px 16px;
-      border-radius: 8px;
+      border-radius: 10px;
       min-width: 100px;
       text-align: right;
       white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border: 1px solid rgba(255,255,255,0.3);
     }
     .product-type-container .dropdown-container, .product-type-container .input-row {
       display: flex;
@@ -184,10 +211,17 @@
     .product-type-container select {
       font-size: 0.9em;
       padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid #2a5298;
-      background: #fff;
+      border-radius: 8px;
+      border: 2px solid #e0e6ed;
+      background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
       max-width: 100%;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .product-type-container select:focus {
+      border-color: #3498db;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(52,152,219,0.1), inset 0 2px 4px rgba(0,0,0,0.05);
     }
     .resize-controls {
       display: flex;
@@ -195,19 +229,22 @@
       justify-content: flex-end;
     }
     .resize-controls button, .plus-btn {
-      background: #1e3c72;
+      background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
       color: #fff;
       border: none;
       cursor: pointer;
       font-size: 0.9em;
-      transition: background 0.2s;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(52,152,219,0.3);
     }
     .resize-controls button {
-        border-radius: 4px;
+        border-radius: 8px;
         padding: 4px 8px;
     }
     .resize-controls button:hover, .plus-btn:hover {
-      background: #2a5298;
+      background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(52,152,219,0.4);
     }
     #plus-btn-wrapper { text-align: center; }
     .plus-btn {
@@ -218,12 +255,13 @@
       width: 40px;
       height: 40px;
       font-size: 1.8em;
+      box-shadow: 0 4px 16px rgba(52,152,219,0.3);
     }
     .delete-btn {
       position: absolute;
       top: 12px;
       right: 12px;
-      background: #e74c3c;
+      background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
       color: #fff;
       border: none;
       border-radius: 50%;
@@ -234,10 +272,14 @@
       text-align: center;
       cursor: pointer;
       display: none;
-      transition: background 0.2s;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(231,76,60,0.3);
     }
     .delete-btn.show { display: inline-flex; }
-    .delete-btn:hover { background: #c0392b; }
+    .delete-btn:hover { 
+      background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+      transform: scale(1.1);
+    }
 
     /* Responsive Design */
     /* Tablet Styles */
@@ -423,10 +465,11 @@
       }
     }
     .bordered-info {
-      border: 1.5px solid #2a5298;
-      box-shadow: 0 2px 8px rgba(30,60,114,0.06);
-      background: #f8fbff;
+      border: 2px solid #3498db;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.05);
+      background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
       margin-bottom: 24px;
+      border-radius: 16px;
     }
     .info-grid {
       display: grid;
@@ -437,11 +480,11 @@
     }
     .info-grid label {
       font-weight: 600;
-      color: #1e3c72;
+      color: #2c3e50;
       margin-right: 4px;
     }
     .info-grid span {
-      color: #222;
+      color: #34495e;
       font-weight: 400;
       margin-left: 2px;
     }
@@ -468,7 +511,7 @@
         padding-bottom: 0 !important;
       }
       .bordered-info {
-        border: 1px solid #2a5298 !important;
+        border: 1px solid #3498db !important;
         margin-bottom: 0 !important;
       }
       .info-grid {
@@ -780,15 +823,15 @@
   </script>
 </head>
 <body>
-  <button onclick="window.print()" id="print-btn" style="position:fixed;top:20px;right:30px;z-index:1000;padding:10px 24px;background:#1e3c72;color:#fff;border:none;border-radius:6px;font-size:1em;box-shadow:0 2px 8px rgba(30,60,114,0.12);cursor:pointer;">Print Quote</button>
+  <button onclick="window.print()" id="print-btn" style="position:fixed;top:20px;right:30px;z-index:1000;padding:12px 28px;background:linear-gradient(135deg, #2c3e50 0%, #34495e 100%);color:#fff;border:none;border-radius:12px;font-size:1em;box-shadow:0 4px 16px rgba(44,62,80,0.3);cursor:pointer;transition:all 0.3s ease;font-weight:600;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(44,62,80,0.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 16px rgba(44,62,80,0.3)'">Print Quote</button>
   <div class="container">
     <div class="header-row">
       <img src="logo.jpg" alt="Company Logo">
       <div style="display:flex;flex-direction:column;gap:2px;">
         <h1 style="margin-bottom:0;">Bluebird Fence</h1>
-        <span style="font-size:1em;color:#2a5298;font-weight:600;">Professional Fence Solutions</span>
-        <span style="font-size:0.95em;color:#444;">374. CAMBRIDGE  ST BURLINGTON MA-01803</span>
-        <span style="font-size:0.95em;color:#444;">(781) 757-2525; <a href="https://www.bluebirdfence.com" target="_blank">www.bluebirdfence.com</a></span>
+        <span style="font-size:1em;color:#3498db;font-weight:600;text-shadow:0 1px 2px rgba(0,0,0,0.1);">Professional Fence Solutions</span>
+        <span style="font-size:0.95em;color:#5a6c7d;">374. CAMBRIDGE  ST BURLINGTON MA-01803</span>
+        <span style="font-size:0.95em;color:#5a6c7d;">(781) 757-2525; <a href="https://www.bluebirdfence.com" target="_blank" style="color:#3498db;text-decoration:none;">www.bluebirdfence.com</a></span>
       </div>
     </div>
     <hr class="blue-line">
@@ -836,7 +879,7 @@
         <div class="input-row"><label>Gate Size:</label><input type="text" placeholder="Write Here"></div>
         <div class="input-row"><label>Labor, # of Days:</label><input type="text" placeholder="Write Here"></div>
         <div class="fence-image-wrapper" style="text-align:center; margin-top:20px;">
-          <img class="fence-preview-image" src="" alt="Fence Preview" style="max-width:100%; max-height:200px; display:none; border-radius:8px; box-shadow:0 2px 8px rgba(30,60,114,0.08);">
+          <img class="fence-preview-image" src="" alt="Fence Preview" style="max-width:100%; max-height:200px; display:none; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.1); border:2px solid rgba(255,255,255,0.3);">
         </div>
       </div>
       <div class="resize-controls">
