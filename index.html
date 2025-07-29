@@ -682,6 +682,18 @@
       .container:nth-child(3) {
         padding: 12px !important;
         margin-bottom: 8px !important;
+        page-break-after: avoid !important;
+      }
+      
+      /* Force fence images container to stay on first page */
+      .container:nth-child(3) {
+        page-break-before: avoid !important;
+        page-break-after: auto !important;
+      }
+      
+      /* Force drawing section to start on new page */
+      .drawing-signature-container {
+        page-break-before: always !important;
       }
       .fence-images-display {
         display: flex !important;
@@ -745,14 +757,15 @@
         gap: 8px !important;
         justify-content: center !important;
         margin-top: 8px !important;
-        min-height: calc(100vh - 400px) !important;
+        min-height: auto !important;
         align-content: start !important;
       }
       
       .fence-image-item {
         text-align: center !important;
         margin: 0 !important;
-        page-break-before: always;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
       }
       .signature-canvas {
         border: 1px solid #ccc;
