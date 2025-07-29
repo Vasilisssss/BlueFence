@@ -1158,60 +1158,24 @@
       });
       
       // Generate fence images for print
-      generateFenceImages();
-    }
-    
-    function generateFenceImages() {
-      const displayContainer = document.getElementById('fence-images-display');
-      if (!displayContainer) return;
-      
-      displayContainer.innerHTML = '';
-      
-      document.querySelectorAll('.product-type-wrapper').forEach(wrapper => {
-        const materialSelect = wrapper.querySelector('.fence-material-select');
-        const styleSelect = wrapper.querySelector('.fence-style-select');
-        const linearFootageInput = wrapper.querySelector('input[placeholder="Write Here"]');
-        
-        if (materialSelect && styleSelect && materialSelect.value !== '0' && styleSelect.value !== '0') {
-          const material = materialSelect.value;
-          const style = styleSelect.value;
-          const linearFootage = linearFootageInput ? linearFootageInput.value : '';
-          
-          const imageItem = document.createElement('div');
-          imageItem.className = 'fence-image-item';
-          
-          const img = document.createElement('img');
-          img.src = getFenceImageSrc(material, style);
-          img.alt = `${material} ${style} fence`;
-          
-          const details = document.createElement('div');
-          details.className = 'fence-details';
-          details.innerHTML = `
-            <div><strong>Material:</strong> ${material.charAt(0).toUpperCase() + material.slice(1)}</div>
-            <div><strong>Style:</strong> ${styleSelect.options[styleSelect.selectedIndex].text}</div>
-            <div><strong>Linear Footage:</strong> ${linearFootage}</div>
-          `;
-          
-          imageItem.appendChild(img);
-          imageItem.appendChild(details);
-          displayContainer.appendChild(imageItem);
-        }
-      });
-    }
-    
-    // Drawing functionality
-    let isDrawing = false;
-    let currentTool = 'pen';
-    let currentColor = '#000000';
-    let currentLineWidth = 2;
-    let startX, startY;
-    let previewCanvas, previewCtx;
-   
+      console.log('Initializing canvas:', canvasId);
    function updatePreviewPosition() {
       canvas.addEventListener('mousedown', startDrawing);
       canvas.addEventListener('mousemove', draw);
       canvas.addEventListener('mouseup', stopDrawing);
       canvas.addEventListener('mouseout', stopDrawing);
+      
+      // Function to save canvas state for preview
+      function saveCanvasState() {
+        canvasState = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      }
+      
+      // Function to restore canvas state
+      function restoreCanvasState() {
+        if (canvasState) {
+          ctx.putImageData(canvasState, 0, 0);
+        }
+      }
       
       // Function to save canvas state for preview
       function saveCanvasState() {
@@ -1232,7 +1196,12 @@
         startY = e.clientY - rect.top;
         
         // Get the current tool for this specific canvas
-        const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
+        const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
+        
+        // Save canvas state for line and rectangle tools (for preview)
+        if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-below-total-canvas') {
+          saveCanvasState();
+        }
         
         // Save canvas state for line and rectangle tools (for preview)
         if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-canvas') {
@@ -1253,18 +1222,18 @@
         if (!isDrawing) return;
         
         // Get the current tool for this specific canvas
-        const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
+        const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
         
         ctx.lineWidth = currentLineWidth;
-        ctx.lineCap = 'round';
         
         if (activeTool === 'pen' || activeTool === 'eraser') {
+          ctx.strokeStyle = activeTool === 'eraser' ? '#ffffff' : currentColor;
           ctx.strokeStyle = activeTool === 'eraser' ? '#ffffff' : currentColor;
           ctx.lineTo(currentX, currentY);
           ctx.stroke();
           ctx.beginPath();
           ctx.moveTo(currentX, currentY);
-        } else if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-canvas') {
+        } else if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-below-total-canvas') {
           // Real-time preview for line and rectangle tools
           restoreCanvasState(); // Restore original canvas
           
@@ -1280,12 +1249,6 @@
             ctx.beginPath();
             ctx.rect(startX, startY, currentX - startX, currentY - startY);
             ctx.stroke();
-          }
-          
-          ctx.globalAlpha = 1.0; // Reset alpha
-        }
-      }
-      
       function stopDrawing() {
         if (!isDrawing) return;
         isDrawing = false;
@@ -1306,6 +1269,7 @@
           ctx.strokeStyle = currentColor;
           ctx.lineCap = 'round';
           ctx.globalAlpha = 1.0; // Full opacity for final shape
+          ctx.globalAlpha = 1.0; // Full opacity for final shape
           
           if (activeTool === 'line') {
             ctx.beginPath();
@@ -1314,12 +1278,12 @@
             ctx.stroke();
           } else if (activeTool === 'rectangle') {
             ctx.beginPath();
-            ctx.rect(startX, startY, endX - startX, endY - startY);
-            ctx.stroke();
-          }
-        }
+        const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
         
-        ctx.beginPath();
+        if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-below-total-canvas') {
+          // Restore canvas and draw final shape
+          restoreCanvasState();
+          
       }
     }
     
@@ -1345,14 +1309,7 @@
     // Initialize drawing canvases when page loads
     function initializeDrawing() {
       initializeCanvas('first-page-drawing-canvas');
-      initializeCanvas('signature-below-total-canvas');
-      generateFenceImages();
       adjustDrawingSize();
-    }
-    
-    // Function to adjust drawing canvas size based on number of fence options
-    function adjustDrawingSize() {
-      // This function can be implemented to adjust canvas size based on content
     }
     
     // Call adjustDrawingSize when cards are added or removed
@@ -1361,17 +1318,6 @@
       const tpl = grid.querySelector('.product-type-wrapper');
       const clone = tpl.cloneNode(true);
 
-      clone.querySelectorAll('input[type=text], select').forEach(el => {
-        if (el.tagName === 'SELECT') { el.selectedIndex = 0; } 
-        else { el.value = ''; }
-      });
-      clone.querySelector('.card-total').textContent = formatCurrency(0);
-      clone.querySelector('.delete-btn').classList.add('show');
-      grid.insertBefore(clone, document.getElementById('plus-btn-wrapper'));
-      bindCardLogic(clone);
-      adjustDrawingSize(); // Adjust canvas size when adding
-      generateFenceImages();
-    }
   </script>
 </head>
 <body>
