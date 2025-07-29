@@ -1081,18 +1081,15 @@
           }
           // Update the fence images display
           generateFenceImages();
-                    canvasHeight = 200;
+        }
 
-                    canvasHeight = 160;
         if (deleteBtn) {
-                    canvasHeight = 130;
+            deleteBtn.addEventListener('click', () => {
                 const grid = document.getElementById('product-type-grid');
-                    canvasHeight = 110;
-                    wrapper.remove();
-                    canvasHeight = 90;
-                   adjustDrawingSize(); // Adjust canvas size when removing
-                    canvasHeight = 70;
-                }
+                wrapper.remove();
+                updateGrandTotal();
+                adjustDrawingSize(); // Adjust canvas size when removing
+                generateFenceImages();
             });
         }
         if (resizePlusBtn && resizeMinusBtn) {
@@ -1119,6 +1116,11 @@
        if (addBtn) {
          addBtn.addEventListener('click', addProductType);
        }
+       
+       // Initialize drawing after a short delay to ensure canvas is ready
+       setTimeout(() => {
+           initializeDrawing();
+       }, 100);
     });
 
     // PWA Service Worker Registration
@@ -1379,14 +1381,12 @@
     });
     
     // Initialize drawing canvases when page loads
-    document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => {
-        initializeCanvas('first-page-drawing-canvas');
-        initializeCanvas('signature-below-total-canvas');
-        generateFenceImages();
-        adjustDrawingSize();
-      }, 100);
-    });
+    function initializeDrawing() {
+      initializeCanvas('first-page-drawing-canvas');
+      initializeCanvas('signature-below-total-canvas');
+      generateFenceImages();
+      adjustDrawingSize();
+    }
     
     // Function to adjust drawing canvas size based on number of fence options
     function adjustDrawingSize() {
@@ -1400,13 +1400,26 @@
        height = 350; // Largest for single fence
      } else if (fenceCount <= 2) {
        height = 280; // Large for few fences
+     } else if (fenceCount <= 3) {
+       height = 200; // Medium for moderate fences
+     } else if (fenceCount <= 4) {
+       height = 160; // Smaller for many fences
+     } else if (fenceCount <= 5) {
+       height = 130; // Even smaller
+     } else if (fenceCount <= 6) {
+       height = 110; // Very small
+     } else if (fenceCount <= 7) {
+       height = 90; // Tiny
+     } else {
+       height = 70; // Minimal for many fences
+     }
+       
        // Initial positioning
        updatePreviewPosition();
       canvas.height = height;
        // Update position on scroll and resize
        window.addEventListener('resize', updatePreviewPosition);
        window.addEventListener('scroll', updatePreviewPosition);
-     }
     }
     
     // Update drawing size when cards are added/removed
