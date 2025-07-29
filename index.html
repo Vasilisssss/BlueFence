@@ -846,6 +846,42 @@
     }
     
     /* Drawing and Signature Sections - Hidden by default, shown only in print */
+    
+    .first-page-drawing {
+      margin-top: 20px;
+      text-align: center;
+    }
+    
+    .first-page-drawing h2 {
+      font-size: 1.3em;
+      margin-bottom: 15px;
+    }
+    
+    .first-page-drawing-canvas {
+      border: 1px solid #ccc;
+      width: 100%;
+      max-width: 800px;
+      background: white;
+      border-radius: 8px;
+    }
+    
+    .signature-below-total {
+      margin-top: 15px;
+      text-align: center;
+    }
+    
+    .signature-below-total h3 {
+      font-size: 1em;
+      margin-bottom: 8px;
+      color: #333;
+      font-family: "Montserrat", Arial, sans-serif;
+    }
+    
+    .signature-below-total canvas {
+      border: 1px solid #ccc;
+      background: white;
+      border-radius: 4px;
+    }
 
     function formatCurrency(value) {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
@@ -1054,6 +1090,7 @@
                 if (grid.querySelectorAll('.product-type-wrapper').length > 1) {
                     wrapper.remove();
                     updateGrandTotal();
+                    adjustDrawingSize(); // Adjust size when removing
                 }
             });
         }
@@ -1330,11 +1367,34 @@
     // Initialize drawing canvases when page loads
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
-        initializeCanvas('drawing-canvas');
-        initializeCanvas('signature-canvas');
+        initializeCanvas('first-page-drawing-canvas');
+        initializeCanvas('signature-below-total-canvas');
         generateFenceImages();
+        adjustDrawingSize();
       }, 100);
     });
+    
+    // Function to adjust drawing canvas size based on number of fence options
+    function adjustDrawingSize() {
+      const canvas = document.getElementById('first-page-drawing-canvas');
+      const fenceCount = document.querySelectorAll('.product-type-wrapper').length;
+      
+      let height;
+      if (fenceCount <= 2) {
+        height = 300; // Larger for few fences
+      } else if (fenceCount <= 4) {
+        height = 250; // Medium size
+      } else if (fenceCount <= 6) {
+        height = 200; // Smaller for more fences
+      } else {
+        height = 150; // Smallest for many fences
+      }
+      
+      canvas.height = height;
+      canvas.style.height = height + 'px';
+    }
+    
+    // Update drawing size when cards are added/removed
   </script>
 </head>
 <body>
@@ -1356,6 +1416,10 @@
           <h2 class="quote-title">Client Quote Form</h2>
           <div class="quote-total-display">
             <div id="grand-total-box">$0.00</div>
+          </div>
+          <div class="signature-below-total">
+            <h3>Customer Signature</h3>
+            <canvas id="signature-below-total-canvas" width="250" height="60" style="border:1px solid #ccc;cursor:crosshair;background:white;"></canvas>
           </div>
         </div>
       </div>
@@ -1383,33 +1447,25 @@
   <div class="container">
     <h2>Selected Fence Options</h2>
     <div id="fence-images-display" class="fence-images-display"></div>
+    
+    <!-- Project Drawing on First Page -->
+    <div class="first-page-drawing">
+      <h2>Project Drawing</h2>
+      <div class="drawing-tools">
+        <button onclick="setDrawingTool('pen')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Pen</button>
+        <button onclick="setDrawingTool('line')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Line</button>
+        <button onclick="setDrawingTool('rectangle')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Rectangle</button>
+        <button onclick="setDrawingTool('eraser')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Eraser</button>
+        <input type="color" value="#000000" onchange="setDrawingColor(this.value)" style="margin-right:10px;">
+        <button onclick="clearCanvas('first-page-drawing-canvas')" style="background:#666;color:white;border:none;padding:8px 16px;cursor:pointer;">Clear</button>
+      </div>
+      <div style="position:relative;margin-top:15px;">
+        <canvas id="first-page-drawing-canvas" class="first-page-drawing-canvas" width="800" height="250" style="cursor:crosshair;"></canvas>
+      </div>
+    </div>
   </div>
 
   <!-- Drawing and Signature Sections - Visible in HTML -->
-  <div class="container drawing-signature-container">
-    <div class="drawing-section">
-    <h2>Project Drawing</h2>
-    <div class="drawing-tools">
-      <button onclick="setDrawingTool('pen')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Pen</button>
-      <button onclick="setDrawingTool('line')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Line</button>
-      <button onclick="setDrawingTool('rectangle')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Rectangle</button>
-      <button onclick="setDrawingTool('eraser')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Eraser</button>
-      <input type="color" value="#000000" onchange="setDrawingColor(this.value)" style="margin-right:10px;">
-      <button onclick="clearCanvas('drawing-canvas')" style="background:#666;color:white;border:none;padding:8px 16px;cursor:pointer;">Clear</button>
-    </div>
-    <div style="position:relative;margin-top:15px;">
-      <canvas id="drawing-canvas" class="drawing-canvas" width="800" height="400" style="border:1px solid #ccc;cursor:crosshair;width:100%;max-width:800px;height:400px;background:white;"></canvas>
-    </div>
-    </div>
-    
-    <div class="signature-section">
-        <h2>Customer Signature</h2>
-        <div style="margin-bottom:10px;">
-          <button onclick="clearCanvas('signature-canvas')" style="background:#666;color:white;border:none;padding:5px 10px;cursor:pointer;">Clear</button>
-        </div>
-        <canvas id="signature-canvas" class="signature-canvas" width="400" height="120" style="border:1px solid #ccc;cursor:crosshair;background:white;"></canvas>
-    </div>
-  </div>
 
   <div class="product-type-grid" id="product-type-grid">
     <div class="product-type-wrapper">
