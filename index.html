@@ -609,58 +609,101 @@
       .container {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
         margin: 0 !important;
-        padding: 20px !important;
+        padding: 15px !important;
         width: 100% !important;
         max-width: 100% !important;
         page-break-inside: avoid;
       }
       .professional-header {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
-        padding: 15px !important;
-        margin: -20px -20px 15px -20px !important;
+        padding: 12px !important;
+        margin: -15px -15px 12px -15px !important;
       }
-      /* Adjust container sizes for first page */
-      .container:first-of-type {
-        padding: 15px !important;
+      .header-content {
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: flex-start !important;
+        text-align: left !important;
       }
-      .container:nth-of-type(2) {
-        padding: 15px !important;
-        margin-bottom: 10px !important;
+      .left-section {
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+        gap: 15px !important;
       }
-      .container:nth-of-type(3) {
-        padding: 15px !important;
-        margin-bottom: 10px !important;
+      .company-logo {
+        height: 50px !important;
+      }
+      .company-tagline {
+        font-size: 1.1em !important;
+        margin-bottom: 8px !important;
+      }
+      .company-details {
+        font-size: 0.85em !important;
+      }
+      .right-section {
+        flex-direction: column !important;
+        align-items: flex-end !important;
+        text-align: right !important;
+        gap: 8px !important;
+      }
+      .quote-title {
+        font-size: 1.2em !important;
+        margin-bottom: 8px !important;
+      }
+      #grand-total-box {
+        font-size: 1.3em !important;
+        padding: 8px 16px !important;
+        min-width: 100px !important;
+      }
+      /* Make customer info section more compact */
+      .info-grid {
+        gap: 8px 20px !important;
+        margin-top: 12px !important;
+        font-size: 0.9em !important;
+      }
+      .info-grid label {
+        margin-bottom: 3px !important;
+        font-size: 0.85em !important;
+      }
+      /* Adjust container spacing for better fit */
+      .container:nth-child(2) {
+        padding: 12px !important;
+        margin-bottom: 8px !important;
+      }
+      .container:nth-child(3) {
+        padding: 12px !important;
+        margin-bottom: 8px !important;
       }
       .fence-images-display {
         display: flex !important;
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 12px;
         justify-content: center;
-        margin-top: 10px;
+        margin-top: 8px;
       }
       .fence-image-item {
         text-align: center;
-        margin: 5px;
+        margin: 3px;
         page-break-inside: avoid;
+        flex: 0 1 calc(50% - 12px);
+        max-width: calc(50% - 12px);
       }
       .fence-image-item img {
-        max-width: 150px;
-        max-height: 120px;
+        max-width: 140px;
+        max-height: 110px;
         border: 1px solid #ddd;
         border-radius: 8px;
       }
       .fence-details {
-        font-size: 10px;
+        font-size: 9px;
         color: #666;
-        margin-top: 5px;
+        margin-top: 4px;
         line-height: 1.3;
       }
-      /* Split fence images into two columns */
-      .fence-images-display {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        margin-top: 15px;
+      h2 {
+        font-size: 1.1em !important;
+        margin-bottom: 8px !important;
       }
       .drawing-canvas {
         border: 1px solid #ccc !important;
@@ -673,7 +716,6 @@
         width: 250px !important;
         height: 80px !important;
       }
-      /* Adjust drawing and signature layout for better fit */
       .drawing-signature-container {
         display: flex !important;
         flex-direction: column;
@@ -692,10 +734,6 @@
       .signature-section h2 {
         margin-right: 20px;
         margin-bottom: 0;
-      }
-      h2 {
-        color: #333333 !important;
-        font-size: 1.2em !important;
       }
       .blue-line {
         display: none !important;
