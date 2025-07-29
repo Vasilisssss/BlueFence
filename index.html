@@ -1088,30 +1088,35 @@
         startX = e.clientX - rect.left;
         startY = e.clientY - rect.top;
         
-        if (currentTool === 'pen' || currentTool === 'eraser') {
+        // Get the current tool for this specific canvas
+        const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
+        
+        if (activeTool === 'pen' || activeTool === 'eraser') {
           ctx.beginPath();
           ctx.moveTo(startX, startY);
         }
       }
       
       function draw(e) {
-        
         const rect = canvas.getBoundingClientRect();
         const currentX = e.clientX - rect.left;
         const currentY = e.clientY - rect.top;
         
         if (!isDrawing) return;
         
+        // Get the current tool for this specific canvas
+        const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
+        
         ctx.lineWidth = currentLineWidth;
         ctx.lineCap = 'round';
-        ctx.strokeStyle = currentTool === 'eraser' ? '#ffffff' : currentColor;
+        ctx.strokeStyle = activeTool === 'eraser' ? '#ffffff' : currentColor;
         
-        if (currentTool === 'pen' || currentTool === 'eraser') {
+        if (activeTool === 'pen' || activeTool === 'eraser') {
           ctx.lineTo(currentX, currentY);
           ctx.stroke();
           ctx.beginPath();
           ctx.moveTo(currentX, currentY);
-        } else if (currentTool === 'line' || currentTool === 'rectangle') {
+        } else if (activeTool === 'line' || activeTool === 'rectangle' && canvasId !== 'signature-canvas') {
           // Clear preview canvas
           previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
           
@@ -1120,12 +1125,12 @@
           previewCtx.strokeStyle = currentColor;
           previewCtx.lineCap = 'round';
           
-          if (currentTool === 'line') {
+          if (activeTool === 'line') {
             previewCtx.beginPath();
             previewCtx.moveTo(startX, startY);
             previewCtx.lineTo(currentX, currentY);
             previewCtx.stroke();
-          } else if (currentTool === 'rectangle') {
+          } else if (activeTool === 'rectangle') {
             previewCtx.beginPath();
             previewCtx.rect(startX, startY, currentX - startX, currentY - startY);
             previewCtx.stroke();
@@ -1137,26 +1142,30 @@
         if (!isDrawing) return;
         isDrawing = false;
         
+        // Get the current tool for this specific canvas
+        const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
+        
         // Clear preview
         if (previewCtx) {
           previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
         }
         
-        if (currentTool === 'line' || currentTool === 'rectangle') {
+        if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-canvas') {
           const rect = canvas.getBoundingClientRect();
-          const endX = event ? event.clientX - rect.left : startX;
-          const endY = event ? event.clientY - rect.top : startY;
+          const lastEvent = window.event || event;
+          const endX = lastEvent ? lastEvent.clientX - rect.left : startX;
+          const endY = lastEvent ? lastEvent.clientY - rect.top : startY;
           
           ctx.lineWidth = currentLineWidth;
           ctx.strokeStyle = currentColor;
           ctx.lineCap = 'round';
           
-          if (currentTool === 'line') {
+          if (activeTool === 'line') {
             ctx.beginPath();
             ctx.moveTo(startX, startY);
             ctx.lineTo(endX, endY);
             ctx.stroke();
-          } else if (currentTool === 'rectangle') {
+          } else if (activeTool === 'rectangle') {
             ctx.beginPath();
             ctx.rect(startX, startY, endX - startX, endY - startY);
             ctx.stroke();
