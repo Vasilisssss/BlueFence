@@ -1121,45 +1121,7 @@
        setTimeout(() => {
            initializeDrawing();
        }, 100);
-    });
-
-    // PWA Service Worker Registration
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-          .then((registration) => {
-            console.log('SW registered: ', registration);
-          })
-          .catch((registrationError) => {
-            console.log('SW registration failed: ', registrationError);
-          });
-      });
-    }
-
-    // PWA Install Prompt
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      // You can show an install button here if desired
-    });
-
-    // Add script to copy input values to spans for print
-    function syncInfoFields() {
-      const fields = [
-        'FirstName', 'LastName', 'Street', 'State', 'ZipCode', 'Email', 'Phone', 'job-address', 'site-contact', 'estimate-attendance'
-      ];
-      fields.forEach(id => {
-        const input = document.getElementById(id);
         const span = document.getElementById(id + '-span');
-        if (input && span) {
-          span.textContent = input.value;
-        }
-      });
-      
-      // Generate fence images for print
-      console.log('Initializing canvas:', canvasId);
-   function updatePreviewPosition() {
       canvas.addEventListener('mousedown', startDrawing);
       canvas.addEventListener('mousemove', draw);
       canvas.addEventListener('mouseup', stopDrawing);
@@ -1189,7 +1151,28 @@
         }
       }
       
+      // Function to save canvas state for preview
+      function saveCanvasState() {
+        canvasState = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      }
+      
+      // Function to restore canvas state
+      function restoreCanvasState() {
+        if (canvasState) {
+          ctx.putImageData(canvasState, 0, 0);
+        }
+      }
+      
       function startDrawing(e) {
+        // Handle text tool differently
+        if (currentTool === 'text' && canvasId !== 'signature-below-total-canvas') {
+          const rect = canvas.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          addTextToCanvas(canvas, ctx, x, y);
+          return;
+        }
+        
         isDrawing = true;
         const rect = canvas.getBoundingClientRect();
         startX = e.clientX - rect.left;
@@ -1249,25 +1232,25 @@
             ctx.beginPath();
             ctx.rect(startX, startY, currentX - startX, currentY - startY);
             ctx.stroke();
-      function stopDrawing() {
-        if (!isDrawing) return;
-        isDrawing = false;
         
-        // Get the current tool for this specific canvas
-        const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
+        // Save canvas state for line and rectangle tools (for preview)
+        if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-below-total-canvas') {
+          saveCanvasState();
+          
+          ctx.globalAlpha = 1.0; // Reset alpha
+        }
         
-        if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-canvas') {
+        if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-below-total-canvas') {
           // Restore canvas and draw final shape
           restoreCanvasState();
           
-          const rect = canvas.getBoundingClientRect();
-          const lastEvent = window.event || event;
           const endX = lastEvent ? lastEvent.clientX - rect.left : startX;
           const endY = lastEvent ? lastEvent.clientY - rect.top : startY;
           
           ctx.lineWidth = currentLineWidth;
           ctx.strokeStyle = currentColor;
           ctx.lineCap = 'round';
+          ctx.globalAlpha = 1.0; // Full opacity for final shape
           ctx.globalAlpha = 1.0; // Full opacity for final shape
           ctx.globalAlpha = 1.0; // Full opacity for final shape
           
@@ -1287,12 +1270,66 @@
       }
     }
     
-    function setDrawingTool(tool) {
-      currentTool = tool;
+    // Function to add text to canvas
+    function addTextToCanvas(canvas, ctx, x, y) {
+      const rect = canvas.getBoundingClientRect();
+      
+      // Create text input element
+      const textInput = document.createElement('input');
+      textInput.type = 'text';
+      textInput.className = 'canvas-text-input';
+      textInput.style.left = (rect.left + window.scrollX + x) + 'px';
+      textInput.style.top = (rect.top + window.scrollY + y - currentFontSize/2) + 'px';
+      textInput.style.fontSize = currentFontSize + 'px';
+      textInput.style.color = currentColor;
+      textInput.placeholder = 'Enter text...';
+      
+      document.body.appendChild(textInput);
+      textInput.focus();
+      
+      // Function to finalize text
+      function finalizeText() {
+        const text = textInput.value.trim();
+        if (text) {
+          ctx.font = currentFontSize + 'px Arial';
+          ctx.fillStyle = currentColor;
+          ctx.textBaseline = 'middle';
+          ctx.fillText(text, x, y);
+        }
+        document.body.removeChild(textInput);
+      }
+      
+      // Handle Enter key and blur events
+      textInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          finalizeText();
+        } else if (e.key === 'Escape') {
+          document.body.removeChild(textInput);
+        }
+      });
+      
+      textInput.addEventListener('blur', finalizeText);
     }
     
-    function setDrawingColor(color) {
+    function setDrawingTool(tool) {
+      currentTool = tool;
+      // Update cursor based on tool
+      const canvas = document.getElementById('first-page-drawing-canvas');
+      if (canvas) {
+        if (tool === 'text') {
+          canvas.style.cursor = 'text';
+        } else {
+          canvas.style.cursor = 'crosshair';
+        }
+      }
+    }
+    
+        const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
       currentColor = color;
+    }
+    
+    function setFontSize(size) {
+      currentFontSize = parseInt(size);
     }
     
     function clearCanvas(canvasId) {
