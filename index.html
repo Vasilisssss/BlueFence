@@ -1210,31 +1210,35 @@
         previewCanvas.height = canvas.height;
         previewCanvas.style.position = 'absolute';
         previewCanvas.style.pointerEvents = 'none';
-        previewCanvas.style.zIndex = '10';
+        previewCanvas.style.zIndex = '1000';
         previewCanvas.style.background = 'transparent';
-        previewCanvas.style.border = 'none';
+        previewCanvas.style.border = '1px solid #ccc';
         
-        previewCanvas.style.top = '0';
-        previewCanvas.style.left = '0';
-        previewCanvas.style.width = canvas.style.width || canvas.width + 'px';
-        previewCanvas.style.height = canvas.style.height || canvas.height + 'px';
+        // Get canvas position relative to viewport
+        const rect = canvas.getBoundingClientRect();
+        previewCanvas.style.top = rect.top + window.scrollY + 'px';
+        previewCanvas.style.left = rect.left + window.scrollX + 'px';
+        previewCanvas.style.width = canvas.offsetWidth + 'px';
+        previewCanvas.style.height = canvas.offsetHeight + 'px';
         
-        // Make the canvas container relative and add preview canvas
-        const container = canvas.parentNode;
-        container.style.position = 'relative';
-        container.appendChild(previewCanvas);
+        // Add preview canvas to body with fixed positioning
+        document.body.appendChild(previewCanvas);
         
         // Update preview canvas size when main canvas size changes
         const updatePreviewSize = () => {
+          const rect = canvas.getBoundingClientRect();
           previewCanvas.width = canvas.width;
           previewCanvas.height = canvas.height;
-          previewCanvas.style.width = canvas.style.width || canvas.width + 'px';
-          previewCanvas.style.height = canvas.style.height || canvas.height + 'px';
+          previewCanvas.style.top = rect.top + window.scrollY + 'px';
+          previewCanvas.style.left = rect.left + window.scrollX + 'px';
+          previewCanvas.style.width = canvas.offsetWidth + 'px';
+          previewCanvas.style.height = canvas.offsetHeight + 'px';
         };
         
         // Update size initially and on resize
         updatePreviewSize();
         window.addEventListener('resize', updatePreviewSize);
+        window.addEventListener('scroll', updatePreviewSize);
         
         previewCtx = previewCanvas.getContext('2d');
       }
@@ -1279,7 +1283,7 @@
           ctx.beginPath();
           ctx.moveTo(currentX, currentY);
         } else if (activeTool === 'line' || activeTool === 'rectangle' && canvasId !== 'signature-canvas') {
-          // Only show preview for drawing canvas
+          // Only show preview for first page drawing canvas
           if (canvasId === 'first-page-drawing-canvas' && previewCtx) {
             // Clear preview canvas
             previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
