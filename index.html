@@ -35,13 +35,85 @@
       width: 100%;
       max-width: 900px;
       margin: 0 auto 32px auto;
-      background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+      background: #f8f9fb;
       border-radius: 16px;
       box-shadow: 0 8px 32px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.05);
       padding: 40px 32px;
       box-sizing: border-box;
       text-align: left;
       border: 1px solid rgba(255,255,255,0.2);
+    }
+    .professional-header {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fb 100%);
+      border: 1px solid #e1e8ed;
+      border-radius: 12px;
+      padding: 32px;
+      margin: -8px -8px 24px -8px;
+    }
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .logo-section {
+      flex-shrink: 0;
+    }
+    .company-logo {
+      height: 80px;
+      width: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .company-info {
+      text-align: center;
+      flex-grow: 1;
+    }
+    .company-tagline {
+      font-size: 1.4em;
+      font-weight: 600;
+      color: #2c5aa0;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+    .company-details {
+      color: #5a6c7d;
+      font-size: 0.95em;
+      line-height: 1.4;
+    }
+    .address-line {
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+    .contact-line {
+      font-weight: 500;
+    }
+    .website-link {
+      color: #2c5aa0;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .website-link:hover {
+      text-decoration: underline;
+    }
+    .quote-title-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 2px solid #e1e8ed;
+    }
+    .quote-title {
+      font-size: 1.6em;
+      font-weight: 600;
+      color: #2c3e50;
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+    .quote-total-display {
+      display: flex;
+      align-items: center;
     }
     .half-container {
       width: 100%;
@@ -111,17 +183,17 @@
       text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     #grand-total-box {
-      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+      background: linear-gradient(135deg, #2c5aa0 0%, #1e3c72 100%);
       color: #fff;
       font-family: "Montserrat", Arial, sans-serif;
       font-weight: 700;
-      font-size: 1.75em;
-      padding: 12px 24px;
+      font-size: 1.6em;
+      padding: 14px 28px;
       border-radius: 12px;
       min-width: 150px;
       text-align: right;
       white-space: nowrap;
-      box-shadow: 0 4px 16px rgba(44,62,80,0.3);
+      box-shadow: 0 4px 16px rgba(44,90,160,0.3);
       border: 1px solid rgba(255,255,255,0.1);
     }
     label {
@@ -291,33 +363,38 @@
         padding: 30px 20px;
         margin-bottom: 20px;
       }
-      .header-row {
+      .professional-header {
+        padding: 24px 16px;
+        margin: -4px -4px 20px -4px;
+      }
+      .header-content {
         flex-direction: column;
         text-align: center;
         gap: 12px;
+        margin-bottom: 20px;
       }
-      .header-row img {
+      .company-logo {
         height: 60px;
       }
-      h1 {
-        font-size: 2em;
-        text-align: center;
+      .company-tagline {
+        font-size: 1.2em;
       }
-      h2 {
-        font-size: 1.3em;
+      .company-details {
+        font-size: 0.9em;
       }
-      .quote-header {
+      .quote-title-section {
         flex-direction: column;
         align-items: center;
         gap: 12px;
+        padding-top: 16px;
       }
-      p.title {
-        font-size: 1.6em;
+      .quote-title {
+        font-size: 1.4em;
         text-align: center;
       }
       #grand-total-box {
-        font-size: 1.5em;
-        padding: 10px 20px;
+        font-size: 1.4em;
+        padding: 12px 24px;
         min-width: 120px;
       }
       input[type="text"], textarea {
@@ -373,22 +450,33 @@
         margin-bottom: 15px;
         border-radius: 8px;
       }
-      .header-row img {
+      .professional-header {
+        padding: 20px 12px;
+        margin: -2px -2px 15px -2px;
+      }
+      .header-content {
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+      .company-logo {
         height: 50px;
       }
-      h1 {
-        font-size: 1.8em;
-        letter-spacing: 1px;
+      .company-tagline {
+        font-size: 1.1em;
       }
-      h2 {
-        font-size: 1.2em;
+      .company-details {
+        font-size: 0.85em;
       }
-      p.title {
-        font-size: 1.4em;
+      .quote-title-section {
+        gap: 10px;
+        padding-top: 14px;
+      }
+      .quote-title {
+        font-size: 1.3em;
       }
       #grand-total-box {
-        font-size: 1.3em;
-        padding: 8px 16px;
+        font-size: 1.2em;
+        padding: 10px 20px;
         min-width: 100px;
       }
       input[type="text"], textarea {
@@ -449,18 +537,18 @@
 
     /* Landscape Mobile */
     @media (max-width: 768px) and (orientation: landscape) {
-      .header-row {
+      .header-content {
         flex-direction: row;
         text-align: left;
       }
-      h1 {
-        text-align: left;
+      .company-info {
+        text-align: center;
       }
-      .quote-header {
+      .quote-title-section {
         flex-direction: row;
         align-items: baseline;
       }
-      p.title {
+      .quote-title {
         text-align: left;
       }
     }
@@ -514,28 +602,40 @@
         border: 1px solid #3498db !important;
         margin-bottom: 0 !important;
       }
+      .professional-header {
+        background: #fff !important;
+        border: 1px solid #ddd !important;
+        padding: 16px !important;
+        margin: 0 !important;
+      }
+      .header-content {
+        margin-bottom: 12px !important;
+        gap: 16px !important;
+      }
+      .company-logo {
+        height: 50px !important;
+      }
+      .company-tagline {
+        font-size: 1.1em !important;
+      }
+      .company-details {
+        font-size: 0.9em !important;
+      }
+      .quote-title-section {
+        padding-top: 12px !important;
+        gap: 12px !important;
+      }
+      .quote-title {
+        font-size: 1.2em !important;
+      }
       .info-grid {
         gap: 6px 18px !important;
         font-size: 0.98em !important;
       }
-      .header-row img {
-        height: 55px !important;
-      }
-      h1, h2, .title {
-        font-size: 1.1em !important;
-        margin: 0 !important;
-      }
-      .blue-line {
-        margin: 6px 0 10px 0 !important;
-        border-top-width: 2px !important;
-      }
-      .quote-header {
-        gap: 8px !important;
-      }
       #grand-total-box {
-        font-size: 1.1em !important;
-        padding: 6px 12px !important;
-        min-width: 80px !important;
+        font-size: 1.0em !important;
+        padding: 8px 16px !important;
+        min-width: 100px !important;
       }
       .product-type-grid, .product-type-wrapper, .product-type-container, .resize-controls, .plus-btn, #plus-btn-wrapper {
         page-break-inside: avoid !important;
@@ -825,19 +925,25 @@
 <body>
   <button onclick="window.print()" id="print-btn" style="position:fixed;top:20px;right:30px;z-index:1000;padding:12px 28px;background:linear-gradient(135deg, #2c3e50 0%, #34495e 100%);color:#fff;border:none;border-radius:12px;font-size:1em;box-shadow:0 4px 16px rgba(44,62,80,0.3);cursor:pointer;transition:all 0.3s ease;font-weight:600;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(44,62,80,0.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 16px rgba(44,62,80,0.3)'">Print Quote</button>
   <div class="container">
-    <div class="header-row">
-      <img src="logo.jpg" alt="Company Logo">
-      <div style="display:flex;flex-direction:column;gap:2px;">
-        <h1 style="margin-bottom:0;">Bluebird Fence</h1>
-        <span style="font-size:1em;color:#3498db;font-weight:600;text-shadow:0 1px 2px rgba(0,0,0,0.1);">Professional Fence Solutions</span>
-        <span style="font-size:0.95em;color:#5a6c7d;">374. CAMBRIDGE  ST BURLINGTON MA-01803</span>
-        <span style="font-size:0.95em;color:#5a6c7d;">(781) 757-2525; <a href="https://www.bluebirdfence.com" target="_blank" style="color:#3498db;text-decoration:none;">www.bluebirdfence.com</a></span>
+    <div class="professional-header">
+      <div class="header-content">
+        <div class="logo-section">
+          <img src="logo.jpg" alt="Company Logo" class="company-logo">
+        </div>
+        <div class="company-info">
+          <div class="company-tagline">Professional Fence Solutions</div>
+          <div class="company-details">
+            <div class="address-line">374. CAMBRIDGE ST BURLINGTON MA-01803</div>
+            <div class="contact-line">(781) 757-2525; <a href="https://www.bluebirdfence.com" target="_blank" class="website-link">www.bluebirdfence.com</a></div>
+          </div>
+        </div>
       </div>
-    </div>
-    <hr class="blue-line">
-    <div class="quote-header">
-      <p class="title">Client Quote Form</p>
-      <div id="grand-total-box">$0.00</div>
+      <div class="quote-title-section">
+        <h2 class="quote-title">Client Quote Form</h2>
+        <div class="quote-total-display">
+          <div id="grand-total-box">$0.00</div>
+        </div>
+      </div>
     </div>
   </div>
 
