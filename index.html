@@ -1313,8 +1313,6 @@
               previewCtx.lineTo(currentX, currentY);
               previewCtx.stroke();
             } else if (activeTool === 'rectangle') {
-              previewCtx.beginPath();
-              previewCtx.rect(startX, startY, currentX - startX, currentY - startY);
               previewCtx.stroke();
             }
            
