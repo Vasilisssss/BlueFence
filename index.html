@@ -1081,17 +1081,17 @@
           }
           // Update the fence images display
           generateFenceImages();
-        }
+                    canvasHeight = 200;
 
-        // --- Button Logic ---
+                    canvasHeight = 160;
         if (deleteBtn) {
-            deleteBtn.addEventListener('click', () => {
+                    canvasHeight = 130;
                 const grid = document.getElementById('product-type-grid');
-                if (grid.querySelectorAll('.product-type-wrapper').length > 1) {
+                    canvasHeight = 110;
                     wrapper.remove();
-                    updateGrandTotal();
+                    canvasHeight = 90;
                    adjustDrawingSize(); // Adjust canvas size when removing
-                   generateFenceImages();
+                    canvasHeight = 70;
                 }
             });
         }
