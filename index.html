@@ -325,11 +325,17 @@
       gap: 20px;
       justify-content: center;
       margin-top: 20px;
+      min-height: 200px;
+      align-content: flex-start;
     }
     
     .fence-image-item {
       text-align: center;
       margin: 10px;
+      flex: 0 1 calc(50% - 20px);
+      max-width: calc(50% - 20px);
+      display: flex;
+      flex-direction: column;
     }
     
     .fence-image-item img {
@@ -337,6 +343,7 @@
       max-height: 150px;
       border: 1px solid #ddd;
       border-radius: 8px;
+      object-fit: cover;
     }
     
     .fence-details {
@@ -344,6 +351,7 @@
       color: #666;
       margin-top: 8px;
       line-height: 1.3;
+      flex-grow: 1;
     }
 
     /* Responsive Design */
@@ -686,54 +694,91 @@
         text-align: center;
         margin: 3px;
         page-break-inside: avoid;
-        flex: 0 1 calc(50% - 12px);
-        max-width: calc(50% - 12px);
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
       }
       .fence-image-item img {
-        max-width: 140px;
-        max-height: 110px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
+        max-width: 160px !important;
+        max-height: 120px !important;
+        border: 1px solid #ddd !important;
+        border-radius: 8px !important;
+        object-fit: cover !important;
       }
       .fence-details {
-        font-size: 9px;
-        color: #666;
-        margin-top: 4px;
-        line-height: 1.3;
+        font-size: 9px !important;
+        color: #666 !important;
+        margin-top: 4px !important;
+        line-height: 1.3 !important;
+        flex-grow: 1 !important;
       }
       h2 {
         font-size: 1.1em !important;
         margin-bottom: 8px !important;
       }
       .drawing-canvas {
-        border: 1px solid #ccc !important;
-        width: 100% !important;
-        height: 350px !important;
+        border: 1px solid #ccc;
+        width: 100%;
+        height: 50vh;
+        max-height: 400px;
+        background: white;
+      }
+      
+      .drawing-section {
+        height: 50vh;
+        max-height: 400px;
+        margin-bottom: 20px;
+      }
+      
+      .signature-section {
+        height: 50vh;
+        max-height: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .fence-images-display {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        justify-content: center !important;
+        margin-top: 8px !important;
+        min-height: calc(100vh - 400px) !important;
+        align-content: start !important;
+      }
+      
+      .fence-image-item {
+        text-align: center !important;
+        margin: 0 !important;
         page-break-before: always;
       }
       .signature-canvas {
-        border: 1px solid #ccc !important;
-        width: 250px !important;
-        height: 80px !important;
+        border: 1px solid #ccc;
+        width: 300px;
+        height: 100px;
+        background: white;
       }
       .drawing-signature-container {
-        display: flex !important;
+        display: flex;
         flex-direction: column;
         height: 100vh;
-        padding: 20px !important;
+        padding: 20px;
       }
       .drawing-section {
-        flex: 1;
+        height: 50vh;
         margin-bottom: 20px;
       }
       .signature-section {
+        height: 50vh;
         display: flex;
-        justify-content: flex-end;
-        align-items: flex-end;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
       }
       .signature-section h2 {
-        margin-right: 20px;
-        margin-bottom: 0;
+        margin-bottom: 10px;
       }
       .blue-line {
         display: none !important;
@@ -1273,7 +1318,7 @@
         <div style="margin-bottom:10px;">
           <button onclick="clearCanvas('signature-canvas')" style="background:#666;color:white;border:none;padding:5px 10px;cursor:pointer;">Clear</button>
         </div>
-        <canvas id="signature-canvas" class="signature-canvas" width="300" height="100" style="border:1px solid #ccc;cursor:crosshair;background:white;"></canvas>
+        <canvas id="signature-canvas" class="signature-canvas" width="400" height="120" style="border:1px solid #ccc;cursor:crosshair;background:white;"></canvas>
     </div>
   </div>
 
