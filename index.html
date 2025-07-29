@@ -1351,27 +1351,27 @@
     }
     
     // Function to adjust drawing canvas size based on number of fence options
+    function adjustDrawingSize() {
+      // This function can be implemented to adjust canvas size based on content
     }
     
-    // Update drawing size when cards are added/removed
-   
-   // Call adjustDrawingSize when cards are added or removed
-   function addProductType() {
-     const grid = document.getElementById('product-type-grid');
-     const tpl = grid.querySelector('.product-type-wrapper');
-     const clone = tpl.cloneNode(true);
+    // Call adjustDrawingSize when cards are added or removed
+    function addProductType() {
+      const grid = document.getElementById('product-type-grid');
+      const tpl = grid.querySelector('.product-type-wrapper');
+      const clone = tpl.cloneNode(true);
 
-     clone.querySelectorAll('input[type=text], select').forEach(el => {
-       if (el.tagName === 'SELECT') { el.selectedIndex = 0; } 
-       else { el.value = ''; }
-     });
-     clone.querySelector('.card-total').textContent = formatCurrency(0);
-     clone.querySelector('.delete-btn').classList.add('show');
-     grid.insertBefore(clone, document.getElementById('plus-btn-wrapper'));
-     bindCardLogic(clone);
-     adjustDrawingSize(); // Adjust canvas size when adding
-     generateFenceImages();
-   }
+      clone.querySelectorAll('input[type=text], select').forEach(el => {
+        if (el.tagName === 'SELECT') { el.selectedIndex = 0; } 
+        else { el.value = ''; }
+      });
+      clone.querySelector('.card-total').textContent = formatCurrency(0);
+      clone.querySelector('.delete-btn').classList.add('show');
+      grid.insertBefore(clone, document.getElementById('plus-btn-wrapper'));
+      bindCardLogic(clone);
+      adjustDrawingSize(); // Adjust canvas size when adding
+      generateFenceImages();
+    }
   </script>
 </head>
 <body>
