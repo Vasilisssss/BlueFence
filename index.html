@@ -16,760 +16,371 @@
   <link rel="icon" type="image/jpeg" href="logo.jpg">
   <link rel="shortcut icon" href="logo.jpg">
   <title>Bluebird Fence - Professional Quote System</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primary-blue: #1e3c72;
-      --secondary-blue: #2a5298;
-      --accent-blue: #3b82f6;
-      --light-blue: #eef4ff;
-      --success-green: #10b981;
-      --warning-orange: #f59e0b;
-      --error-red: #ef4444;
-      --neutral-50: #f8fafc;
-      --neutral-100: #f1f5f9;
-      --neutral-200: #e2e8f0;
-      --neutral-300: #cbd5e1;
-      --neutral-400: #94a3b8;
-      --neutral-500: #64748b;
-      --neutral-600: #475569;
-      --neutral-700: #334155;
-      --neutral-800: #1e293b;
-      --neutral-900: #0f172a;
-      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-      --border-radius: 12px;
-      --border-radius-sm: 8px;
-      --spacing-unit: 8px;
-    }
-
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      background: linear-gradient(135deg, var(--neutral-50) 0%, var(--light-blue) 100%);
-      margin: 0;
-      padding: 24px;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      font-size: 14px;
-      line-height: 1.6;
-      color: var(--neutral-700);
-      min-height: 100vh;
+      font-family: 'Inter', Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+      color: #333;
+      line-height: 1.4;
     }
 
-    .page-header {
-      text-align: center;
-      margin-bottom: 32px;
+    .quote-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
     }
 
-    .page-title {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 800;
-      font-size: 2.5rem;
-      color: var(--primary-blue);
-      margin: 0 0 8px 0;
-      letter-spacing: -0.025em;
-    }
-
-    .page-subtitle {
-      font-size: 1.125rem;
-      color: var(--neutral-500);
-      margin: 0;
-      font-weight: 400;
-    }
-
-    .container,
-    .half-container,
-    .product-type-wrapper {
-      break-inside: avoid;
-      page-break-inside: avoid;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1000px;
-      margin: 0 auto 24px auto;
-      background: #fff;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow-lg);
-      padding: 40px;
-      border: 1px solid var(--neutral-200);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
-    }
-
-    .half-container {
-      width: 100%;
-      max-width: 1000px;
-      margin: 0 auto 24px auto;
-      background: #fff;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow-md);
-      padding: 32px 40px;
-      border: 1px solid var(--neutral-200);
-    }
-
-    .header-row {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      margin-bottom: 32px;
-    }
-
-    .header-row img {
-      height: 80px;
-      width: 80px;
-      object-fit: cover;
-      border-radius: var(--border-radius-sm);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .company-info {
-      flex: 1;
-    }
-
-    .company-name {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 2rem;
-      color: var(--primary-blue);
-      margin: 0 0 4px 0;
-      letter-spacing: -0.025em;
-    }
-
-    .company-tagline {
-      font-size: 0.875rem;
-      color: var(--neutral-500);
-      margin: 0;
-      font-weight: 500;
-    }
-
-    .quote-info {
-      text-align: right;
-      font-size: 0.875rem;
-      color: var(--neutral-600);
-    }
-
-    .quote-number {
-      font-weight: 600;
-      color: var(--primary-blue);
-    }
-
-    .quote-date {
-      margin-top: 4px;
-    }
-
-    h1, h2 {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      color: var(--primary-blue);
-      margin-top: 0;
-    }
-
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 8px;
-      letter-spacing: -0.025em;
-    }
-
-    h2 {
-      font-size: 1.25rem;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    h2::before {
-      content: '';
-      width: 4px;
-      height: 24px;
-      background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
-      border-radius: 2px;
-    }
-
-    .section-divider {
-      border: none;
-      border-top: 2px solid var(--neutral-200);
-      width: 100%;
-      margin: 24px 0;
-      background: linear-gradient(90deg, var(--primary-blue) 0%, var(--neutral-200) 20%, var(--neutral-200) 80%, var(--primary-blue) 100%);
-      height: 2px;
-    }
-
+    /* Header Section */
     .quote-header {
+      background: linear-gradient(135deg, #4a5568, #2d3748);
+      color: white;
+      padding: 20px 30px;
+      position: relative;
+    }
+
+    .header-top {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 24px;
-      flex-wrap: wrap;
-      margin-bottom: 32px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .business-name {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0;
     }
 
     .quote-title {
-      color: var(--primary-blue);
-      font-size: 1.875rem;
+      text-align: right;
+    }
+
+    .quote-title h1 {
+      font-size: 32px;
       font-weight: 700;
-      font-family: 'Montserrat', sans-serif;
       margin: 0;
-      letter-spacing: -0.025em;
+      letter-spacing: 2px;
     }
 
-    #grand-total-box {
-      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-      color: #fff;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 1.5rem;
-      padding: 16px 24px;
-      border-radius: var(--border-radius-sm);
-      min-width: 180px;
-      text-align: center;
-      box-shadow: var(--shadow-md);
-      position: relative;
-      overflow: hidden;
-    }
-
-    #grand-total-box::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s;
-    }
-
-    #grand-total-box:hover::before {
-      left: 100%;
-    }
-
-    .total-label {
-      font-size: 0.75rem;
-      font-weight: 500;
+    .quote-subtitle {
+      font-size: 12px;
+      margin-top: 5px;
       opacity: 0.9;
-      display: block;
-      margin-bottom: 4px;
+    }
+
+    .contact-info {
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      opacity: 0.9;
+    }
+
+    /* Invoice Details Section */
+    .invoice-details {
+      background: #e2e8f0;
+      padding: 15px 30px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    .detail-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .detail-label {
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      font-size: 10px;
+      letter-spacing: 0.5px;
     }
 
-    label {
-      font-family: 'Inter', sans-serif;
-      color: var(--neutral-700);
+    .detail-value {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* Address Section */
+    .address-section {
+      padding: 20px 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 200px;
+      gap: 30px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .address-block h3 {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      color: #2d3748;
+    }
+
+    .address-content {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #4a5568;
+    }
+
+    .total-due {
+      text-align: right;
+    }
+
+    .total-due h3 {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      color: #2d3748;
+    }
+
+    .total-amount {
+      font-size: 28px;
+      font-weight: 700;
+      color: #2d3748;
+    }
+
+    /* Items Table */
+    .items-section {
+      padding: 0 30px;
+    }
+
+    .items-header {
+      display: grid;
+      grid-template-columns: 3fr 1fr 1fr 1fr;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom: 2px solid #2d3748;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #2d3748;
+    }
+
+    .item-row {
+      display: grid;
+      grid-template-columns: 3fr 1fr 1fr 1fr;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 12px;
+      align-items: center;
+    }
+
+    .item-description {
+      color: #4a5568;
+    }
+
+    .item-quantity, .item-price, .item-amount {
+      text-align: right;
+      color: #2d3748;
       font-weight: 500;
-      margin-right: 8px;
-      font-size: 0.875rem;
-      display: inline-block;
-      min-width: 120px;
     }
 
-    .input-row {
+    /* Totals Section */
+    .totals-section {
+      padding: 20px 30px;
       display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--neutral-100);
+      justify-content: flex-end;
     }
 
-    .input-row:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
+    .totals-block {
+      width: 300px;
     }
 
-    input[type="text"], 
-    input[type="email"], 
-    input[type="tel"], 
-    input[type="number"], 
-    textarea {
-      font-size: 0.875rem;
-      padding: 12px 16px;
-      border-radius: var(--border-radius-sm);
-      border: 2px solid var(--neutral-200);
-      background: #fff;
-      min-width: 280px;
-      flex: 1;
-      transition: all 0.2s ease;
-      font-family: 'Inter', sans-serif;
-    }
-
-    input[type="text"]:focus, 
-    input[type="email"]:focus, 
-    input[type="tel"]:focus, 
-    input[type="number"]:focus, 
-    textarea:focus {
-      outline: none;
-      border-color: var(--accent-blue);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-      transform: translateY(-1px);
-    }
-
-    input::placeholder {
-      color: var(--neutral-400);
-      font-style: italic;
-    }
-
-    .required {
-      color: var(--error-red);
-      margin-left: 4px;
-    }
-
-    .product-type-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      align-items: center;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    .product-type-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-      max-width: 800px;
-    }
-
-    .product-type-container {
-      background: #fff;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow-md);
-      padding: 32px;
-      position: relative;
-      transition: all 0.3s ease;
-      border: 2px solid var(--neutral-200);
-      overflow: hidden;
-    }
-
-    .product-type-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--success-green), var(--accent-blue));
-    }
-
-    .product-type-container:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-xl);
-      border-color: var(--accent-blue);
-    }
-
-    .card-header {
+    .subtotal-row, .total-row {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 24px;
-      margin-bottom: 24px;
-    }
-
-    .card-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--primary-blue);
-      margin: 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .card-number {
-      background: var(--light-blue);
-      color: var(--primary-blue);
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 4px 8px;
-      border-radius: 12px;
-      min-width: 24px;
-      text-align: center;
-    }
-
-    .card-total {
-      background: linear-gradient(135deg, var(--light-blue), #fff);
-      color: var(--primary-blue);
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 1.125rem;
-      padding: 12px 20px;
-      border-radius: var(--border-radius-sm);
-      min-width: 120px;
-      text-align: center;
-      border: 2px solid var(--neutral-200);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .dropdown-container, 
-    .product-type-container .input-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
       padding: 8px 0;
+      font-size: 14px;
     }
 
-    .product-type-container select {
-      font-size: 0.875rem;
-      padding: 12px 16px;
-      border-radius: var(--border-radius-sm);
-      border: 2px solid var(--neutral-200);
-      background: #fff;
-      min-width: 200px;
-      flex: 1;
-      transition: all 0.2s ease;
-      font-family: 'Inter', sans-serif;
+    .subtotal-row {
+      border-bottom: 1px solid #e2e8f0;
+      color: #4a5568;
     }
 
-    .product-type-container select:focus {
-      outline: none;
-      border-color: var(--accent-blue);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    .total-row {
+      border-top: 2px solid #2d3748;
+      font-weight: 700;
+      font-size: 16px;
+      color: #2d3748;
+      margin-top: 10px;
+      padding-top: 15px;
     }
 
-    .resize-controls {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
+    /* Signature Section */
+    .signature-section {
+      padding: 30px;
+      text-align: right;
+      border-top: 1px solid #e2e8f0;
     }
 
-    .resize-controls button, 
-    .plus-btn {
-      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      font-size: 0.875rem;
-      font-weight: 500;
-      transition: all 0.2s ease;
-      box-shadow: var(--shadow-sm);
-      font-family: 'Inter', sans-serif;
+    .signature-label {
+      font-size: 11px;
+      color: #4a5568;
+      margin-bottom: 40px;
     }
 
-    .resize-controls button {
-      border-radius: var(--border-radius-sm);
-      padding: 8px 16px;
-      min-width: 40px;
+    .signature-line {
+      width: 300px;
+      height: 60px;
+      margin-left: auto;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 60"><path d="M20 40 Q50 20 80 35 T140 30 Q170 25 200 35 T260 30" stroke="%23333" stroke-width="2" fill="none"/></svg>');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
     }
 
-    .resize-controls button:hover, 
-    .plus-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-md);
+    /* Form Controls (Hidden in Print) */
+    .form-controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000;
+      max-width: 300px;
     }
 
-    .resize-controls button:active, 
-    .plus-btn:active {
-      transform: translateY(0);
+    .form-controls h3 {
+      margin-bottom: 15px;
+      color: #2d3748;
+      font-size: 14px;
     }
 
-    #plus-btn-wrapper { 
-      text-align: center;
-      margin-top: 16px;
+    .form-group {
+      margin-bottom: 15px;
     }
 
-    .plus-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      width: 56px;
-      height: 56px;
-      font-size: 1.5rem;
-      font-weight: 300;
-      position: relative;
-      overflow: hidden;
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #4a5568;
     }
 
-    .plus-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
+    .form-group input, .form-group textarea {
       width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transition: left 0.3s;
+      padding: 8px;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      font-size: 12px;
     }
 
-    .plus-btn:hover::before {
-      left: 100%;
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: #4299e1;
     }
 
-    .delete-btn {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: var(--error-red);
-      color: #fff;
+    .btn {
+      background: #4299e1;
+      color: white;
       border: none;
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      font-size: 0.875rem;
-      line-height: 1;
-      text-align: center;
+      padding: 10px 20px;
+      border-radius: 4px;
       cursor: pointer;
-      display: none;
-      transition: all 0.2s ease;
-      box-shadow: var(--shadow-sm);
+      font-size: 12px;
+      font-weight: 600;
+      margin-right: 10px;
+      margin-bottom: 10px;
     }
 
-    .delete-btn.show { 
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+    .btn:hover {
+      background: #3182ce;
     }
 
-    .delete-btn:hover { 
-      background: #dc2626;
-      transform: scale(1.1);
-      box-shadow: var(--shadow-md);
+    .btn-success {
+      background: #48bb78;
     }
 
-    .fence-image-wrapper {
-      text-align: center;
-      margin-top: 24px;
-      padding: 16px;
-      background: var(--neutral-50);
-      border-radius: var(--border-radius-sm);
-      border: 2px dashed var(--neutral-300);
+    .btn-success:hover {
+      background: #38a169;
     }
 
-    .fence-preview-image {
-      max-width: 100%;
-      max-height: 200px;
-      border-radius: var(--border-radius-sm);
-      box-shadow: var(--shadow-md);
-      transition: transform 0.2s ease;
+    /* Fence Items Section */
+    .fence-items {
+      margin: 20px 0;
     }
 
-    .fence-preview-image:hover {
-      transform: scale(1.02);
+    .fence-item {
+      background: #f7fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 15px;
+      margin-bottom: 15px;
     }
 
-    .status-indicator {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      margin-right: 8px;
+    .fence-item h4 {
+      color: #2d3748;
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: 600;
     }
 
-    .status-complete {
-      background: var(--success-green);
+    .fence-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      font-size: 11px;
     }
 
-    .status-incomplete {
-      background: var(--warning-orange);
+    .fence-detail {
+      display: flex;
+      flex-direction: column;
     }
 
-    .footer-info {
-      text-align: center;
-      margin-top: 48px;
-      padding: 24px;
-      background: var(--neutral-50);
-      border-radius: var(--border-radius);
-      border: 1px solid var(--neutral-200);
+    .fence-detail label {
+      font-weight: 600;
+      color: #4a5568;
+      margin-bottom: 2px;
     }
 
-    .footer-info p {
-      margin: 0;
-      color: var(--neutral-500);
-      font-size: 0.875rem;
+    .fence-detail select, .fence-detail input {
+      padding: 4px 6px;
+      border: 1px solid #e2e8f0;
+      border-radius: 3px;
+      font-size: 11px;
     }
 
-    .footer-info .company-contact {
-      font-weight: 500;
-      color: var(--primary-blue);
-      margin-bottom: 8px;
+    .add-fence-btn {
+      background: #48bb78;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      margin-top: 10px;
     }
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      body {
-        padding: 16px;
-      }
-
-      .page-title {
-        font-size: 2rem;
-      }
-
-      .container, .half-container {
-        padding: 24px 20px;
-        margin-bottom: 16px;
-      }
-
-      .header-row {
-        flex-direction: column;
-        text-align: center;
-        gap: 16px;
-      }
-
-      .header-row img {
-        height: 60px;
-        width: 60px;
-      }
-
-      .company-name {
-        font-size: 1.5rem;
-        text-align: center;
-      }
-
-      .quote-header {
-        flex-direction: column;
-        align-items: center;
-        gap: 16px;
-      }
-
-      .quote-title {
-        font-size: 1.5rem;
-        text-align: center;
-      }
-
-      #grand-total-box {
-        font-size: 1.25rem;
-        padding: 12px 20px;
-        min-width: 150px;
-      }
-
-      .input-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-
-      label {
-        min-width: auto;
-      }
-
-      input[type="text"], 
-      input[type="email"], 
-      input[type="tel"], 
-      input[type="number"], 
-      textarea {
-        min-width: 100%;
-        width: 100%;
-      }
-
-      .product-type-container {
-        padding: 20px;
-      }
-
-      .card-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-      }
-
-      .card-total {
-        align-self: flex-end;
-        font-size: 1rem;
-        padding: 8px 16px;
-      }
-
-      .dropdown-container, 
-      .product-type-container .input-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-
-      .product-type-container select {
-        min-width: 100%;
-        width: 100%;
-      }
-
-      .resize-controls {
-        justify-content: center;
-        margin-top: 16px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .page-title {
-        font-size: 1.75rem;
-      }
-
-      .container, .half-container {
-        padding: 20px 16px;
-        border-radius: var(--border-radius-sm);
-      }
-
-      .company-name {
-        font-size: 1.25rem;
-      }
-
-      .quote-title {
-        font-size: 1.25rem;
-      }
-
-      #grand-total-box {
-        font-size: 1.125rem;
-        padding: 10px 16px;
-        min-width: 120px;
-      }
-
-      .product-type-container {
-        padding: 16px;
-        border-radius: var(--border-radius-sm);
-      }
-
-      .card-total {
-        font-size: 0.875rem;
-        padding: 6px 12px;
-        min-width: 100px;
-      }
-
-      .plus-btn {
-        width: 48px;
-        height: 48px;
-        font-size: 1.25rem;
-      }
-
-      .fence-preview-image {
-        max-height: 150px;
-      }
-    }
-
-    @media (min-width: 1200px) {
-      .container, .half-container {
-        max-width: 1200px;
-        padding: 48px 56px;
-      }
-
-      .page-title {
-        font-size: 3rem;
-      }
-
-      .company-name {
-        font-size: 2.25rem;
-      }
-
-      .quote-title {
-        font-size: 2.125rem;
-      }
-
-      #grand-total-box {
-        font-size: 1.75rem;
-        padding: 20px 32px;
-      }
+    .remove-fence-btn {
+      background: #f56565;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 10px;
+      float: right;
     }
 
     /* Print Styles */
@@ -778,115 +389,56 @@
         background: white;
         padding: 0;
       }
-
-      .container, .half-container, .product-type-container {
-        box-shadow: none;
-        border: 1px solid var(--neutral-300);
-        break-inside: avoid;
-      }
-
-      .resize-controls, .delete-btn, .plus-btn {
+      
+      .form-controls {
         display: none !important;
       }
-
-      .fence-image-wrapper {
-        background: white;
-        border: 1px solid var(--neutral-300);
+      
+      .quote-container {
+        box-shadow: none;
+        max-width: none;
+      }
+      
+      .add-fence-btn, .remove-fence-btn {
+        display: none !important;
+      }
+      
+      .fence-item {
+        break-inside: avoid;
       }
     }
 
-    /* Animation for smooth interactions */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
+    /* Responsive */
+    @media (max-width: 768px) {
+      .form-controls {
+        position: relative;
+        top: auto;
+        right: auto;
+        margin-bottom: 20px;
+        max-width: none;
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      
+      .address-section {
+        grid-template-columns: 1fr;
+        gap: 20px;
       }
-    }
-
-    .product-type-wrapper {
-      animation: fadeInUp 0.3s ease-out;
-    }
-
-    /* Loading states */
-    .loading {
-      opacity: 0.6;
-      pointer-events: none;
-    }
-
-    .loading::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 20px;
-      height: 20px;
-      margin: -10px 0 0 -10px;
-      border: 2px solid var(--neutral-300);
-      border-top: 2px solid var(--accent-blue);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      
+      .items-header, .item-row {
+        grid-template-columns: 2fr 1fr 1fr;
+        font-size: 10px;
+      }
+      
+      .item-quantity {
+        display: none;
+      }
+      
+      .items-header .quantity-header {
+        display: none;
+      }
     }
   </style>
   <script>
-    const MIN_W = 300, MAX_W = 900, STEP = 50;
-
-    function formatCurrency(value) {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    }
-
-    function updateGrandTotal() {
-      const allTotals = document.querySelectorAll('.card-total');
-      let grandTotal = 0;
-      allTotals.forEach(box => {
-        const value = parseFloat(box.textContent.replace(/[^\d.-]/g, ''));
-        if (!isNaN(value)) {
-          grandTotal += value;
-        }
-      });
-      const grandTotalBox = document.getElementById('grand-total-box');
-      if(grandTotalBox) {
-        grandTotalBox.innerHTML = `<span class="total-label">Total Quote</span>${formatCurrency(grandTotal)}`;
-      }
-    }
-
-    function addProductType() {
-      const grid = document.getElementById('product-type-grid');
-      const tpl = grid.querySelector('.product-type-wrapper');
-      const clone = tpl.cloneNode(true);
-
-      // Update card number
-      const cardNumber = grid.querySelectorAll('.product-type-wrapper').length + 1;
-      clone.querySelector('.card-number').textContent = cardNumber;
-
-      clone.querySelectorAll('input[type=text], input[type=number], select').forEach(el => {
-        if (el.tagName === 'SELECT') { el.selectedIndex = 0; } 
-        else { el.value = ''; }
-      });
-      clone.querySelector('.card-total').textContent = formatCurrency(0);
-      clone.querySelector('.delete-btn').classList.add('show');
-      grid.insertBefore(clone, document.getElementById('plus-btn-wrapper'));
-      bindCardLogic(clone);
-      
-      // Add smooth animation
-      clone.style.opacity = '0';
-      clone.style.transform = 'translateY(20px)';
-      setTimeout(() => {
-        clone.style.transition = 'all 0.3s ease';
-        clone.style.opacity = '1';
-        clone.style.transform = 'translateY(0)';
-      }, 10);
-    }
-
-    // Fence style options by material
+    // Fence style options by material (keeping original logic)
     const FENCE_STYLE_OPTIONS = {
       wood: [
         { value: 'lattice', label: 'Lattice' },
@@ -913,7 +465,7 @@
       ]
     };
 
-    // Enhanced pricing configuration
+    // Enhanced pricing configuration (keeping original logic)
     const PRICING = {
       materials: {
         wood: 44,
@@ -948,9 +500,13 @@
       }
     };
 
+    function formatCurrency(value) {
+        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    }
+
     function updateFenceStyleOptions(materialSelect, styleSelect) {
       const material = materialSelect.value;
-      styleSelect.innerHTML = '<option value="0">Please Select Style</option>';
+      styleSelect.innerHTML = '<option value="">Select Style</option>';
       if (FENCE_STYLE_OPTIONS[material]) {
         FENCE_STYLE_OPTIONS[material].forEach(opt => {
           const option = document.createElement('option');
@@ -961,26 +517,21 @@
       }
     }
 
-    function getFenceImageSrc(material, style) {
-      if (!material || !style || material === '0' || style === '0') return '';
-      return `images/${material}-${style}.png`;
-    }
-
-    function calculateCardPrice(material, height, style, linearFootage = 0, singleGates = 0, doubleGates = 0) {
+    function calculateFencePrice(material, height, style, linearFootage = 0, singleGates = 0, doubleGates = 0) {
       let total = 0;
       
       // Base material cost per linear foot
-      if (material && material !== '0' && PRICING.materials[material]) {
+      if (material && PRICING.materials[material]) {
         total += PRICING.materials[material] * (linearFootage || 1);
       }
       
       // Height multiplier
-      if (height && height !== '0' && PRICING.heights[height]) {
+      if (height && PRICING.heights[height]) {
         total += PRICING.heights[height] * (linearFootage || 1);
       }
       
       // Style cost per linear foot
-      if (material && style && material !== '0' && style !== '0') {
+      if (material && style) {
         const styleKey = `${material}-${style}`;
         if (PRICING.styles[styleKey]) {
           total += PRICING.styles[styleKey] * (linearFootage || 1);
@@ -994,365 +545,345 @@
       return total;
     }
 
-    function bindCardLogic(wrapper) {
-        const selects = wrapper.querySelectorAll('select');
-        const inputs = wrapper.querySelectorAll('input[type="text"], input[type="number"]');
-        const cardTotalEl = wrapper.querySelector('.card-total');
-        const deleteBtn = wrapper.querySelector('.delete-btn');
-        const resizePlusBtn = wrapper.querySelector('.resize-plus');
-        const resizeMinusBtn = wrapper.querySelector('.resize-minus');
-        const materialSelect = wrapper.querySelector('.fence-material-select');
-        const styleSelect = wrapper.querySelector('.fence-style-select');
-        const heightSelect = wrapper.querySelector('select:not(.fence-material-select):not(.fence-style-select)');
-        const imageEl = wrapper.querySelector('.fence-preview-image');
-        const linearFootageInput = wrapper.querySelector('input[placeholder*="Linear"]');
-        const singleGatesInput = wrapper.querySelector('input[placeholder*="Single"]');
-        const doubleGatesInput = wrapper.querySelector('input[placeholder*="Double"]');
-
-        function updateCardPrice() {
-            const material = materialSelect ? materialSelect.value : '0';
-            const height = heightSelect ? heightSelect.value : '0';
-            const style = styleSelect ? styleSelect.value : '0';
-            const linearFootage = parseFloat(linearFootageInput?.value) || 0;
-            const singleGates = parseInt(singleGatesInput?.value) || 0;
-            const doubleGates = parseInt(doubleGatesInput?.value) || 0;
-            
-            const currentPrice = calculateCardPrice(material, height, style, linearFootage, singleGates, doubleGates);
-            cardTotalEl.textContent = formatCurrency(currentPrice);
-            updateGrandTotal();
-        }
-
-        // Bind all inputs and selects
-        [...selects, ...inputs].forEach(element => {
-            element.addEventListener('change', updateCardPrice);
-            element.addEventListener('input', updateCardPrice);
-        });
-
-        // Material/Style filtering
-        if (materialSelect && styleSelect) {
-          materialSelect.addEventListener('change', function() {
-            updateFenceStyleOptions(materialSelect, styleSelect);
-            styleSelect.value = '0';
-            updateCardPrice();
-            updateFenceImage();
-          });
-          styleSelect.addEventListener('change', function() {
-            updateCardPrice();
-            updateFenceImage();
-          });
-        }
-
-        function updateFenceImage() {
-          if (!imageEl) return;
-          const mat = materialSelect ? materialSelect.value : '';
-          const sty = styleSelect ? styleSelect.value : '';
-          const src = getFenceImageSrc(mat, sty);
-          if (src && mat !== '0' && sty !== '0') {
-            imageEl.src = src;
-            imageEl.style.display = '';
-            imageEl.parentElement.style.display = '';
-          } else {
-            imageEl.src = '';
-            imageEl.style.display = 'none';
-            imageEl.parentElement.style.display = 'none';
+    function updateItemsTable() {
+      const itemsContainer = document.getElementById('items-container');
+      const fenceItems = document.querySelectorAll('.fence-item');
+      
+      // Clear existing items
+      itemsContainer.innerHTML = '';
+      
+      let subtotal = 0;
+      
+      fenceItems.forEach((item, index) => {
+        const material = item.querySelector('.material-select').value;
+        const height = item.querySelector('.height-select').value;
+        const style = item.querySelector('.style-select').value;
+        const linearFootage = parseFloat(item.querySelector('.linear-footage').value) || 0;
+        const singleGates = parseInt(item.querySelector('.single-gates').value) || 0;
+        const doubleGates = parseInt(item.querySelector('.double-gates').value) || 0;
+        
+        if (material && height && style && linearFootage > 0) {
+          const price = calculateFencePrice(material, height, style, linearFootage, singleGates, doubleGates);
+          const description = `${material.charAt(0).toUpperCase() + material.slice(1)} ${height.replace('H', 'ft')} ${style.replace(/-/g, ' ')} Fence`;
+          
+          const itemRow = document.createElement('div');
+          itemRow.className = 'item-row';
+          itemRow.innerHTML = `
+            <div class="item-description">${description}</div>
+            <div class="item-quantity">${linearFootage} ft</div>
+            <div class="item-price">${formatCurrency(price / linearFootage)}</div>
+            <div class="item-amount">${formatCurrency(price)}</div>
+          `;
+          itemsContainer.appendChild(itemRow);
+          
+          subtotal += price;
+          
+          // Add gates if any
+          if (singleGates > 0) {
+            const gateRow = document.createElement('div');
+            gateRow.className = 'item-row';
+            gateRow.innerHTML = `
+              <div class="item-description">Single Gates</div>
+              <div class="item-quantity">${singleGates}</div>
+              <div class="item-price">$150.00</div>
+              <div class="item-amount">${formatCurrency(singleGates * 150)}</div>
+            `;
+            itemsContainer.appendChild(gateRow);
+            subtotal += singleGates * 150;
+          }
+          
+          if (doubleGates > 0) {
+            const gateRow = document.createElement('div');
+            gateRow.className = 'item-row';
+            gateRow.innerHTML = `
+              <div class="item-description">Double Gates</div>
+              <div class="item-quantity">${doubleGates}</div>
+              <div class="item-price">$250.00</div>
+              <div class="item-amount">${formatCurrency(doubleGates * 250)}</div>
+            `;
+            itemsContainer.appendChild(gateRow);
+            subtotal += doubleGates * 250;
           }
         }
-
-        // Button functionality
-        if (deleteBtn) {
-            deleteBtn.addEventListener('click', () => {
-                const grid = document.getElementById('product-type-grid');
-                if (grid.querySelectorAll('.product-type-wrapper').length > 1) {
-                    wrapper.style.transition = 'all 0.3s ease';
-                    wrapper.style.opacity = '0';
-                    wrapper.style.transform = 'translateY(-20px)';
-                    setTimeout(() => {
-                        wrapper.remove();
-                        updateGrandTotal();
-                        // Update card numbers
-                        grid.querySelectorAll('.card-number').forEach((el, index) => {
-                            el.textContent = index + 1;
-                        });
-                    }, 300);
-                }
-            });
-        }
-
-        if (resizePlusBtn && resizeMinusBtn) {
-            const container = wrapper.querySelector('.product-type-container');
-            resizePlusBtn.addEventListener('click', () => {
-                let w = container.offsetWidth + STEP;
-                container.style.width = Math.max(MIN_W, Math.min(w, MAX_W)) + 'px';
-            });
-            resizeMinusBtn.addEventListener('click', () => {
-                let w = container.offsetWidth - STEP;
-                container.style.width = Math.max(MIN_W, Math.min(w, MAX_W)) + 'px';
-            });
-        }
-
-        updateCardPrice();
-        updateFenceImage();
+      });
+      
+      // Update totals
+      document.getElementById('subtotal-amount').textContent = formatCurrency(subtotal);
+      document.getElementById('total-amount').textContent = formatCurrency(subtotal);
+      document.getElementById('total-due-amount').textContent = formatCurrency(subtotal);
     }
 
-    // Generate quote number and date
-    function generateQuoteInfo() {
-        const now = new Date();
-        const quoteNumber = 'QT-' + now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0') + '-' + String(Math.floor(Math.random() * 1000)).padStart(3, '0');
-        const quoteDate = now.toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        });
-        
-        document.getElementById('quote-number').textContent = quoteNumber;
-        document.getElementById('quote-date').textContent = quoteDate;
+    function addFenceItem() {
+      const container = document.getElementById('fence-items-container');
+      const itemCount = container.querySelectorAll('.fence-item').length + 1;
+      
+      const fenceItem = document.createElement('div');
+      fenceItem.className = 'fence-item';
+      fenceItem.innerHTML = `
+        <h4>Fence Section ${itemCount} <button type="button" class="remove-fence-btn" onclick="removeFenceItem(this)">Remove</button></h4>
+        <div class="fence-details">
+          <div class="fence-detail">
+            <label>Material</label>
+            <select class="material-select" onchange="handleMaterialChange(this)">
+              <option value="">Select Material</option>
+              <option value="wood">Wood</option>
+              <option value="vinyl">Vinyl</option>
+            </select>
+          </div>
+          <div class="fence-detail">
+            <label>Height</label>
+            <select class="height-select" onchange="updateItemsTable()">
+              <option value="">Select Height</option>
+              <option value="6H">6 Feet</option>
+              <option value="4H">4 Feet</option>
+            </select>
+          </div>
+          <div class="fence-detail">
+            <label>Style</label>
+            <select class="style-select" onchange="updateItemsTable()">
+              <option value="">Select Style</option>
+            </select>
+          </div>
+          <div class="fence-detail">
+            <label>Linear Footage</label>
+            <input type="number" class="linear-footage" min="1" step="0.1" onchange="updateItemsTable()">
+          </div>
+          <div class="fence-detail">
+            <label>Single Gates</label>
+            <input type="number" class="single-gates" min="0" step="1" onchange="updateItemsTable()">
+          </div>
+          <div class="fence-detail">
+            <label>Double Gates</label>
+            <input type="number" class="double-gates" min="0" step="1" onchange="updateItemsTable()">
+          </div>
+        </div>
+      `;
+      
+      container.appendChild(fenceItem);
     }
 
-    // Form validation
-    function validateForm() {
-        const requiredFields = document.querySelectorAll('input[required]');
-        let isValid = true;
-        
-        requiredFields.forEach(field => {
-            if (!field.value.trim()) {
-                field.style.borderColor = 'var(--error-red)';
-                isValid = false;
-            } else {
-                field.style.borderColor = 'var(--neutral-200)';
-            }
-        });
-        
-        return isValid;
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        generateQuoteInfo();
-        document.querySelectorAll('.product-type-wrapper').forEach(bindCardLogic);
-        document.getElementById('add-card-btn').addEventListener('click', addProductType);
-        
-        // Initialize grand total
-        updateGrandTotal();
-        
-        // Add smooth scrolling for new cards
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.type === 'childList') {
-                    mutation.addedNodes.forEach((node) => {
-                        if (node.classList && node.classList.contains('product-type-wrapper')) {
-                            node.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }
-                    });
-                }
-            });
-        });
-        
-        observer.observe(document.getElementById('product-type-grid'), {
-            childList: true
-        });
-    });
-
-    // PWA Service Worker Registration
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-          .then((registration) => {
-            console.log('SW registered: ', registration);
-          })
-          .catch((registrationError) => {
-            console.log('SW registration failed: ', registrationError);
-          });
+    function removeFenceItem(button) {
+      button.closest('.fence-item').remove();
+      updateItemsTable();
+      
+      // Renumber remaining items
+      const items = document.querySelectorAll('.fence-item h4');
+      items.forEach((item, index) => {
+        item.innerHTML = `Fence Section ${index + 1} <button type="button" class="remove-fence-btn" onclick="removeFenceItem(this)">Remove</button>`;
       });
     }
 
-    // PWA Install Prompt
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
+    function handleMaterialChange(select) {
+      const fenceItem = select.closest('.fence-item');
+      const styleSelect = fenceItem.querySelector('.style-select');
+      updateFenceStyleOptions(select, styleSelect);
+      updateItemsTable();
+    }
+
+    function updateBusinessInfo() {
+      const businessName = document.getElementById('business-name-input').value || 'Your Business Name';
+      const email = document.getElementById('email-input').value || 'email@yourbusinessname.com.au';
+      const phone = document.getElementById('phone-input').value || '+61200000000';
+      const website = document.getElementById('website-input').value || 'www.yourbusinessname.com.au';
+      
+      document.getElementById('business-name').textContent = businessName;
+      document.getElementById('contact-email').textContent = email;
+      document.getElementById('contact-phone').textContent = phone;
+      document.getElementById('contact-website').textContent = website;
+    }
+
+    function updateClientInfo() {
+      const clientName = document.getElementById('client-name-input').value || 'Your Client';
+      const clientAddress = document.getElementById('client-address-input').value || '100 Harris St\nSydney NSW NSW 2009\nAustralia';
+      
+      document.getElementById('client-name').textContent = clientName;
+      document.getElementById('client-address').innerHTML = clientAddress.replace(/\n/g, '<br>');
+    }
+
+    function generateQuoteNumber() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const random = Math.floor(Math.random() * 1000);
+      
+      return `${year}${month}${day}${random}`;
+    }
+
+    function updateDates() {
+      const now = new Date();
+      const issueDate = now.toLocaleDateString('en-AU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const dueDate = new Date(now.getTime() + (30 * 24 * 60 * 60 * 1000)).toLocaleDateString('en-AU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      
+      document.getElementById('issue-date').textContent = issueDate;
+      document.getElementById('due-date').textContent = dueDate;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Generate quote number
+      const quoteNumber = generateQuoteNumber();
+      document.getElementById('quote-number').textContent = quoteNumber;
+      document.getElementById('reference-number').textContent = quoteNumber;
+      
+      // Update dates
+      updateDates();
+      
+      // Add initial fence item
+      addFenceItem();
+      
+      // Bind form updates
+      document.getElementById('business-name-input').addEventListener('input', updateBusinessInfo);
+      document.getElementById('email-input').addEventListener('input', updateBusinessInfo);
+      document.getElementById('phone-input').addEventListener('input', updateBusinessInfo);
+      document.getElementById('website-input').addEventListener('input', updateBusinessInfo);
+      document.getElementById('client-name-input').addEventListener('input', updateClientInfo);
+      document.getElementById('client-address-input').addEventListener('input', updateClientInfo);
     });
-
-    // Print functionality
-    function printQuote() {
-        window.print();
-    }
-
-    // Export functionality (basic)
-    function exportQuote() {
-        const quoteData = {
-            quoteNumber: document.getElementById('quote-number').textContent,
-            quoteDate: document.getElementById('quote-date').textContent,
-            customer: {
-                name: document.getElementById('Name').value,
-                email: document.getElementById('Email').value,
-                phone: document.getElementById('Phone').value,
-                billingAddress: document.getElementById('Billing-Address').value
-            },
-            project: {
-                jobAddress: document.getElementById('job-address').value,
-                siteContact: document.getElementById('site-contact').value,
-                estimateAttendance: document.getElementById('estimate-attendance').value
-            },
-            total: document.getElementById('grand-total-box').textContent
-        };
-        
-        console.log('Quote Data:', quoteData);
-        // Here you could send this data to a server or download as JSON
-    }
   </script>
 </head>
 <body>
-  <div class="page-header">
-    <h1 class="page-title">Professional Quote System</h1>
-    <p class="page-subtitle">Create detailed fence installation quotes with ease</p>
-  </div>
-
-  <div class="container">
-    <div class="header-row">
-      <img src="logo.jpg" alt="Bluebird Fence Logo">
-      <div class="company-info">
-        <h1 class="company-name">Bluebird Fence</h1>
-        <p class="company-tagline">Professional Fence Installation & Design</p>
-      </div>
-      <div class="quote-info">
-        <div class="quote-number">Quote #: <span id="quote-number">QT-2024-001</span></div>
-        <div class="quote-date">Date: <span id="quote-date">January 15, 2024</span></div>
-      </div>
-    </div>
-    <hr class="section-divider">
-    <div class="quote-header">
-      <h1 class="quote-title">Client Quote Form</h1>
-      <div id="grand-total-box">
-        <span class="total-label">Total Quote</span>
-        $0.00
-      </div>
-    </div>
-  </div>
-
-  <div class="half-container">
-    <h2>Customer Information</h2>
-    <hr class="section-divider">
-    <div class="input-row">
-      <label>Full Name <span class="required">*</span></label>
-      <input type="text" id="Name" placeholder="Enter customer's full name" required>
-    </div>
-    <div class="input-row">
-      <label>Billing Address <span class="required">*</span></label>
-      <input type="text" id="Billing-Address" placeholder="Enter complete billing address" required>
-    </div>
-    <div class="input-row">
-      <label>Email Address <span class="required">*</span></label>
-      <input type="email" id="Email" placeholder="customer@email.com" required>
-    </div>
-    <div class="input-row">
-      <label>Phone Number <span class="required">*</span></label>
-      <input type="tel" id="Phone" placeholder="(555) 123-4567" required>
-    </div>
-  </div>
-
-  <div class="half-container">
-    <h2>Project & Site Details</h2>
-    <hr class="section-divider">
-    <div class="input-row">
-      <label>Job Address <span class="required">*</span></label>
-      <input type="text" id="job-address" placeholder="Enter project installation address" required>
-    </div>
-    <div class="input-row">
-      <label>Site Contact</label>
-      <input type="text" id="site-contact" placeholder="On-site contact name & phone number">
-    </div>
-    <div class="input-row">
-      <label>Estimate Meeting</label>
-      <input type="text" id="estimate-attendance" placeholder="Preferred date/time for site visit">
-    </div>
-  </div>
-
-  <div class="product-type-grid" id="product-type-grid">
-    <div class="product-type-wrapper">
-      <div class="product-type-container">
-        <button class="delete-btn">✕</button>
-        <div class="card-header">
-          <h2 class="card-title">
-            <span class="card-number">1</span>
-            Fence Section
-          </h2>
-          <div class="card-total">$0.00</div>
-        </div>
-        <hr class="section-divider">
-        
-        <div class="dropdown-container">
-          <label>Fence Material <span class="required">*</span></label>
-          <select class="fence-material-select" required>
-            <option value="0">Please Select Material</option>
-            <option value="wood">Wood Fencing</option>
-            <option value="vinyl">Vinyl Fencing</option>
-          </select>
-        </div>
-        
-        <div class="dropdown-container">
-          <label>Fence Height <span class="required">*</span></label>
-          <select required>
-            <option value="0">Please Select Height</option>
-            <option value="6H">6 Feet High</option>
-            <option value="4H">4 Feet High</option>
-          </select>
-        </div>
-        
-        <div class="dropdown-container">
-          <label>Fence Style <span class="required">*</span></label>
-          <select class="fence-style-select" required>
-            <option value="0">Please Select Style</option>
-          </select>
-        </div>
-        
-        <div class="input-row">
-          <label>Linear Footage <span class="required">*</span></label>
-          <input type="number" placeholder="Enter total linear feet" min="1" step="0.1" required>
-        </div>
-        
-        <div class="input-row">
-          <label>Single Gates</label>
-          <input type="number" placeholder="Number of single gates" min="0" step="1">
-        </div>
-        
-        <div class="input-row">
-          <label>Double Gates</label>
-          <input type="number" placeholder="Number of double gates" min="0" step="1">
-        </div>
-        
-        <div class="input-row">
-          <label>Gate Style</label>
-          <input type="text" placeholder="Describe gate style/design">
-        </div>
-        
-        <div class="input-row">
-          <label>Gate Dimensions</label>
-          <input type="text" placeholder="Gate width x height (e.g., 4' x 6')">
-        </div>
-        
-        <div class="input-row">
-          <label>Installation Days</label>
-          <input type="number" placeholder="Estimated installation time" min="1" step="0.5">
-        </div>
-        
-        <div class="fence-image-wrapper" style="display: none;">
-          <img class="fence-preview-image" src="" alt="Fence Style Preview">
-        </div>
-      </div>
-      <div class="resize-controls">
-        <button class="resize-plus" title="Expand card">Expand</button>
-        <button class="resize-minus" title="Shrink card">Shrink</button>
-      </div>
+  <!-- Form Controls (Hidden in Print) -->
+  <div class="form-controls">
+    <h3>Quote Settings</h3>
+    
+    <div class="form-group">
+      <label>Business Name</label>
+      <input type="text" id="business-name-input" placeholder="Your Business Name">
     </div>
     
-    <div id="plus-btn-wrapper">
-      <button class="plus-btn" id="add-card-btn" title="Add another fence section">+</button>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="email-input" placeholder="email@business.com.au">
     </div>
+    
+    <div class="form-group">
+      <label>Phone</label>
+      <input type="tel" id="phone-input" placeholder="+61200000000">
+    </div>
+    
+    <div class="form-group">
+      <label>Website</label>
+      <input type="text" id="website-input" placeholder="www.business.com.au">
+    </div>
+    
+    <div class="form-group">
+      <label>Client Name</label>
+      <input type="text" id="client-name-input" placeholder="Client Name">
+    </div>
+    
+    <div class="form-group">
+      <label>Client Address</label>
+      <textarea id="client-address-input" rows="3" placeholder="100 Harris St&#10;Sydney NSW 2009&#10;Australia"></textarea>
+    </div>
+    
+    <div class="fence-items">
+      <h4>Fence Items</h4>
+      <div id="fence-items-container"></div>
+      <button type="button" class="add-fence-btn" onclick="addFenceItem()">Add Fence Section</button>
+    </div>
+    
+    <button type="button" class="btn btn-success" onclick="window.print()">Print Quote</button>
   </div>
 
-  <div class="footer-info">
-    <p class="company-contact">Bluebird Fence - Professional Installation Services</p>
-    <p>This quote is valid for 30 days from the date issued. All prices include materials and professional installation.</p>
-    <p>For questions about this quote, please contact us at your convenience.</p>
+  <!-- Quote Document -->
+  <div class="quote-container">
+    <!-- Header -->
+    <div class="quote-header">
+      <div class="header-top">
+        <div class="business-info">
+          <h1 class="business-name" id="business-name">Your Business Name</h1>
+        </div>
+        <div class="quote-title">
+          <h1>QUOTE</h1>
+          <div class="quote-subtitle">Tax Invoice</div>
+          <div class="contact-info">
+            <div id="contact-phone">+61200000000</div>
+            <div id="contact-email">email@yourbusinessname.com.au</div>
+            <div id="contact-website">www.yourbusinessname.com.au</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Invoice Details -->
+    <div class="invoice-details">
+      <div class="detail-group">
+        <div class="detail-label">Invoice No.</div>
+        <div class="detail-value" id="quote-number">202445</div>
+        <div class="detail-label">Reference</div>
+        <div class="detail-value" id="reference-number">202445</div>
+      </div>
+      <div class="detail-group">
+        <div class="detail-label">Issue Date</div>
+        <div class="detail-value" id="issue-date">19/7/2022</div>
+      </div>
+      <div class="detail-group">
+        <div class="detail-label">Due Date</div>
+        <div class="detail-value" id="due-date">2/8/2022</div>
+      </div>
+    </div>
+
+    <!-- Address Section -->
+    <div class="address-section">
+      <div class="address-block">
+        <h3>From</h3>
+        <div class="address-content">
+          <div id="business-name-from">Your Business Name</div>
+          <div>5 Martin Pl</div>
+          <div>Sydney NSW 2000</div>
+          <div>Australia</div>
+        </div>
+      </div>
+      <div class="address-block">
+        <h3>To</h3>
+        <div class="address-content">
+          <div id="client-name">Your Client</div>
+          <div id="client-address">100 Harris St<br>Sydney NSW NSW 2009<br>Australia</div>
+        </div>
+      </div>
+      <div class="total-due">
+        <h3>Total due</h3>
+        <div class="total-amount" id="total-due-amount">$30.00</div>
+      </div>
+    </div>
+
+    <!-- Items Table -->
+    <div class="items-section">
+      <div class="items-header">
+        <div>Description</div>
+        <div class="quantity-header">Quantity</div>
+        <div>Unit Price ($)</div>
+        <div>Amount ($)</div>
+      </div>
+      <div id="items-container">
+        <div class="item-row">
+          <div class="item-description">Sample service</div>
+          <div class="item-quantity">1 hour</div>
+          <div class="item-price">30.00</div>
+          <div class="item-amount">30.00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Totals -->
+    <div class="totals-section">
+      <div class="totals-block">
+        <div class="subtotal-row">
+          <span>Subtotal:</span>
+          <span id="subtotal-amount">$30.00</span>
+        </div>
+        <div class="total-row">
+          <span>Total (AUD):</span>
+          <span id="total-amount">$30.00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Signature -->
+    <div class="signature-section">
+      <div class="signature-label">Issued by, signature</div>
+      <div class="signature-line"></div>
+    </div>
   </div>
 </body>
 </html>
