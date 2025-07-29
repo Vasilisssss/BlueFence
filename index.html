@@ -15,412 +15,825 @@
   <link rel="apple-touch-icon" href="logo.jpg">
   <link rel="icon" type="image/jpeg" href="logo.jpg">
   <link rel="shortcut icon" href="logo.jpg">
-  <title>Blue Fence</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <title>Bluebird Fence - Professional Quote System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
-    body {
-      background: #f7fbff;
-      margin: 0;
-      padding: 20px;
-      font-family: Arial, sans-serif;
+    :root {
+      --primary-blue: #1e3c72;
+      --secondary-blue: #2a5298;
+      --accent-blue: #3b82f6;
+      --light-blue: #eef4ff;
+      --success-green: #10b981;
+      --warning-orange: #f59e0b;
+      --error-red: #ef4444;
+      --neutral-50: #f8fafc;
+      --neutral-100: #f1f5f9;
+      --neutral-200: #e2e8f0;
+      --neutral-300: #cbd5e1;
+      --neutral-400: #94a3b8;
+      --neutral-500: #64748b;
+      --neutral-600: #475569;
+      --neutral-700: #334155;
+      --neutral-800: #1e293b;
+      --neutral-900: #0f172a;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --border-radius: 12px;
+      --border-radius-sm: 8px;
+      --spacing-unit: 8px;
     }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--neutral-50) 0%, var(--light-blue) 100%);
+      margin: 0;
+      padding: 24px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--neutral-700);
+      min-height: 100vh;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .page-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 2.5rem;
+      color: var(--primary-blue);
+      margin: 0 0 8px 0;
+      letter-spacing: -0.025em;
+    }
+
+    .page-subtitle {
+      font-size: 1.125rem;
+      color: var(--neutral-500);
+      margin: 0;
+      font-weight: 400;
+    }
+
     .container,
     .half-container,
     .product-type-wrapper {
       break-inside: avoid;
       page-break-inside: avoid;
     }
+
     .container {
       width: 100%;
-      max-width: 900px;
-      margin: 0 auto 32px auto;
+      max-width: 1000px;
+      margin: 0 auto 24px auto;
       background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 24px rgba(30,60,114,0.08);
-      padding: 40px 32px;
-      box-sizing: border-box;
-      text-align: left;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-lg);
+      padding: 40px;
+      border: 1px solid var(--neutral-200);
+      position: relative;
+      overflow: hidden;
     }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+    }
+
     .half-container {
       width: 100%;
-      max-width: 900px;
-      margin: 0 auto 32px auto;
+      max-width: 1000px;
+      margin: 0 auto 24px auto;
       background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 24px rgba(30,60,114,0.08);
-      padding: 40px 32px;
-      box-sizing: border-box;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
+      padding: 32px 40px;
+      border: 1px solid var(--neutral-200);
     }
-    .half-container .input-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 20px;
-    }
+
     .header-row {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 24px;
+      margin-bottom: 32px;
     }
+
     .header-row img {
       height: 80px;
+      width: 80px;
+      object-fit: cover;
+      border-radius: var(--border-radius-sm);
+      box-shadow: var(--shadow-sm);
     }
-    h1, h2 {
-      font-family: "Montserrat", Arial, sans-serif;
+
+    .company-info {
+      flex: 1;
+    }
+
+    .company-name {
+      font-family: 'Montserrat', sans-serif;
       font-weight: 700;
-      color: #1e3c72;
-      letter-spacing: 2px;
+      font-size: 2rem;
+      color: var(--primary-blue);
+      margin: 0 0 4px 0;
+      letter-spacing: -0.025em;
+    }
+
+    .company-tagline {
+      font-size: 0.875rem;
+      color: var(--neutral-500);
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .quote-info {
+      text-align: right;
+      font-size: 0.875rem;
+      color: var(--neutral-600);
+    }
+
+    .quote-number {
+      font-weight: 600;
+      color: var(--primary-blue);
+    }
+
+    .quote-date {
+      margin-top: 4px;
+    }
+
+    h1, h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: var(--primary-blue);
       margin-top: 0;
     }
+
     h1 {
-      font-size: 2.5em;
-      margin-bottom: 0.2em;
+      font-size: 2rem;
+      margin-bottom: 8px;
+      letter-spacing: -0.025em;
     }
+
     h2 {
-      font-size: 1.5em;
-      margin-bottom: 0;
+      font-size: 1.25rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .blue-line {
+
+    h2::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+      border-radius: 2px;
+    }
+
+    .section-divider {
       border: none;
-      border-top: 3px solid #2a5298;
+      border-top: 2px solid var(--neutral-200);
       width: 100%;
-      margin: 10px 0 28px;
+      margin: 24px 0;
+      background: linear-gradient(90deg, var(--primary-blue) 0%, var(--neutral-200) 20%, var(--neutral-200) 80%, var(--primary-blue) 100%);
+      height: 2px;
     }
+
     .quote-header {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      gap: 16px;
+      align-items: center;
+      gap: 24px;
       flex-wrap: wrap;
+      margin-bottom: 32px;
     }
-    p.title {
-      color: #2a5298;
-      font-size: 2em;
-      font-weight: bold;
-      margin: 0;
-    }
-    #grand-total-box {
-      background-color: #1e3c72;
-      color: #fff;
-      font-family: "Montserrat", Arial, sans-serif;
+
+    .quote-title {
+      color: var(--primary-blue);
+      font-size: 1.875rem;
       font-weight: 700;
-      font-size: 1.75em;
-      padding: 12px 24px;
-      border-radius: 8px;
-      min-width: 150px;
-      text-align: right;
-      white-space: nowrap;
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      letter-spacing: -0.025em;
     }
+
+    #grand-total-box {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      padding: 16px 24px;
+      border-radius: var(--border-radius-sm);
+      min-width: 180px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #grand-total-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    #grand-total-box:hover::before {
+      left: 100%;
+    }
+
+    .total-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      opacity: 0.9;
+      display: block;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
     label {
-      font-family: "Montserrat", Arial, sans-serif;
-      color: #1e3c72;
-      font-weight: 600;
-      margin-right: 2px;
+      font-family: 'Inter', sans-serif;
+      color: var(--neutral-700);
+      font-weight: 500;
+      margin-right: 8px;
+      font-size: 0.875rem;
+      display: inline-block;
+      min-width: 120px;
     }
-    input[type="text"], textarea {
-      font-size: 0.9em;
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid #2a5298;
+
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--neutral-100);
+    }
+
+    .input-row:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    input[type="text"], 
+    input[type="email"], 
+    input[type="tel"], 
+    input[type="number"], 
+    textarea {
+      font-size: 0.875rem;
+      padding: 12px 16px;
+      border-radius: var(--border-radius-sm);
+      border: 2px solid var(--neutral-200);
       background: #fff;
-      min-width: 300px;
-      max-width: 800px;
-      transition: width 0.1s;
+      min-width: 280px;
+      flex: 1;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
     }
-    #estimate-attendance, #site-contact, #job-address, #Name, #Billing-Address, #Email, #Phone {
-      width: 365px;
+
+    input[type="text"]:focus, 
+    input[type="email"]:focus, 
+    input[type="tel"]:focus, 
+    input[type="number"]:focus, 
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      transform: translateY(-1px);
     }
+
+    input::placeholder {
+      color: var(--neutral-400);
+      font-style: italic;
+    }
+
+    .required {
+      color: var(--error-red);
+      margin-left: 4px;
+    }
+
     .product-type-grid {
       display: flex;
       flex-direction: column;
-      gap: 32px;
+      gap: 24px;
       align-items: center;
-      max-width: 940px;
+      max-width: 1000px;
       margin: auto;
     }
+
     .product-type-wrapper {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      width: fit-content;
+      gap: 12px;
+      width: 100%;
+      max-width: 800px;
     }
+
     .product-type-container {
-      width: 500px;
-      min-width: 300px;
-      max-width: 1500px;
       background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 24px rgba(30,60,114,0.08);
-      padding: 24px;
-      box-sizing: border-box;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
+      padding: 32px;
       position: relative;
-      transition: width 0.15s;
+      transition: all 0.3s ease;
+      border: 2px solid var(--neutral-200);
+      overflow: hidden;
     }
+
+    .product-type-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--success-green), var(--accent-blue));
+    }
+
+    .product-type-container:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--accent-blue);
+    }
+
     .card-header {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      gap: 16px;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 24px;
     }
-    .card-total {
-      background-color: #eef4ff;
-      color: #1e3c72;
-      font-family: "Montserrat", Arial, sans-serif;
-      font-weight: 700;
-      font-size: 1.25em;
-      padding: 8px 16px;
-      border-radius: 8px;
-      min-width: 100px;
-      text-align: right;
-      white-space: nowrap;
-    }
-    .product-type-container .dropdown-container, .product-type-container .input-row {
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--primary-blue);
+      margin: 0;
       display: flex;
       align-items: center;
-      gap: 4px;
-      margin-top: 12px;
-      flex-wrap: wrap;
+      gap: 8px;
     }
+
+    .card-number {
+      background: var(--light-blue);
+      color: var(--primary-blue);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 12px;
+      min-width: 24px;
+      text-align: center;
+    }
+
+    .card-total {
+      background: linear-gradient(135deg, var(--light-blue), #fff);
+      color: var(--primary-blue);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.125rem;
+      padding: 12px 20px;
+      border-radius: var(--border-radius-sm);
+      min-width: 120px;
+      text-align: center;
+      border: 2px solid var(--neutral-200);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .dropdown-container, 
+    .product-type-container .input-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding: 8px 0;
+    }
+
     .product-type-container select {
-      font-size: 0.9em;
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid #2a5298;
+      font-size: 0.875rem;
+      padding: 12px 16px;
+      border-radius: var(--border-radius-sm);
+      border: 2px solid var(--neutral-200);
       background: #fff;
-      max-width: 100%;
+      min-width: 200px;
+      flex: 1;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
     }
+
+    .product-type-container select:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
     .resize-controls {
       display: flex;
       gap: 8px;
-      justify-content: flex-end;
+      justify-content: center;
     }
-    .resize-controls button, .plus-btn {
-      background: #1e3c72;
+
+    .resize-controls button, 
+    .plus-btn {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
       color: #fff;
       border: none;
       cursor: pointer;
-      font-size: 0.9em;
-      transition: background 0.2s;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+      font-family: 'Inter', sans-serif;
     }
+
     .resize-controls button {
-        border-radius: 4px;
-        padding: 4px 8px;
+      border-radius: var(--border-radius-sm);
+      padding: 8px 16px;
+      min-width: 40px;
     }
-    .resize-controls button:hover, .plus-btn:hover {
-      background: #2a5298;
+
+    .resize-controls button:hover, 
+    .plus-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
     }
-    #plus-btn-wrapper { text-align: center; }
+
+    .resize-controls button:active, 
+    .plus-btn:active {
+      transform: translateY(0);
+    }
+
+    #plus-btn-wrapper { 
+      text-align: center;
+      margin-top: 16px;
+    }
+
     .plus-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      font-size: 1.8em;
+      width: 56px;
+      height: 56px;
+      font-size: 1.5rem;
+      font-weight: 300;
+      position: relative;
+      overflow: hidden;
     }
+
+    .plus-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.3s;
+    }
+
+    .plus-btn:hover::before {
+      left: 100%;
+    }
+
     .delete-btn {
       position: absolute;
-      top: 12px;
-      right: 12px;
-      background: #e74c3c;
+      top: 16px;
+      right: 16px;
+      background: var(--error-red);
       color: #fff;
       border: none;
       border-radius: 50%;
-      width: 24px;
-      height: 24px;
-      font-size: 1em;
-      line-height: 24px;
+      width: 32px;
+      height: 32px;
+      font-size: 0.875rem;
+      line-height: 1;
       text-align: center;
       cursor: pointer;
       display: none;
-      transition: background 0.2s;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
     }
-    .delete-btn.show { display: inline-flex; }
-    .delete-btn:hover { background: #c0392b; }
+
+    .delete-btn.show { 
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .delete-btn:hover { 
+      background: #dc2626;
+      transform: scale(1.1);
+      box-shadow: var(--shadow-md);
+    }
+
+    .fence-image-wrapper {
+      text-align: center;
+      margin-top: 24px;
+      padding: 16px;
+      background: var(--neutral-50);
+      border-radius: var(--border-radius-sm);
+      border: 2px dashed var(--neutral-300);
+    }
+
+    .fence-preview-image {
+      max-width: 100%;
+      max-height: 200px;
+      border-radius: var(--border-radius-sm);
+      box-shadow: var(--shadow-md);
+      transition: transform 0.2s ease;
+    }
+
+    .fence-preview-image:hover {
+      transform: scale(1.02);
+    }
+
+    .status-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    .status-complete {
+      background: var(--success-green);
+    }
+
+    .status-incomplete {
+      background: var(--warning-orange);
+    }
+
+    .footer-info {
+      text-align: center;
+      margin-top: 48px;
+      padding: 24px;
+      background: var(--neutral-50);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--neutral-200);
+    }
+
+    .footer-info p {
+      margin: 0;
+      color: var(--neutral-500);
+      font-size: 0.875rem;
+    }
+
+    .footer-info .company-contact {
+      font-weight: 500;
+      color: var(--primary-blue);
+      margin-bottom: 8px;
+    }
 
     /* Responsive Design */
-    /* Tablet Styles */
     @media (max-width: 768px) {
       body {
-        padding: 15px;
+        padding: 16px;
       }
+
+      .page-title {
+        font-size: 2rem;
+      }
+
       .container, .half-container {
-        padding: 30px 20px;
-        margin-bottom: 20px;
+        padding: 24px 20px;
+        margin-bottom: 16px;
       }
+
       .header-row {
         flex-direction: column;
         text-align: center;
-        gap: 12px;
+        gap: 16px;
       }
+
       .header-row img {
         height: 60px;
+        width: 60px;
       }
-      h1 {
-        font-size: 2em;
+
+      .company-name {
+        font-size: 1.5rem;
         text-align: center;
       }
-      h2 {
-        font-size: 1.3em;
-      }
+
       .quote-header {
         flex-direction: column;
         align-items: center;
-        gap: 12px;
+        gap: 16px;
       }
-      p.title {
-        font-size: 1.6em;
+
+      .quote-title {
+        font-size: 1.5rem;
         text-align: center;
       }
+
       #grand-total-box {
-        font-size: 1.5em;
-        padding: 10px 20px;
-        min-width: 120px;
+        font-size: 1.25rem;
+        padding: 12px 20px;
+        min-width: 150px;
       }
-      input[type="text"], textarea {
-        min-width: 250px;
-        max-width: 100%;
-      }
-      #estimate-attendance, #site-contact, #job-address, #Name, #Billing-Address, #Email, #Phone {
-        width: 100%;
-        max-width: 400px;
-      }
-      .half-container .input-row {
+
+      .input-row {
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
       }
-      .product-type-container {
+
+      label {
+        min-width: auto;
+      }
+
+      input[type="text"], 
+      input[type="email"], 
+      input[type="tel"], 
+      input[type="number"], 
+      textarea {
+        min-width: 100%;
         width: 100%;
-        max-width: 600px;
+      }
+
+      .product-type-container {
         padding: 20px;
       }
+
       .card-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
       }
+
       .card-total {
         align-self: flex-end;
-        font-size: 1.1em;
-        padding: 6px 12px;
+        font-size: 1rem;
+        padding: 8px 16px;
       }
-      .product-type-container .dropdown-container, .product-type-container .input-row {
+
+      .dropdown-container, 
+      .product-type-container .input-row {
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
       }
-      .product-type-container select, .product-type-container input[type="text"] {
+
+      .product-type-container select {
+        min-width: 100%;
         width: 100%;
-        max-width: 100%;
       }
+
       .resize-controls {
         justify-content: center;
-        margin-top: 10px;
+        margin-top: 16px;
       }
     }
 
-    /* Mobile Styles */
     @media (max-width: 480px) {
-      body {
-        padding: 10px;
+      .page-title {
+        font-size: 1.75rem;
       }
+
       .container, .half-container {
-        padding: 20px 15px;
-        margin-bottom: 15px;
-        border-radius: 8px;
+        padding: 20px 16px;
+        border-radius: var(--border-radius-sm);
       }
-      .header-row img {
-        height: 50px;
+
+      .company-name {
+        font-size: 1.25rem;
       }
-      h1 {
-        font-size: 1.8em;
-        letter-spacing: 1px;
+
+      .quote-title {
+        font-size: 1.25rem;
       }
-      h2 {
-        font-size: 1.2em;
-      }
-      p.title {
-        font-size: 1.4em;
-      }
+
       #grand-total-box {
-        font-size: 1.3em;
-        padding: 8px 16px;
+        font-size: 1.125rem;
+        padding: 10px 16px;
+        min-width: 120px;
+      }
+
+      .product-type-container {
+        padding: 16px;
+        border-radius: var(--border-radius-sm);
+      }
+
+      .card-total {
+        font-size: 0.875rem;
+        padding: 6px 12px;
         min-width: 100px;
       }
-      input[type="text"], textarea {
-        min-width: 200px;
-        font-size: 0.85em;
-        padding: 8px 10px;
-      }
-      .product-type-container {
-        padding: 15px;
-        border-radius: 8px;
-      }
-      .card-total {
-        font-size: 1em;
-        padding: 5px 10px;
-        min-width: 80px;
-      }
-      .product-type-container select {
-        font-size: 0.85em;
-        padding: 8px 10px;
-      }
+
       .plus-btn {
-        width: 35px;
-        height: 35px;
-        font-size: 1.6em;
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
       }
-      .resize-controls button {
-        padding: 6px 10px;
-        font-size: 0.8em;
-      }
+
       .fence-preview-image {
-        max-height: 150px !important;
+        max-height: 150px;
       }
     }
 
-    /* Large Desktop Styles */
     @media (min-width: 1200px) {
       .container, .half-container {
-        max-width: 1100px;
-        padding: 50px 40px;
+        max-width: 1200px;
+        padding: 48px 56px;
       }
-      .product-type-container {
-        max-width: 800px;
+
+      .page-title {
+        font-size: 3rem;
       }
-      h1 {
-        font-size: 2.8em;
+
+      .company-name {
+        font-size: 2.25rem;
       }
-      h2 {
-        font-size: 1.7em;
+
+      .quote-title {
+        font-size: 2.125rem;
       }
-      p.title {
-        font-size: 2.2em;
-      }
+
       #grand-total-box {
-        font-size: 1.9em;
-        padding: 15px 30px;
+        font-size: 1.75rem;
+        padding: 20px 32px;
       }
     }
 
-    /* Landscape Mobile */
-    @media (max-width: 768px) and (orientation: landscape) {
-      .header-row {
-        flex-direction: row;
-        text-align: left;
+    /* Print Styles */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
       }
-      h1 {
-        text-align: left;
+
+      .container, .half-container, .product-type-container {
+        box-shadow: none;
+        border: 1px solid var(--neutral-300);
+        break-inside: avoid;
       }
-      .quote-header {
-        flex-direction: row;
-        align-items: baseline;
+
+      .resize-controls, .delete-btn, .plus-btn {
+        display: none !important;
       }
-      p.title {
-        text-align: left;
+
+      .fence-image-wrapper {
+        background: white;
+        border: 1px solid var(--neutral-300);
       }
+    }
+
+    /* Animation for smooth interactions */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .product-type-wrapper {
+      animation: fadeInUp 0.3s ease-out;
+    }
+
+    /* Loading states */
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .loading::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border: 2px solid var(--neutral-300);
+      border-top: 2px solid var(--accent-blue);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
   <script>
@@ -441,7 +854,7 @@
       });
       const grandTotalBox = document.getElementById('grand-total-box');
       if(grandTotalBox) {
-        grandTotalBox.textContent = formatCurrency(grandTotal);
+        grandTotalBox.innerHTML = `<span class="total-label">Total Quote</span>${formatCurrency(grandTotal)}`;
       }
     }
 
@@ -450,14 +863,27 @@
       const tpl = grid.querySelector('.product-type-wrapper');
       const clone = tpl.cloneNode(true);
 
-      clone.querySelectorAll('input[type=text], select').forEach(el => {
+      // Update card number
+      const cardNumber = grid.querySelectorAll('.product-type-wrapper').length + 1;
+      clone.querySelector('.card-number').textContent = cardNumber;
+
+      clone.querySelectorAll('input[type=text], input[type=number], select').forEach(el => {
         if (el.tagName === 'SELECT') { el.selectedIndex = 0; } 
         else { el.value = ''; }
       });
       clone.querySelector('.card-total').textContent = formatCurrency(0);
       clone.querySelector('.delete-btn').classList.add('show');
       grid.insertBefore(clone, document.getElementById('plus-btn-wrapper'));
-      bindCardLogic(clone); // IMPORTANT: Bind logic to the new card
+      bindCardLogic(clone);
+      
+      // Add smooth animation
+      clone.style.opacity = '0';
+      clone.style.transform = 'translateY(20px)';
+      setTimeout(() => {
+        clone.style.transition = 'all 0.3s ease';
+        clone.style.opacity = '1';
+        clone.style.transform = 'translateY(0)';
+      }, 10);
     }
 
     // Fence style options by material
@@ -483,11 +909,11 @@
         { value: 'semi-privacy', label: 'Semi Privacy' },
         { value: 'pergola', label: 'Pergola' },
         { value: 'straight-top-baluster-arbor', label: 'Straight Top Baluster' },
-        {value: 'privacy-mini-lattice', label: 'Privacy & Mini Latice'}
+        {value: 'privacy-mini-lattice', label: 'Privacy & Mini Lattice'}
       ]
     };
 
-    // Pricing configuration
+    // Enhanced pricing configuration
     const PRICING = {
       materials: {
         wood: 44,
@@ -524,7 +950,7 @@
 
     function updateFenceStyleOptions(materialSelect, styleSelect) {
       const material = materialSelect.value;
-      styleSelect.innerHTML = '<option value="0">Please Select</option>';
+      styleSelect.innerHTML = '<option value="0">Please Select Style</option>';
       if (FENCE_STYLE_OPTIONS[material]) {
         FENCE_STYLE_OPTIONS[material].forEach(opt => {
           const option = document.createElement('option');
@@ -535,41 +961,42 @@
       }
     }
 
-    // Helper: get image path for a given material and style
     function getFenceImageSrc(material, style) {
       if (!material || !style || material === '0' || style === '0') return '';
-      // Example: images/wood-lattice.png
       return `images/${material}-${style}.png`;
     }
 
-    // Helper: calculate price for a card
-    function calculateCardPrice(material, height, style) {
+    function calculateCardPrice(material, height, style, linearFootage = 0, singleGates = 0, doubleGates = 0) {
       let total = 0;
       
-      // Add material cost
+      // Base material cost per linear foot
       if (material && material !== '0' && PRICING.materials[material]) {
-        total += PRICING.materials[material];
+        total += PRICING.materials[material] * (linearFootage || 1);
       }
       
-      // Add height cost
+      // Height multiplier
       if (height && height !== '0' && PRICING.heights[height]) {
-        total += PRICING.heights[height];
+        total += PRICING.heights[height] * (linearFootage || 1);
       }
       
-      // Add style cost
+      // Style cost per linear foot
       if (material && style && material !== '0' && style !== '0') {
         const styleKey = `${material}-${style}`;
         if (PRICING.styles[styleKey]) {
-          total += PRICING.styles[styleKey];
+          total += PRICING.styles[styleKey] * (linearFootage || 1);
         }
       }
+      
+      // Gate costs
+      total += (singleGates || 0) * 150; // $150 per single gate
+      total += (doubleGates || 0) * 250; // $250 per double gate
       
       return total;
     }
 
-    // This is the main function that gives each card its functionality
     function bindCardLogic(wrapper) {
         const selects = wrapper.querySelectorAll('select');
+        const inputs = wrapper.querySelectorAll('input[type="text"], input[type="number"]');
         const cardTotalEl = wrapper.querySelector('.card-total');
         const deleteBtn = wrapper.querySelector('.delete-btn');
         const resizePlusBtn = wrapper.querySelector('.resize-plus');
@@ -578,27 +1005,33 @@
         const styleSelect = wrapper.querySelector('.fence-style-select');
         const heightSelect = wrapper.querySelector('select:not(.fence-material-select):not(.fence-style-select)');
         const imageEl = wrapper.querySelector('.fence-preview-image');
+        const linearFootageInput = wrapper.querySelector('input[placeholder*="Linear"]');
+        const singleGatesInput = wrapper.querySelector('input[placeholder*="Single"]');
+        const doubleGatesInput = wrapper.querySelector('input[placeholder*="Double"]');
 
-        // --- Pricing Logic ---
         function updateCardPrice() {
             const material = materialSelect ? materialSelect.value : '0';
             const height = heightSelect ? heightSelect.value : '0';
             const style = styleSelect ? styleSelect.value : '0';
+            const linearFootage = parseFloat(linearFootageInput?.value) || 0;
+            const singleGates = parseInt(singleGatesInput?.value) || 0;
+            const doubleGates = parseInt(doubleGatesInput?.value) || 0;
             
-            const currentPrice = calculateCardPrice(material, height, style);
+            const currentPrice = calculateCardPrice(material, height, style, linearFootage, singleGates, doubleGates);
             cardTotalEl.textContent = formatCurrency(currentPrice);
-            updateGrandTotal(); // Update the main total whenever a card changes
+            updateGrandTotal();
         }
 
-        selects.forEach(select => {
-            select.addEventListener('change', updateCardPrice);
+        // Bind all inputs and selects
+        [...selects, ...inputs].forEach(element => {
+            element.addEventListener('change', updateCardPrice);
+            element.addEventListener('input', updateCardPrice);
         });
 
-        // --- Fence Material/Style Filtering ---
+        // Material/Style filtering
         if (materialSelect && styleSelect) {
           materialSelect.addEventListener('change', function() {
             updateFenceStyleOptions(materialSelect, styleSelect);
-            // Reset style selection when material changes
             styleSelect.value = '0';
             updateCardPrice();
             updateFenceImage();
@@ -609,7 +1042,6 @@
           });
         }
 
-        // --- Fence Image Logic ---
         function updateFenceImage() {
           if (!imageEl) return;
           const mat = materialSelect ? materialSelect.value : '';
@@ -618,22 +1050,34 @@
           if (src && mat !== '0' && sty !== '0') {
             imageEl.src = src;
             imageEl.style.display = '';
+            imageEl.parentElement.style.display = '';
           } else {
             imageEl.src = '';
             imageEl.style.display = 'none';
+            imageEl.parentElement.style.display = 'none';
           }
         }
 
-        // --- Button Logic ---
+        // Button functionality
         if (deleteBtn) {
             deleteBtn.addEventListener('click', () => {
                 const grid = document.getElementById('product-type-grid');
                 if (grid.querySelectorAll('.product-type-wrapper').length > 1) {
-                    wrapper.remove();
-                    updateGrandTotal();
+                    wrapper.style.transition = 'all 0.3s ease';
+                    wrapper.style.opacity = '0';
+                    wrapper.style.transform = 'translateY(-20px)';
+                    setTimeout(() => {
+                        wrapper.remove();
+                        updateGrandTotal();
+                        // Update card numbers
+                        grid.querySelectorAll('.card-number').forEach((el, index) => {
+                            el.textContent = index + 1;
+                        });
+                    }, 300);
                 }
             });
         }
+
         if (resizePlusBtn && resizeMinusBtn) {
             const container = wrapper.querySelector('.product-type-container');
             resizePlusBtn.addEventListener('click', () => {
@@ -645,12 +1089,66 @@
                 container.style.width = Math.max(MIN_W, Math.min(w, MAX_W)) + 'px';
             });
         }
-        updateCardPrice(); // Calculate initial price for the card
+
+        updateCardPrice();
+        updateFenceImage();
+    }
+
+    // Generate quote number and date
+    function generateQuoteInfo() {
+        const now = new Date();
+        const quoteNumber = 'QT-' + now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0') + '-' + String(Math.floor(Math.random() * 1000)).padStart(3, '0');
+        const quoteDate = now.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+        
+        document.getElementById('quote-number').textContent = quoteNumber;
+        document.getElementById('quote-date').textContent = quoteDate;
+    }
+
+    // Form validation
+    function validateForm() {
+        const requiredFields = document.querySelectorAll('input[required]');
+        let isValid = true;
+        
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                field.style.borderColor = 'var(--error-red)';
+                isValid = false;
+            } else {
+                field.style.borderColor = 'var(--neutral-200)';
+            }
+        });
+        
+        return isValid;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+        generateQuoteInfo();
         document.querySelectorAll('.product-type-wrapper').forEach(bindCardLogic);
         document.getElementById('add-card-btn').addEventListener('click', addProductType);
+        
+        // Initialize grand total
+        updateGrandTotal();
+        
+        // Add smooth scrolling for new cards
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'childList') {
+                    mutation.addedNodes.forEach((node) => {
+                        if (node.classList && node.classList.contains('product-type-wrapper')) {
+                            node.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    });
+                }
+            });
+        });
+        
+        observer.observe(document.getElementById('product-type-grid'), {
+            childList: true
+        });
     });
 
     // PWA Service Worker Registration
@@ -671,36 +1169,101 @@
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      // You can show an install button here if desired
     });
+
+    // Print functionality
+    function printQuote() {
+        window.print();
+    }
+
+    // Export functionality (basic)
+    function exportQuote() {
+        const quoteData = {
+            quoteNumber: document.getElementById('quote-number').textContent,
+            quoteDate: document.getElementById('quote-date').textContent,
+            customer: {
+                name: document.getElementById('Name').value,
+                email: document.getElementById('Email').value,
+                phone: document.getElementById('Phone').value,
+                billingAddress: document.getElementById('Billing-Address').value
+            },
+            project: {
+                jobAddress: document.getElementById('job-address').value,
+                siteContact: document.getElementById('site-contact').value,
+                estimateAttendance: document.getElementById('estimate-attendance').value
+            },
+            total: document.getElementById('grand-total-box').textContent
+        };
+        
+        console.log('Quote Data:', quoteData);
+        // Here you could send this data to a server or download as JSON
+    }
   </script>
 </head>
 <body>
+  <div class="page-header">
+    <h1 class="page-title">Professional Quote System</h1>
+    <p class="page-subtitle">Create detailed fence installation quotes with ease</p>
+  </div>
+
   <div class="container">
     <div class="header-row">
-      <img src="logo.jpg" alt="Company Logo">
-      <h1>Bluebird Fence</h1>
+      <img src="logo.jpg" alt="Bluebird Fence Logo">
+      <div class="company-info">
+        <h1 class="company-name">Bluebird Fence</h1>
+        <p class="company-tagline">Professional Fence Installation & Design</p>
+      </div>
+      <div class="quote-info">
+        <div class="quote-number">Quote #: <span id="quote-number">QT-2024-001</span></div>
+        <div class="quote-date">Date: <span id="quote-date">January 15, 2024</span></div>
+      </div>
     </div>
-    <hr class="blue-line">
+    <hr class="section-divider">
     <div class="quote-header">
-      <p class="title">Client Quote Form</p>
-      <div id="grand-total-box">$0.00</div>
+      <h1 class="quote-title">Client Quote Form</h1>
+      <div id="grand-total-box">
+        <span class="total-label">Total Quote</span>
+        $0.00
+      </div>
     </div>
   </div>
 
   <div class="half-container">
-    <h2>Customer Information</h2><hr class="blue-line">
-    <div class="input-row"><label>Name:</label><input type="text" id="Name" placeholder="Enter Name"></div>
-    <div class="input-row"><label>Billing Address:</label><input type="text" id="Billing-Address"placeholder="Enter Billing Address"></div>
-    <div class="input-row"><label>Email:</label><input type="text" id="Email"placeholder="Enter Email"></div>
-    <div class="input-row"><label>Phone:</label><input type="text" id="Phone"placeholder="Enter Phone"></div>
+    <h2>Customer Information</h2>
+    <hr class="section-divider">
+    <div class="input-row">
+      <label>Full Name <span class="required">*</span></label>
+      <input type="text" id="Name" placeholder="Enter customer's full name" required>
+    </div>
+    <div class="input-row">
+      <label>Billing Address <span class="required">*</span></label>
+      <input type="text" id="Billing-Address" placeholder="Enter complete billing address" required>
+    </div>
+    <div class="input-row">
+      <label>Email Address <span class="required">*</span></label>
+      <input type="email" id="Email" placeholder="customer@email.com" required>
+    </div>
+    <div class="input-row">
+      <label>Phone Number <span class="required">*</span></label>
+      <input type="tel" id="Phone" placeholder="(555) 123-4567" required>
+    </div>
   </div>
 
   <div class="half-container">
-    <h2>Project / Site Details</h2><hr class="blue-line">
-    <div class="input-row"><label>Job Address:</label><input type="text" id="job-address"placeholder="Enter Address"></div>
-    <div class="input-row"><label>Site Contact:</label><input type="text" id="site-contact" placeholder="Enter Name & Phone"></div>
-    <div class="input-row"><label>Estimate Attendance:</label><input type="text" id="estimate-attendance" placeholder="Enter Estimate Attendance"></div>
+    <h2>Project & Site Details</h2>
+    <hr class="section-divider">
+    <div class="input-row">
+      <label>Job Address <span class="required">*</span></label>
+      <input type="text" id="job-address" placeholder="Enter project installation address" required>
+    </div>
+    <div class="input-row">
+      <label>Site Contact</label>
+      <input type="text" id="site-contact" placeholder="On-site contact name & phone number">
+    </div>
+    <div class="input-row">
+      <label>Estimate Meeting</label>
+      <input type="text" id="estimate-attendance" placeholder="Preferred date/time for site visit">
+    </div>
   </div>
 
   <div class="product-type-grid" id="product-type-grid">
@@ -708,34 +1271,88 @@
       <div class="product-type-container">
         <button class="delete-btn">✕</button>
         <div class="card-header">
-          <h2>Product Type</h2>
+          <h2 class="card-title">
+            <span class="card-number">1</span>
+            Fence Section
+          </h2>
           <div class="card-total">$0.00</div>
         </div>
-        <hr class="blue-line">
-        <div class="dropdown-container"><label>Fence Material:</label><select class="fence-material-select"><option value="0">Please Select</option><option value="wood">Wood</option><option value="vinyl">Vinyl</option></select></div>
-        <div class="dropdown-container"><label>Fence Height:</label><select><option value="0">Please Select</option><option value="6H">6'H</option><option value="4H">4'H</option></select></div>
-        <div class="dropdown-container"><label>Fence Style:</label><select class="fence-style-select">
-          <option value="0">Please Select</option>
-        </select></div>
-        <div class="input-row"><label>Linear Footage:</label><input type="text" placeholder="Write Here"></div>
-        <div class="input-row"><label>Single Gates N.:</label><input type="text" placeholder="Write Here"></div>
-        <div class="input-row"><label>Double Gates N.:</label><input type="text" placeholder="Write Here"></div>
-        <div class="input-row"><label>Gate Style:</label><input type="text" placeholder="Write Here"></div>
-        <div class="input-row"><label>Gate Size:</label><input type="text" placeholder="Write Here"></div>
-        <div class="input-row"><label>Labor, # of Days:</label><input type="text" placeholder="Write Here"></div>
-        <div class="fence-image-wrapper" style="text-align:center; margin-top:20px;">
-          <img class="fence-preview-image" src="" alt="Fence Preview" style="max-width:100%; max-height:200px; display:none; border-radius:8px; box-shadow:0 2px 8px rgba(30,60,114,0.08);">
+        <hr class="section-divider">
+        
+        <div class="dropdown-container">
+          <label>Fence Material <span class="required">*</span></label>
+          <select class="fence-material-select" required>
+            <option value="0">Please Select Material</option>
+            <option value="wood">Wood Fencing</option>
+            <option value="vinyl">Vinyl Fencing</option>
+          </select>
+        </div>
+        
+        <div class="dropdown-container">
+          <label>Fence Height <span class="required">*</span></label>
+          <select required>
+            <option value="0">Please Select Height</option>
+            <option value="6H">6 Feet High</option>
+            <option value="4H">4 Feet High</option>
+          </select>
+        </div>
+        
+        <div class="dropdown-container">
+          <label>Fence Style <span class="required">*</span></label>
+          <select class="fence-style-select" required>
+            <option value="0">Please Select Style</option>
+          </select>
+        </div>
+        
+        <div class="input-row">
+          <label>Linear Footage <span class="required">*</span></label>
+          <input type="number" placeholder="Enter total linear feet" min="1" step="0.1" required>
+        </div>
+        
+        <div class="input-row">
+          <label>Single Gates</label>
+          <input type="number" placeholder="Number of single gates" min="0" step="1">
+        </div>
+        
+        <div class="input-row">
+          <label>Double Gates</label>
+          <input type="number" placeholder="Number of double gates" min="0" step="1">
+        </div>
+        
+        <div class="input-row">
+          <label>Gate Style</label>
+          <input type="text" placeholder="Describe gate style/design">
+        </div>
+        
+        <div class="input-row">
+          <label>Gate Dimensions</label>
+          <input type="text" placeholder="Gate width x height (e.g., 4' x 6')">
+        </div>
+        
+        <div class="input-row">
+          <label>Installation Days</label>
+          <input type="number" placeholder="Estimated installation time" min="1" step="0.5">
+        </div>
+        
+        <div class="fence-image-wrapper" style="display: none;">
+          <img class="fence-preview-image" src="" alt="Fence Style Preview">
         </div>
       </div>
       <div class="resize-controls">
-        <button class="resize-plus">+</button>
-        <button class="resize-minus">−</button>
+        <button class="resize-plus" title="Expand card">Expand</button>
+        <button class="resize-minus" title="Shrink card">Shrink</button>
       </div>
     </div>
-    <!-- ADD BUTTON MOVED OUTSIDE THE REPEATING GRID -->
+    
     <div id="plus-btn-wrapper">
-      <button class="plus-btn" id="add-card-btn">+</button>
+      <button class="plus-btn" id="add-card-btn" title="Add another fence section">+</button>
     </div>
+  </div>
+
+  <div class="footer-info">
+    <p class="company-contact">Bluebird Fence - Professional Installation Services</p>
+    <p>This quote is valid for 30 days from the date issued. All prices include materials and professional installation.</p>
+    <p>For questions about this quote, please contact us at your convenience.</p>
   </div>
 </body>
 </html>
