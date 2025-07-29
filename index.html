@@ -571,11 +571,22 @@
       font-weight: 600;
       color: #333333;
       margin-right: 4px;
+      display: block;
+      margin-bottom: 5px;
     }
     .info-grid span {
       color: #666666;
       font-weight: 400;
       margin-left: 2px;
+      display: none;
+    }
+    .info-grid input[type="text"] {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 0.9em;
+      background: white;
     }
     @media print {
       body {
@@ -586,13 +597,44 @@
       #print-btn {
         display: none !important;
       }
+      .info-grid input[type="text"] {
+        display: none !important;
+      }
+      .info-grid span {
+        display: inline !important;
+      }
       .product-type-grid, .product-type-wrapper, .product-type-container, .resize-controls, .plus-btn, #plus-btn-wrapper, .drawing-tools {
         display: none !important;
+      }
+      .fence-images-display {
+        display: flex !important;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .fence-image-item {
+        text-align: center;
+        margin: 10px;
+        page-break-inside: avoid;
+      }
+      .fence-image-item img {
+        max-width: 200px;
+        max-height: 150px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+      .fence-details {
+        font-size: 12px;
+        color: #666;
+        margin-top: 8px;
+        line-height: 1.3;
       }
       .drawing-canvas {
         border: 1px solid #ccc !important;
         width: 100% !important;
         height: 400px !important;
+        page-break-before: always;
       }
       .signature-canvas {
         border: 1px solid #ccc !important;
@@ -903,6 +945,8 @@
     
     function generateFenceImages() {
       const displayContainer = document.getElementById('fence-images-display');
+      if (!displayContainer) return;
+      
       displayContainer.innerHTML = '';
       
       document.querySelectorAll('.product-type-wrapper').forEach(wrapper => {
@@ -994,7 +1038,7 @@
     }
     
     window.addEventListener('beforeprint', syncInfoFields);
-    document.querySelectorAll('.input-row input').forEach(inp => {
+    document.querySelectorAll('input[type="text"]').forEach(inp => {
       inp.addEventListener('input', syncInfoFields);
     });
     
@@ -1033,27 +1077,27 @@
     </div>
   </div>
 
-  <!-- Print-only fence images section -->
-  <div id="print-fence-images" class="print-fence-images"></div>
+  <!-- Customer & Project Information -->
+  <div class="container">
+    <h2>Customer & Project Information</h2>
+    <div class="info-grid">
+      <div><label>First Name:</label><input type="text" id="FirstName" /><span id="FirstName-span"></span></div>
+      <div><label>Last Name:</label><input type="text" id="LastName" /><span id="LastName-span"></span></div>
+      <div><label>Street:</label><input type="text" id="Street" /><span id="Street-span"></span></div>
+      <div><label>State:</label><input type="text" id="State" /><span id="State-span"></span></div>
+      <div><label>Zip Code:</label><input type="text" id="ZipCode" /><span id="ZipCode-span"></span></div>
+      <div><label>Email:</label><input type="text" id="Email" /><span id="Email-span"></span></div>
+      <div><label>Phone:</label><input type="text" id="Phone" /><span id="Phone-span"></span></div>
+      <div><label>Job Address:</label><input type="text" id="job-address" /><span id="job-address-span"></span></div>
+      <div><label>Site Contact:</label><input type="text" id="site-contact" /><span id="site-contact-span"></span></div>
+      <div><label>Estimate Attendance:</label><input type="text" id="estimate-attendance" /><span id="estimate-attendance-span"></span></div>
+    </div>
+  </div>
 
   <!-- Fence Images Section - Visible in both HTML and Print -->
   <div class="container">
     <h2>Selected Fence Options</h2>
-
-  <div class="half-container bordered-info">
-    <h2>Customer & Project Information</h2><hr class="blue-line">
-    <div class="info-grid">
-      <div><label>First Name:</label><span id="FirstName-span"></span></div>
-      <div><label>Last Name:</label><span id="LastName-span"></span></div>
-      <div><label>Street:</label><span id="Street-span"></span></div>
-      <div><label>State:</label><span id="State-span"></span></div>
-      <div><label>Zip Code:</label><span id="ZipCode-span"></span></div>
-      <div><label>Email:</label><span id="Email-span"></span></div>
-      <div><label>Phone:</label><span id="Phone-span"></span></div>
-      <div><label>Job Address:</label><span id="job-address-span"></span></div>
-      <div><label>Site Contact:</label><span id="site-contact-span"></span></div>
-      <div><label>Estimate Attendance:</label><span id="estimate-attendance-span"></span></div>
-    </div>
+    <div id="fence-images-display" class="fence-images-display"></div>
   </div>
 
   <!-- Drawing and Signature Sections - Visible in HTML -->
