@@ -318,6 +318,34 @@
       background: #777777;
     }
 
+    /* Fence Images Display */
+    .fence-images-display {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    
+    .fence-image-item {
+      text-align: center;
+      margin: 10px;
+    }
+    
+    .fence-image-item img {
+      max-width: 200px;
+      max-height: 150px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    
+    .fence-details {
+      font-size: 12px;
+      color: #666;
+      margin-top: 8px;
+      line-height: 1.3;
+    }
+
     /* Responsive Design */
     /* Tablet Styles */
     @media (max-width: 768px) {
@@ -558,104 +586,43 @@
       #print-btn {
         display: none !important;
       }
-      .product-type-grid, .product-type-wrapper, .product-type-container, .resize-controls, .plus-btn, #plus-btn-wrapper {
+      .product-type-grid, .product-type-wrapper, .product-type-container, .resize-controls, .plus-btn, #plus-btn-wrapper, .drawing-tools {
         display: none !important;
       }
-      .print-fence-images {
-        display: block !important;
-        page-break-inside: avoid;
-        margin-top: 20px;
-      }
-      .fence-image-item {
-        display: inline-block;
-        margin: 10px 15px;
-        text-align: center;
-        vertical-align: top;
-        page-break-inside: avoid;
-      }
-      .fence-image-item img {
-        max-width: 200px;
-        max-height: 150px;
-        border: 1px solid #ddd;
-      }
-      .fence-details {
-        font-size: 10px;
-        color: #666;
-        margin-top: 5px;
-        line-height: 1.2;
-      }
-      .drawing-section, .signature-section {
-        display: block !important;
-        page-break-before: always;
-      }
       .drawing-canvas {
-        border: 1px solid #000 !important;
+        border: 1px solid #ccc !important;
         width: 100% !important;
         height: 400px !important;
       }
       .signature-canvas {
-        border: 1px solid #000 !important;
+        border: 1px solid #ccc !important;
         width: 300px !important;
         height: 100px !important;
       }
-      .container, .half-container, .bordered-info {
-        box-shadow: none !important;
-        background: #fff !important;
-        border-radius: 0 !important;
+      .container, .half-container {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
         margin: 0 !important;
-        padding: 12px 24px 8px 24px !important;
+        padding: 40px 32px !important;
         width: 100% !important;
         max-width: 100% !important;
-      }
-      .container {
-        margin-bottom: 0 !important;
-        padding-bottom: 0 !important;
-      }
-      .bordered-info {
-        border: 1px solid #3498db !important;
-        margin-bottom: 0 !important;
+        page-break-inside: avoid;
       }
       .professional-header {
-        background: #fff !important;
-        padding: 16px !important;
-        margin: 0 !important;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+        padding: 30px !important;
+        margin: -40px -32px 30px -32px !important;
       }
-      .header-content {
-        margin-bottom: 12px !important;
-        gap: 16px !important;
-      }
-      .company-logo {
-        height: 50px !important;
-      }
-      .company-tagline {
-        font-size: 1.1em !important;
-      }
-      .company-details {
-        font-size: 0.9em !important;
-      }
-      .right-section {
-        gap: 12px !important;
-      }
-      .quote-title {
-        font-size: 1.2em !important;
+      .bordered-info {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
       }
       .info-grid {
-        gap: 6px 18px !important;
-        font-size: 0.98em !important;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
       }
-      #grand-total-box {
-        font-size: 1.0em !important;
-        padding: 8px 16px !important;
-        min-width: 100px !important;
+      h2 {
+        color: #333333 !important;
       }
-      .product-type-grid, .product-type-wrapper, .product-type-container, .resize-controls, .plus-btn, #plus-btn-wrapper {
-        page-break-inside: avoid !important;
-      }
-      /* Fit header + info on half page */
-      .container, .bordered-info {
-        min-height: unset !important;
-        max-height: 45vh !important;
-        overflow: hidden !important;
+      .blue-line {
+        display: none !important;
       }
       @page {
         size: A4 portrait;
@@ -664,42 +631,6 @@
     }
     
     /* Drawing and Signature Sections - Hidden by default, shown only in print */
-    .drawing-section, .signature-section {
-      display: none;
-      margin: 20px 0;
-    }
-    
-    .drawing-section h2, .signature-section h2 {
-      color: #333;
-      margin-bottom: 15px;
-    }
-    
-    .drawing-tools {
-      margin-bottom: 10px;
-    }
-    
-    .drawing-tools button {
-      margin-right: 10px;
-      padding: 5px 10px;
-      background: #666;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    
-    .drawing-canvas {
-      border: 1px solid #ccc;
-      cursor: crosshair;
-    }
-    
-    .signature-canvas {
-      border: 1px solid #ccc;
-      cursor: crosshair;
-    }
-    
-    .print-fence-images {
-      display: none;
-    }
 
     function formatCurrency(value) {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
@@ -897,6 +828,8 @@
             imageEl.src = '';
             imageEl.style.display = 'none';
           }
+          // Update the fence images display
+          generateFenceImages();
         }
 
         // --- Button Logic ---
@@ -926,6 +859,8 @@
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.product-type-wrapper').forEach(bindCardLogic);
         document.getElementById('add-card-btn').addEventListener('click', addProductType);
+        // Generate initial fence images
+        generateFenceImages();
     });
 
     // PWA Service Worker Registration
@@ -963,12 +898,12 @@
       });
       
       // Generate fence images for print
-      generatePrintFenceImages();
+      generateFenceImages();
     }
     
-    function generatePrintFenceImages() {
-      const printContainer = document.getElementById('print-fence-images');
-      printContainer.innerHTML = '';
+    function generateFenceImages() {
+      const displayContainer = document.getElementById('fence-images-display');
+      displayContainer.innerHTML = '';
       
       document.querySelectorAll('.product-type-wrapper').forEach(wrapper => {
         const materialSelect = wrapper.querySelector('.fence-material-select');
@@ -997,7 +932,7 @@
           
           imageItem.appendChild(img);
           imageItem.appendChild(details);
-          printContainer.appendChild(imageItem);
+          displayContainer.appendChild(imageItem);
         }
       });
     }
@@ -1068,6 +1003,7 @@
       setTimeout(() => {
         initializeCanvas('drawing-canvas');
         initializeCanvas('signature-canvas');
+        generateFenceImages();
       }, 100);
     });
   </script>
@@ -1100,6 +1036,10 @@
   <!-- Print-only fence images section -->
   <div id="print-fence-images" class="print-fence-images"></div>
 
+  <!-- Fence Images Section - Visible in both HTML and Print -->
+  <div class="container">
+    <h2>Selected Fence Options</h2>
+
   <div class="half-container bordered-info">
     <h2>Customer & Project Information</h2><hr class="blue-line">
     <div class="info-grid">
@@ -1116,6 +1056,33 @@
     </div>
   </div>
 
+  <!-- Drawing and Signature Sections - Visible in HTML -->
+  <div class="container">
+    <h2>Project Drawing</h2>
+    <div class="drawing-tools">
+      <button onclick="setDrawingTool('pen')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Pen</button>
+      <button onclick="setDrawingTool('eraser')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Eraser</button>
+      <input type="color" value="#000000" onchange="setDrawingColor(this.value)" style="margin-right:10px;">
+      <button onclick="clearCanvas('drawing-canvas')" style="background:#666;color:white;border:none;padding:8px 16px;cursor:pointer;">Clear</button>
+    </div>
+    <canvas id="drawing-canvas" class="drawing-canvas" width="800" height="400" style="border:1px solid #ccc;cursor:crosshair;width:100%;max-width:800px;height:400px;background:white;margin-top:15px;"></canvas>
+  </div>
+
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+      <div style="flex:1;">
+        <h2>Additional Notes</h2>
+        <div style="height:100px;"></div>
+      </div>
+      <div style="text-align:right;">
+        <h2>Customer Signature</h2>
+        <div style="margin-bottom:10px;">
+          <button onclick="clearCanvas('signature-canvas')" style="background:#666;color:white;border:none;padding:5px 10px;cursor:pointer;">Clear</button>
+        </div>
+        <canvas id="signature-canvas" class="signature-canvas" width="300" height="100" style="border:1px solid #ccc;cursor:crosshair;background:white;"></canvas>
+      </div>
+    </div>
+  </div>
 
   <div class="product-type-grid" id="product-type-grid">
     <div class="product-type-wrapper">
@@ -1152,27 +1119,5 @@
     </div>
   </div>
 
-  <!-- Drawing Section -->
-  <div class="drawing-section">
-    <h2>Project Drawing</h2>
-    <div class="drawing-tools">
-      <button onclick="setDrawingTool('pen')">Pen</button>
-      <button onclick="setDrawingTool('eraser')">Eraser</button>
-      <input type="color" value="#000000" onchange="setDrawingColor(this.value)">
-      <button onclick="clearCanvas('drawing-canvas')">Clear</button>
-    </div>
-    <canvas id="drawing-canvas" class="drawing-canvas" width="800" height="400"></canvas>
-  </div>
-
-  <!-- Signature Section -->
-  <div class="signature-section">
-    <h2>Customer Signature</h2>
-    <div style="text-align: right; margin-bottom: 10px;">
-      <button onclick="clearCanvas('signature-canvas')" style="background: #666; color: white; border: none; padding: 5px 10px; cursor: pointer;">Clear Signature</button>
-    </div>
-    <div style="text-align: right;">
-      <canvas id="signature-canvas" class="signature-canvas" width="300" height="100"></canvas>
-    </div>
-  </div>
 </body>
 </html>
