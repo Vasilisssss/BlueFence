@@ -1090,7 +1090,8 @@
                 if (grid.querySelectorAll('.product-type-wrapper').length > 1) {
                     wrapper.remove();
                     updateGrandTotal();
-                    adjustDrawingSize(); // Adjust size when removing
+                   adjustDrawingSize(); // Adjust canvas size when removing
+                   generateFenceImages();
                 }
             });
         }
@@ -1110,9 +1111,14 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.product-type-wrapper').forEach(bindCardLogic);
-        document.getElementById('add-card-btn').addEventListener('click', addProductType);
         // Generate initial fence images
         generateFenceImages();
+       
+       // Bind add button
+       const addBtn = document.getElementById('add-card-btn');
+       if (addBtn) {
+         addBtn.addEventListener('click', addProductType);
+       }
     });
 
     // PWA Service Worker Registration
@@ -1198,31 +1204,38 @@
     let currentLineWidth = 2;
     let startX, startY;
     let previewCanvas, previewCtx;
+   
+   function updatePreviewPosition() {
+     if (!previewCanvas) return;
+     const canvas = document.getElementById('first-page-drawing-canvas');
+     if (!canvas) return;
+     
+     const rect = canvas.getBoundingClientRect();
+     previewCanvas.style.position = 'absolute';
+     previewCanvas.style.top = (rect.top + window.scrollY) + 'px';
+     previewCanvas.style.left = (rect.left + window.scrollX) + 'px';
+     previewCanvas.style.width = canvas.offsetWidth + 'px';
+     previewCanvas.style.height = canvas.offsetHeight + 'px';
+     previewCanvas.width = canvas.width;
+     previewCanvas.height = canvas.height;
+   }
     
     function initializeCanvas(canvasId) {
       const canvas = document.getElementById(canvasId);
+     if (!canvas) return;
       const ctx = canvas.getContext('2d');
       
       // Create preview canvas for real-time drawing feedback (only for drawing canvas)
       if (canvasId === 'drawing-canvas') {
         previewCanvas = document.createElement('canvas');
-        previewCanvas.width = canvas.width;
-        previewCanvas.height = canvas.height;
-        previewCanvas.style.position = 'absolute';
         previewCanvas.style.pointerEvents = 'none';
-        previewCanvas.style.zIndex = '1000';
+       previewCanvas.style.zIndex = '9999';
         previewCanvas.style.background = 'transparent';
-        previewCanvas.style.border = '1px solid #ccc';
-        
-        // Get canvas position relative to viewport
-        const rect = canvas.getBoundingClientRect();
-        previewCanvas.style.top = rect.top + window.scrollY + 'px';
-        previewCanvas.style.left = rect.left + window.scrollX + 'px';
-        previewCanvas.style.width = canvas.offsetWidth + 'px';
-        previewCanvas.style.height = canvas.offsetHeight + 'px';
+       previewCanvas.style.border = '1px solid rgba(255,0,0,0.3)'; // Subtle red border for debugging
         
         // Add preview canvas to body with fixed positioning
         document.body.appendChild(previewCanvas);
+       previewCtx = previewCanvas.getContext('2d');
         
         // Update preview canvas size when main canvas size changes
         const updatePreviewSize = () => {
@@ -1284,7 +1297,7 @@
           ctx.moveTo(currentX, currentY);
         } else if (activeTool === 'line' || activeTool === 'rectangle' && canvasId !== 'signature-canvas') {
           // Only show preview for first page drawing canvas
-          if (canvasId === 'first-page-drawing-canvas' && previewCtx) {
+         if (canvasId === 'first-page-drawing-canvas' && previewCtx && previewCanvas) {
             // Clear preview canvas
             previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
             
@@ -1292,7 +1305,7 @@
             previewCtx.lineWidth = currentLineWidth;
             previewCtx.strokeStyle = currentColor;
             previewCtx.lineCap = 'round';
-            previewCtx.setLineDash([]);
+           previewCtx.globalAlpha = 0.8; // Make preview slightly transparent
             
             if (activeTool === 'line') {
               previewCtx.beginPath();
@@ -1304,6 +1317,8 @@
               previewCtx.rect(startX, startY, currentX - startX, currentY - startY);
               previewCtx.stroke();
             }
+           
+           previewCtx.globalAlpha = 1.0; // Reset alpha
           }
         }
       }
@@ -1316,7 +1331,7 @@
         const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
         
         // Clear preview
-        if (previewCtx && canvasId === 'first-page-drawing-canvas') {
+       if (previewCtx && previewCanvas && canvasId === 'first-page-drawing-canvas') {
           previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
         }
         
@@ -1378,24 +1393,43 @@
     // Function to adjust drawing canvas size based on number of fence options
     function adjustDrawingSize() {
       const canvas = document.getElementById('first-page-drawing-canvas');
+     if (!canvas) return;
+     
       const fenceCount = document.querySelectorAll('.product-type-wrapper').length;
       
       let height;
-      if (fenceCount <= 2) {
-        height = 300; // Larger for few fences
-      } else if (fenceCount <= 4) {
-        height = 250; // Medium size
-      } else if (fenceCount <= 6) {
-        height = 200; // Smaller for more fences
-      } else {
-        height = 150; // Smallest for many fences
-      }
-      
+     if (fenceCount <= 1) {
+       height = 350; // Largest for single fence
+     } else if (fenceCount <= 2) {
+       height = 280; // Large for few fences
+       // Initial positioning
+       updatePreviewPosition();
       canvas.height = height;
-      canvas.style.height = height + 'px';
+       // Update position on scroll and resize
+       window.addEventListener('resize', updatePreviewPosition);
+       window.addEventListener('scroll', updatePreviewPosition);
+     }
     }
     
     // Update drawing size when cards are added/removed
+   
+   // Call adjustDrawingSize when cards are added or removed
+   function addProductType() {
+     const grid = document.getElementById('product-type-grid');
+     const tpl = grid.querySelector('.product-type-wrapper');
+     const clone = tpl.cloneNode(true);
+
+     clone.querySelectorAll('input[type=text], select').forEach(el => {
+       if (el.tagName === 'SELECT') { el.selectedIndex = 0; } 
+       else { el.value = ''; }
+     });
+     clone.querySelector('.card-total').textContent = formatCurrency(0);
+     clone.querySelector('.delete-btn').classList.add('show');
+     grid.insertBefore(clone, document.getElementById('plus-btn-wrapper'));
+     bindCardLogic(clone);
+     adjustDrawingSize(); // Adjust canvas size when adding
+     generateFenceImages();
+   }
   </script>
 </head>
 <body>
