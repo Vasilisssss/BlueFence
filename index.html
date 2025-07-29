@@ -1059,10 +1059,23 @@
     let currentColor = '#000000';
     let currentLineWidth = 2;
     let startX, startY;
+    let previewCanvas, previewCtx;
     
     function initializeCanvas(canvasId) {
       const canvas = document.getElementById(canvasId);
       const ctx = canvas.getContext('2d');
+      
+      // Create preview canvas for real-time drawing feedback
+      previewCanvas = document.createElement('canvas');
+      previewCanvas.width = canvas.width;
+      previewCanvas.height = canvas.height;
+      previewCanvas.style.position = 'absolute';
+      previewCanvas.style.top = canvas.offsetTop + 'px';
+      previewCanvas.style.left = canvas.offsetLeft + 'px';
+      previewCanvas.style.pointerEvents = 'none';
+      previewCanvas.style.zIndex = '10';
+      canvas.parentNode.appendChild(previewCanvas);
+      previewCtx = previewCanvas.getContext('2d');
       
       canvas.addEventListener('mousedown', startDrawing);
       canvas.addEventListener('mousemove', draw);
@@ -1082,11 +1095,12 @@
       }
       
       function draw(e) {
-        if (!isDrawing) return;
         
         const rect = canvas.getBoundingClientRect();
         const currentX = e.clientX - rect.left;
         const currentY = e.clientY - rect.top;
+        
+        if (!isDrawing) return;
         
         ctx.lineWidth = currentLineWidth;
         ctx.lineCap = 'round';
@@ -1097,6 +1111,25 @@
           ctx.stroke();
           ctx.beginPath();
           ctx.moveTo(currentX, currentY);
+        } else if (currentTool === 'line' || currentTool === 'rectangle') {
+          // Clear preview canvas
+          previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+          
+          // Draw preview
+          previewCtx.lineWidth = currentLineWidth;
+          previewCtx.strokeStyle = currentColor;
+          previewCtx.lineCap = 'round';
+          
+          if (currentTool === 'line') {
+            previewCtx.beginPath();
+            previewCtx.moveTo(startX, startY);
+            previewCtx.lineTo(currentX, currentY);
+            previewCtx.stroke();
+          } else if (currentTool === 'rectangle') {
+            previewCtx.beginPath();
+            previewCtx.rect(startX, startY, currentX - startX, currentY - startY);
+            previewCtx.stroke();
+          }
         }
       }
       
@@ -1104,13 +1137,19 @@
         if (!isDrawing) return;
         isDrawing = false;
         
+        // Clear preview
+        if (previewCtx) {
+          previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+        }
+        
         if (currentTool === 'line' || currentTool === 'rectangle') {
           const rect = canvas.getBoundingClientRect();
-          const endX = event.clientX - rect.left;
-          const endY = event.clientY - rect.top;
+          const endX = event ? event.clientX - rect.left : startX;
+          const endY = event ? event.clientY - rect.top : startY;
           
           ctx.lineWidth = currentLineWidth;
           ctx.strokeStyle = currentColor;
+          ctx.lineCap = 'round';
           
           if (currentTool === 'line') {
             ctx.beginPath();
