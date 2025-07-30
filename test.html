@@ -1,1620 +1,1219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1e3c72">
-  <meta name="description" content="Bluebird Fence - Professional Fence Quote Form">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Bluebird Fence">
-  <meta name="msapplication-TileColor" content="#1e3c72">
-  <meta name="msapplication-tileimage" content="logo.jpg">
-  
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="logo.jpg">
-  <link rel="icon" type="image/jpeg" href="logo.jpg">
-  <link rel="shortcut icon" href="logo.jpg">
-  <title>Blue Fence</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      margin: 0;
-      padding: 20px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      min-height: 100vh;
-    }
-    .container,
-    .half-container,
-    .product-type-wrapper {
-      break-inside: avoid;
-      page-break-inside: avoid;
-    }
-    .container {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto 32px auto;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      padding: 40px 0px;
-      box-sizing: border-box;
-      text-align: left;
-    }
-    .professional-header {
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      padding: 30px;
-      margin: -40px -32px 30px -32px;
-    }
-    .header-content {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 40px;
-      margin-bottom: 0;
-    }
-    .left-section {
-      display: flex;
-      align-items: flex-start;
-      gap: 20px;
-      flex-shrink: 0;
-    }
-    .company-logo {
-      height: 70px;
-      width: auto;
-      border-radius: 6px;
-    }
-    .company-info {
-      text-align: left;
-    }
-    .company-tagline {
-      font-size: 1.3em;
-      font-weight: 600;
-      color: #333333;
-      margin-bottom: 12px;
-      letter-spacing: 0.5px;
-    }
-    .company-details {
-      color: #666666;
-      font-size: 0.95em;
-      line-height: 1.4;
-    }
-    .address-line {
-      margin-bottom: 4px;
-      font-weight: 500;
-    }
-    .contact-line {
-      font-weight: 500;
-    }
-    .website-link {
-      color: #333333;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .website-link:hover {
-      text-decoration: underline;
-    }
-    .right-section {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      text-align: right;
-    }
-    .quote-title {
-      font-size: 1.4em;
-      font-weight: 600;
-      color: #333333;
-      margin: 0 0 15px 0;
-      letter-spacing: 0.5px;
-    }
-    .quote-total-display {
-      display: flex;
-      align-items: center;
-    }
-    .half-container {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto 32px auto;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      padding: 40px 32px;
-      box-sizing: border-box;
-    }
-    .half-container .input-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 20px;
-    }
-    .header-row {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .header-row img {
-      height: 80px;
-    }
-    h1, h2 {
-      font-family: "Montserrat", Arial, sans-serif;
-      font-weight: 700;
-      color: #333333;
-      letter-spacing: 2px;
-      margin-top: 0;
-    }
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 0.2em;
-      color: #333333;
-    }
-    h2 {
-      font-size: 1.5em;
-      margin-bottom: 0;
-      color: #333333;
-    }
-    .blue-line {
-      border: none;
-      background: #cccccc;
-      height: 1px;
-      width: 100%;
-      margin: 10px 0 28px;
-    }
-    .quote-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    p.title {
-      color: #333333;
-      font-size: 2em;
-      font-weight: bold;
-      margin: 0;
-    }
-    #grand-total-box {
-      background: #333333;
-      color: #ffffff;
-      font-family: "Montserrat", Arial, sans-serif;
-      font-weight: 700;
-      font-size: 1.6em;
-      padding: 12px 24px;
-      border-radius: 4px;
-      min-width: 150px;
-      text-align: right;
-      white-space: nowrap;
-    }
-    label {
-      font-family: "Montserrat", Arial, sans-serif;
-      color: #333333;
-      font-weight: 600;
-      margin-right: 2px;
-    }
-    input[type="text"], textarea {
-      font-size: 0.9em;
-      padding: 6px 12px;
-      border-radius: 4px;
-      border: 1px solid #dddddd;
-      background: #ffffff;
-      min-width: 300px;
-      max-width: 800px;
-      transition: all 0.3s ease;
-    }
-    input[type="text"]:focus, textarea:focus {
-      border-color: #666666;
-      outline: none;
-    }
-    #estimate-attendance, #site-contact, #job-address, #Name, #Billing-Address, #Email, #Phone {
-      width: 365px;
-    }
-    .product-type-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-      align-items: center;
-      max-width: 940px;
-      margin: auto;
-    }
-    .product-type-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      width: fit-content;
-    }
-    .product-type-container {
-      width: 500px;
-      min-width: 300px;
-      max-width: 1500px;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      padding: 24px;
-      box-sizing: border-box;
-      position: relative;
-      transition: width 0.15s;
-    }
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 16px;
-    }
-    .card-total {
-      background: #f5f5f5;
-      color: #333333;
-      font-family: "Montserrat", Arial, sans-serif;
-      font-weight: 700;
-      font-size: 1.25em;
-      padding: 8px 16px;
-      border-radius: 4px;
-      min-width: 100px;
-      text-align: right;
-      white-space: nowrap;
-    }
-    .product-type-container .dropdown-container, .product-type-container .input-row {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      margin-top: 12px;
-      flex-wrap: wrap;
-    }
-    .product-type-container select {
-      font-size: 0.9em;
-      padding: 6px 12px;
-      border-radius: 4px;
-      border: 1px solid #dddddd;
-      background: #ffffff;
-      max-width: 100%;
-      transition: all 0.3s ease;
-    }
-    .product-type-container select:focus {
-      border-color: #666666;
-      outline: none;
-    }
-    .resize-controls {
-      display: flex;
-      gap: 8px;
-      justify-content: flex-end;
-    }
-    .resize-controls button, .plus-btn {
-      background: #666666;
-      color: #ffffff;
-      border: none;
-      cursor: pointer;
-      font-size: 0.9em;
-      transition: all 0.3s ease;
-    }
-    .resize-controls button {
-        border-radius: 4px;
-        padding: 4px 8px;
-    }
-    .resize-controls button:hover, .plus-btn:hover {
-      background: #555555;
-    }
-    #plus-btn-wrapper { text-align: center; }
-    .plus-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      font-size: 1.8em;
-    }
-    .delete-btn {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: #999999;
-      color: #ffffff;
-      border: none;
-      border-radius: 50%;
-      width: 24px;
-      height: 24px;
-      font-size: 1em;
-      line-height: 24px;
-      text-align: center;
-      cursor: pointer;
-      display: none;
-      transition: all 0.3s ease;
-    }
-    .delete-btn.show { display: inline-flex; }
-    .delete-btn:hover { 
-      background: #777777;
-    }
-
-    /* Fence Images Display */
-    .fence-images-display {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-      margin-top: 20px;
-      min-height: auto;
-      max-height: 350px;
-      overflow: hidden;
-      align-content: flex-start;
-    }
-    
-    .fence-image-item {
-      text-align: center;
-      margin: 10px;
-      flex: 0 1 calc(25% - 15px);
-      max-width: calc(25% - 15px);
-      min-width: 120px;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .fence-image-item img {
-      max-width: 140px;
-      max-height: 100px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      object-fit: cover;
-      width: 100%;
-    }
-    
-    .fence-details {
-      font-size: 10px;
-      color: #666;
-      margin-top: 8px;
-      line-height: 1.3;
-      flex-grow: 1;
-      text-align: left;
-    }
-
-    /* Responsive Design */
-    /* Tablet Styles */
-    @media (max-width: 768px) {
-      body {
-        padding: 15px;
-      }
-      .container, .half-container {
-        padding: 30px 20px;
-        margin-bottom: 20px;
-      }
-      .professional-header {
-        padding: 20px 16px;
-        margin: -30px -20px 20px -20px;
-      }
-      .header-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 12px;
-        margin-bottom: 0;
-      }
-      .left-section {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 12px;
-      }
-      .company-logo {
-        height: 60px;
-      }
-      .company-tagline {
-        font-size: 1.2em;
-      }
-      .company-details {
-        font-size: 0.9em;
-      }
-      .right-section {
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
-      }
-      .quote-title {
-        font-size: 1.4em;
-        text-align: center;
-      }
-      #grand-total-box {
-        font-size: 1.4em;
-        padding: 12px 24px;
-        min-width: 120px;
-      }
-      input[type="text"], textarea {
-        min-width: 250px;
-        max-width: 100%;
-      }
-      #estimate-attendance, #site-contact, #job-address, #Name, #Billing-Address, #Email, #Phone {
-        width: 100%;
-        max-width: 400px;
-      }
-      .half-container .input-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-      .product-type-container {
-        width: 100%;
-        max-width: 600px;
-        padding: 20px;
-      }
-      .card-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-      }
-      .card-total {
-        align-self: flex-end;
-        font-size: 1.1em;
-        padding: 6px 12px;
-      }
-      .product-type-container .dropdown-container, .product-type-container .input-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-      .product-type-container select, .product-type-container input[type="text"] {
-        width: 100%;
-        max-width: 100%;
-      }
-      .resize-controls {
-        justify-content: center;
-        margin-top: 10px;
-      }
-    }
-
-    /* Mobile Styles */
-    @media (max-width: 480px) {
-      body {
-        padding: 10px;
-      }
-      .container, .half-container {
-        padding: 20px 15px;
-        margin-bottom: 15px;
-        border-radius: 8px;
-      }
-      .professional-header {
-        padding: 15px 12px;
-        margin: -20px -15px 15px -15px;
-      }
-      .header-content {
-        gap: 10px;
-        margin-bottom: 0;
-      }
-      .company-logo {
-        height: 50px;
-      }
-      .company-tagline {
-        font-size: 1.1em;
-      }
-      .company-details {
-        font-size: 0.85em;
-      }
-      .right-section {
-        gap: 10px;
-      }
-      .quote-title {
-        font-size: 1.3em;
-      }
-      #grand-total-box {
-        font-size: 1.2em;
-        padding: 10px 20px;
-        min-width: 100px;
-      }
-      input[type="text"], textarea {
-        min-width: 200px;
-        font-size: 0.85em;
-        padding: 8px 10px;
-      }
-      .product-type-container {
-        padding: 15px;
-        border-radius: 8px;
-      }
-      .card-total {
-        font-size: 1em;
-        padding: 5px 10px;
-        min-width: 80px;
-      }
-      .product-type-container select {
-        font-size: 0.85em;
-        padding: 8px 10px;
-      }
-      .plus-btn {
-        width: 35px;
-        height: 35px;
-        font-size: 1.6em;
-      }
-      .resize-controls button {
-        padding: 6px 10px;
-        font-size: 0.8em;
-      }
-      .fence-preview-image {
-        max-height: 150px !important;
-      }
-    }
-
-    /* Large Desktop Styles */
-    @media (min-width: 1200px) {
-      .container, .half-container {
-        max-width: 1100px;
-        padding: 50px 40px;
-      }
-      .professional-header {
-        margin: -50px -40px 30px -40px;
-      }
-      .product-type-container {
-        max-width: 800px;
-      }
-      h1 {
-        font-size: 2.8em;
-      }
-      h2 {
-        font-size: 1.7em;
-      }
-      p.title {
-        font-size: 2.2em;
-      }
-      #grand-total-box {
-        font-size: 1.9em;
-        padding: 15px 30px;
-      }
-    }
-
-    /* Landscape Mobile */
-    @media (max-width: 768px) and (orientation: landscape) {
-      .header-content {
-        flex-direction: row;
-        justify-content: space-between;
-      }
-      .left-section {
-        flex-direction: row;
-        text-align: left;
-      }
-      .right-section {
-        text-align: center;
-      }
-      .right-section {
-        flex-direction: row;
-        align-items: baseline;
-      }
-      .quote-title {
-        text-align: left;
-      }
-    }
-    .bordered-info {
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      margin-bottom: 24px;
-    }
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px 24px;
-      margin-top: 18px;
-      font-size: 1.05em;
-    }
-    .info-grid label {
-      font-weight: 600;
-      color: #333333;
-      margin-right: 4px;
-      display: block;
-      margin-bottom: 5px;
-    }
-    .info-grid span {
-      color: #666666;
-      font-weight: 400;
-      margin-left: 2px;
-      display: none;
-    }
-    .info-grid input[type="text"] {
-      width: 100%;
-      padding: 8px 12px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 0.9em;
-      background: white;
-    }
-    @media print {
-      /* Make all backgrounds light grey */
-      * {
-        background: #f5f5f5 !important;
-      }
-      
-      /* Keep specific elements white for readability */
-      canvas, .signature-canvas, .drawing-canvas, input, select, textarea {
-        background: white !important;
-      }
-      
-      body {
-        background: #f5f5f5 !important;
-        padding: 0 !important;
-        margin: 0 !important;
-      }
-      #print-btn {
-        display: none !important;
-      }
-      .info-grid input[type="text"] {
-        display: none !important;
-      }
-      .info-grid span {
-        display: inline !important;
-      }
-      .product-type-grid, .product-type-wrapper, .product-type-container, .resize-controls, .plus-btn, #plus-btn-wrapper, .drawing-tools {
-        display: none !important;
-      }
-      .container {
-        background: #f5f5f5 !important;
-        margin: 0 !important;
-        padding: 10px !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        page-break-inside: avoid;
-      }
-      .professional-header {
-        background: #f5f5f5 !important;
-        padding: 12px !important;
-        margin: -15px -15px 12px -15px !important;
-      }
-      .header-content {
-        flex-direction: row !important;
-        justify-content: space-between !important;
-        align-items: flex-start !important;
-        text-align: left !important;
-      }
-      .left-section {
-        flex-direction: row !important;
-        align-items: flex-start !important;
-        text-align: left !important;
-        gap: 15px !important;
-      }
-      .company-logo {
-        height: 50px !important;
-      }
-      .company-tagline {
-        font-size: 1.1em !important;
-        margin-bottom: 8px !important;
-      }
-      .company-details {
-        font-size: 0.85em !important;
-      }
-      .right-section {
-        flex-direction: column !important;
-        align-items: flex-end !important;
-        text-align: right !important;
-        gap: 8px !important;
-      }
-      .quote-title {
-        font-size: 1.2em !important;
-        margin-bottom: 8px !important;
-      }
-      #grand-total-box {
-        font-size: 1.3em !important;
-        padding: 8px 16px !important;
-        min-width: 100px !important;
-      }
-      /* Make customer info section more compact */
-      .info-grid {
-        gap: 8px 20px !important;
-        margin-top: 12px !important;
-        font-size: 0.9em !important;
-      }
-      .info-grid label {
-        margin-bottom: 3px !important;
-        font-size: 0.85em !important;
-      }
-      /* Adjust container spacing for better fit */
-      .container:nth-child(2) {
-        padding: 12px !important;
-        margin-bottom: 8px !important;
-      }
-      .container:nth-child(3) {
-        padding: 12px !important;
-        margin-bottom: 8px !important;
-        page-break-after: avoid !important;
-      }
-      
-      /* Force fence images container to stay on first page */
-      .container:nth-child(3) {
-        page-break-before: avoid !important;
-        page-break-after: avoid !important;
-        max-height: 450px !important;
-        overflow: hidden !important;
-      }
-            /* Make drawing section touch bottom of page */
-      .container:nth-child(3) {
-        margin-bottom: 0 !important;
-        padding-bottom: 0 !important;
-      }
-
-      body {
-        padding-bottom: 0 !important;
-      }
-      
-      
-      .drawing-signature-container {
-        page-break-before: always !important;
-      }
-      .fence-images-display {
-        display: flex !important;
-        flex-wrap: wrap;
-        gap: 12px;
-        justify-content: center;
-        margin-top: 8px;
-      }
-      .fence-image-item {
-        text-align: center;
-        margin: 3px;
-        page-break-inside: avoid;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: flex-start !important;
-      }
-      .fence-image-item img {
-        max-width: 160px !important;
-        max-height: 120px !important;
-        border: 1px solid #ddd !important;
-        border-radius: 8px !important;
-        object-fit: cover !important;
-      }
-      .fence-details {
-        font-size: 9px !important;
-        color: #666 !important;
-        margin-top: 4px !important;
-        line-height: 1.3 !important;
-        flex-grow: 1 !important;
-        text-align: left !important;
-      }
-      h2 {
-        font-size: 1.1em !important;
-        margin-bottom: 8px !important;
-      }
-      .drawing-canvas {
-        border: 1px solid #ccc;
-        width: 100%;
-        height: 50vh;
-        max-height: 400px;
-        background: white;
-      }
-      
-      .drawing-section {
-        height: 50vh;
-        max-height: 400px;
-        margin-bottom: 0px;
-      }
-      
-      .signature-section {
-        height: 50vh;
-        max-height: 400px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-      
-      .fence-images-display {
-        display: grid !important;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
-        gap: 8px !important;
-        justify-content: center !important;
-        margin-top: 8px !important;
-        min-height: auto !important;
-        align-content: start !important;
-        max-height: 300px !important;
-        overflow: hidden !important;
-      }
-      
-      .fence-image-item {
-        text-align: center !important;
-        margin: 0 !important;
-        page-break-inside: avoid !important;
-        break-inside: avoid !important;
-        max-width: 150px !important;
-      }
-      
-      .fence-image-item img {
-        max-width: 100px !important;
-        max-height: 80px !important;
-        border: 1px solid #ddd !important;
-        border-radius: 4px !important;
-        object-fit: cover !important;
-      }
-      
-      .fence-details {
-        font-size: 8px !important;
-        color: #666 !important;
-        margin-top: 3px !important;
-        line-height: 1.2 !important;
-        flex-grow: 1 !important;
-        text-align: left !important;
-      }
-      .signature-canvas {
-        width: 300px;
-        height: 100px;
-        background: white;
-      }
-      .drawing-signature-container {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        padding: 20px;
-      }
-      .drawing-section {
-        height: calc(100vh - 200px) !important;
-        margin-bottom: 0px;
-      }
-      .signature-section {
-        position: fixed !important;
-        bottom: 20px !important;
-        right: 20px !important;
-        width: 300px !important;
-        height: auto !important;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        background: #f5f5f5 !important;
-        padding: 15px !important;
-        border-radius: 8px !important;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
-      }
-      .signature-section h2 {
-        margin: 0 0 10px 0 !important;
-        font-size: 1em !important;
-        text-align: center !important;
-        width: 100% !important;
-      }
-      
-      .signature-canvas {
-        width: 280px !important;
-        height: 80px !important;
-        background: #f5f5f5 !important;
-      }
-      .blue-line {
-        display: none !important;
-      }
-      
-      /* Override all white backgrounds to light grey */
-      * {
-        background-color: #f5f5f5 !important;
-      }
-      
-      /* Keep canvas backgrounds white for drawing visibility */
-      canvas {
-        background: white !important;
-      }
-      
-      /* Keep text inputs and form elements readable */
-      input[type="text"], select, textarea {
-        background: white !important;
-        border: 1px solid #ccc !important;
-      }
-      @page {
-        size: A4 portrait;
-        margin: 0cm;
-      }
-    }
-    
-    /* Drawing and Signature Sections - Hidden by default, shown only in print */
-    
-    .first-page-drawing {
-      margin-top: 20px;
-      text-align: center;
-    }
-    
-    .first-page-drawing h2 {
-      font-size: 1.3em;
-      margin-bottom: 0px;
-    }
-    
-    .first-page-drawing-canvas {
-      border: 1px solid #ccc;
-      width: 100%;
-      max-width: 800px;
-      background: white;
-      border-radius: 8px;
-    }
-    
-    .signature-below-total {
-      margin-top: 15px;
-      text-align: center;
-    }
-    
-    .signature-below-total h3 {
-      font-size: 1em;
-      margin-bottom: 8px;
-      color: #333;
-      font-family: "Montserrat", Arial, sans-serif;
-    }
-    
-    .signature-below-total canvas {
-      
-      background: white;
-      border-radius: 4px;
-    }
-    </style>
-    <script>
-
-
-
-
-    function formatCurrency(value) {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    }
-
-    function updateGrandTotal() {
-      const allTotals = document.querySelectorAll('.card-total');
-      let grandTotal = 0;
-      allTotals.forEach(box => {
-        const value = parseFloat(box.textContent.replace(/[^\d.-]/g, ''));
-        if (!isNaN(value)) {
-          grandTotal += value;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluebird Fence - Professional Quote Form</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e3c72">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-      });
-      const grandTotalBox = document.getElementById('grand-total-box');
-      if(grandTotalBox) {
-        grandTotalBox.textContent = formatCurrency(grandTotal);
-      }
-    }
 
-    function addProductType() {
-      const grid = document.getElementById('product-type-grid');
-      const tpl = grid.querySelector('.product-type-wrapper');
-      const clone = tpl.cloneNode(true);
-
-      clone.querySelectorAll('input[type=text], select').forEach(el => {
-        if (el.tagName === 'SELECT') { el.selectedIndex = 0; } 
-        else { el.value = ''; }
-      });
-      clone.querySelector('.card-total').textContent = formatCurrency(0);
-      clone.querySelector('.delete-btn').classList.add('show');
-      grid.insertBefore(clone, document.getElementById('plus-btn-wrapper'));
-      bindCardLogic(clone); // IMPORTANT: Bind logic to the new card
-    }
-
-    // Fence style options by material
-    const FENCE_STYLE_OPTIONS = {
-      wood: [
-        { value: 'lattice', label: 'Lattice' },
-        { value: 'closed-top-baluster', label: 'Closed Top Baluster' },
-        { value: 'privacy-lattice', label: 'Privacy & Lattice' },
-        { value: 'universal-privacy', label: 'Universal Privacy' },
-        { value: 'traditional-scalloped', label: 'Traditional Scalloped' },
-        { value: 'tongue-groove', label: 'Tongue & Groove' },
-        { value: 'stockade', label: 'Stockade' },
-        { value: 'horizontal-boards', label: 'Horizontal Boards' },
-        { value: 'open-top-baluster', label: 'Open top Baluster' }
-      ],
-      vinyl: [
-        { value: 'solid-privacy', label: 'Solid Privacy' },
-        { value: 'privacy-baluster', label: 'Privacy & Baluster' },
-        { value: 'privacy-lattice', label: 'Privacy & Lattice' },
-        { value: 'scalloped-baluster', label: 'Scalloped Baluster' },
-        { value: 'closed-top-baluster', label: 'Closed Top Baluster & Arbor' },
-        { value: 'lattice', label: 'Lattice' },
-        { value: 'semi-privacy', label: 'Semi Privacy' },
-        { value: 'pergola', label: 'Pergola' },
-        { value: 'straight-top-baluster-arbor', label: 'Straight Top Baluster' },
-        {value: 'privacy-mini-lattice', label: 'Privacy & Mini Latice'}
-      ]
-    };
-
-    // Pricing configuration
-    const PRICING = {
-      materials: {
-        wood: 44,
-        vinyl: 45
-      },
-      heights: {
-        '6H': 15,
-        '4H': 10
-      },
-      styles: {
-        // Wood styles
-        'wood-lattice': 30,
-        'wood-closed-top-baluster': 35,
-        'wood-privacy-lattice': 50,
-        'wood-universal-privacy': 55,
-        'wood-traditional-scalloped': 40,
-        'wood-tongue-groove': 25,
-        'wood-stockade': 20,
-        'wood-horizontal-boards': 30,
-        'wood-open-top-baluster': 35,
-        // Vinyl styles
-        'vinyl-solid-privacy': 40,
-        'vinyl-privacy-baluster': 50,
-        'vinyl-privacy-lattice': 55,
-        'vinyl-scalloped-baluster': 45,
-        'vinyl-closed-top-baluster': 35,
-        'vinyl-lattice': 30,
-        'vinyl-semi-privacy': 25,
-        'vinyl-pergola': 60,
-        'vinyl-straight-top-baluster-arbor': 40,
-        'vinyl-privacy-mini-lattice': 45
-      }
-    };
-
-    function updateFenceStyleOptions(materialSelect, styleSelect) {
-      const material = materialSelect.value;
-      styleSelect.innerHTML = '<option value="0">Please Select</option>';
-      if (FENCE_STYLE_OPTIONS[material]) {
-        FENCE_STYLE_OPTIONS[material].forEach(opt => {
-          const option = document.createElement('option');
-          option.value = opt.value;
-          option.textContent = opt.label;
-          styleSelect.appendChild(option);
-        });
-      }
-    }
-
-    // Helper: get image path for a given material and style
-    function getFenceImageSrc(material, style) {
-      if (!material || !style || material === '0' || style === '0') return '';
-      // Example: images/wood-lattice.png
-      return `images/${material}-${style}.png`;
-    }
-
-    // Helper: calculate price for a card
-    function calculateCardPrice(material, height, style) {
-      let total = 0;
-      
-      // Add material cost
-      if (material && material !== '0' && PRICING.materials[material]) {
-        total += PRICING.materials[material];
-      }
-      
-      // Add height cost
-      if (height && height !== '0' && PRICING.heights[height]) {
-        total += PRICING.heights[height];
-      }
-      
-      // Add style cost
-      if (material && style && material !== '0' && style !== '0') {
-        const styleKey = `${material}-${style}`;
-        if (PRICING.styles[styleKey]) {
-          total += PRICING.styles[styleKey];
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
         }
-      }
-      
-      return total;
-    }
 
-    // This is the main function that gives each card its functionality
-    function bindCardLogic(wrapper) {
-        const selects = wrapper.querySelectorAll('select');
-        const cardTotalEl = wrapper.querySelector('.card-total');
-        const deleteBtn = wrapper.querySelector('.delete-btn');
-        const resizePlusBtn = wrapper.querySelector('.resize-plus');
-        const resizeMinusBtn = wrapper.querySelector('.resize-minus');
-        const materialSelect = wrapper.querySelector('.fence-material-select');
-        const styleSelect = wrapper.querySelector('.fence-style-select');
-        const heightSelect = wrapper.querySelector('select:not(.fence-material-select):not(.fence-style-select)');
-        const imageEl = wrapper.querySelector('.fence-preview-image');
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            min-height: 100vh;
+        }
 
-        // --- Pricing Logic ---
-        function updateCardPrice() {
-            const material = materialSelect ? materialSelect.value : '0';
-            const height = heightSelect ? heightSelect.value : '0';
-            const style = styleSelect ? styleSelect.value : '0';
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="fence" patternUnits="userSpaceOnUse" width="20" height="20"><rect width="20" height="20" fill="none"/><rect x="8" y="0" width="4" height="20" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23fence)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 3px solid white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .company-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .form-container {
+            padding: 2rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #f8fbff 0%, #e8f4fd 100%);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: #1e3c72;
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.1);
+        }
+
+        .section-title {
+            color: #1e3c72;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #1e3c72;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::before {
+            content: '🏗️';
+            font-size: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-row.three-col {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+            transform: translateY(-1px);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .checkbox-item:hover {
+            border-color: #1e3c72;
+            background: #f8fbff;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin-right: 0.5rem;
+            transform: scale(1.2);
+        }
+
+        .fence-styles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .fence-option {
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .fence-option:hover {
+            border-color: #1e3c72;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .fence-option.selected {
+            border-color: #1e3c72;
+            background: linear-gradient(145deg, #f8fbff 0%, #e8f4fd 100%);
+        }
+
+        .fence-option img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .fence-option h4 {
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+
+        .fence-option input[type="radio"] {
+            margin-top: 0.5rem;
+            transform: scale(1.3);
+        }
+
+        .drawing-section {
+            background: linear-gradient(145deg, #fff9e6 0%, #f0f8ff 100%);
+            border: 2px solid #ffd700;
+        }
+
+        .drawing-section .section-title::before {
+            content: '✏️';
+        }
+
+        .canvas-container {
+            position: relative;
+            border: 3px solid #1e3c72;
+            border-radius: 12px;
+            background: white;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .drawing-toolbar {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: linear-gradient(145deg, #f0f8ff 0%, #e8f4fd 100%);
+            border-radius: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .tool-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #1e3c72;
+            background: white;
+            color: #1e3c72;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .tool-btn:hover {
+            background: #1e3c72;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .tool-btn.active {
+            background: #1e3c72;
+            color: white;
+        }
+
+        .color-picker {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #1e3c72;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .line-width-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .line-width-control input {
+            width: 60px;
+        }
+
+        canvas {
+            display: block;
+            cursor: crosshair;
+        }
+
+        .signature-section {
+            background: linear-gradient(145deg, #f0fff0 0%, #e8f5e8 100%);
+            border: 2px solid #28a745;
+        }
+
+        .signature-section .section-title::before {
+            content: '✍️';
+        }
+
+        .signature-canvas-container {
+            position: relative;
+            border: 2px solid #28a745;
+            border-radius: 8px;
+            background: white;
+            margin: 1rem 0;
+        }
+
+        .signature-canvas-container canvas {
+            display: block;
+        }
+
+        .signature-clear {
+            margin-top: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .signature-clear:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+        }
+
+        .total-section {
+            background: linear-gradient(145deg, #fff0f5 0%, #f8f9fa 100%);
+            border: 3px solid #28a745;
+            text-align: center;
+        }
+
+        .total-section .section-title::before {
+            content: '💰';
+        }
+
+        .total-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #28a745;
+            margin: 1rem 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+                box-shadow: none;
+            }
+
+            .header {
+                padding: 1.5rem;
+            }
+
+            .company-name {
+                font-size: 2rem;
+            }
+
+            .form-container {
+                padding: 1rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row.three-col {
+                grid-template-columns: 1fr;
+            }
+
+            .fence-styles {
+                grid-template-columns: 1fr;
+            }
+
+            .drawing-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .tool-btn {
+                text-align: center;
+            }
+        }
+
+        @media print {
+            * { background-color: #f5f5f5 !important; }
+            body { background: #f5f5f5 !important; }
+            input, select, textarea, canvas { background-color: white !important; }
             
-            const currentPrice = calculateCardPrice(material, height, style);
-            cardTotalEl.textContent = formatCurrency(currentPrice);
-            updateGrandTotal(); // Update the main total whenever a card changes
-        }
+            body {
+                font-size: 12px;
+                line-height: 1.4;
+                color: #000;
+            }
 
-        selects.forEach(select => {
-            select.addEventListener('change', updateCardPrice);
-        });
+            .container {
+                max-width: none;
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+            }
 
-        // --- Fence Material/Style Filtering ---
-        if (materialSelect && styleSelect) {
-          materialSelect.addEventListener('change', function() {
-            updateFenceStyleOptions(materialSelect, styleSelect);
-            // Reset style selection when material changes
-            styleSelect.value = '0';
-            updateCardPrice();
-            updateFenceImage();
-          });
-          styleSelect.addEventListener('change', function() {
-            updateCardPrice();
-            updateFenceImage();
-          });
-        }
+            .header {
+                background: #f5f5f5 !important;
+                color: #000 !important;
+                padding: 1rem;
+                page-break-after: avoid;
+            }
 
-        // --- Fence Image Logic ---
-        function updateFenceImage() {
-          if (!imageEl) return;
-          const mat = materialSelect ? materialSelect.value : '';
-          const sty = styleSelect ? styleSelect.value : '';
-          const src = getFenceImageSrc(mat, sty);
-          if (src && mat !== '0' && sty !== '0') {
-            imageEl.src = src;
-            imageEl.style.display = '';
-          } else {
-            imageEl.src = '';
-            imageEl.style.display = 'none';
-          }
-          // Update the fence images display
-          generateFenceImages();
-        }
+            .company-name {
+                font-size: 1.5rem;
+                color: #000 !important;
+                text-shadow: none;
+            }
 
-        if (deleteBtn) {
-            deleteBtn.addEventListener('click', () => {
-                const grid = document.getElementById('product-type-grid');
-                wrapper.remove();
-                updateGrandTotal();
-                adjustDrawingSize(); // Adjust canvas size when removing
-                generateFenceImages();
-            });
-        }
-        if (resizePlusBtn && resizeMinusBtn) {
-            const container = wrapper.querySelector('.product-type-container');
-            resizePlusBtn.addEventListener('click', () => {
-                let w = container.offsetWidth + STEP;
-                container.style.width = Math.max(MIN_W, Math.min(w, MAX_W)) + 'px';
-            });
-            resizeMinusBtn.addEventListener('click', () => {
-                let w = container.offsetWidth - STEP;
-                container.style.width = Math.max(MIN_W, Math.min(w, MAX_W)) + 'px';
-            });
-        }
-        updateCardPrice(); // Calculate initial price for the card
-    }
+            .tagline {
+                color: #000 !important;
+            }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.product-type-wrapper').forEach(bindCardLogic);
-        // Generate initial fence images
-        generateFenceImages();
-       
-       // Bind add button
-       const addBtn = document.getElementById('add-card-btn');
-       if (addBtn) {
-         addBtn.addEventListener('click', addProductType);
-       }
-       
-       // Initialize drawing after a short delay to ensure canvas is ready
-       setTimeout(() => {
-           initializeDrawing();
-       }, 100);
-    });
+            .form-container {
+                padding: 1rem;
+            }
 
-    // PWA Service Worker Registration
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-          .then((registration) => {
-            console.log('SW registered: ', registration);
-          })
-          .catch((registrationError) => {
-            console.log('SW registration failed: ', registrationError);
-          });
-      });
-    }
+            .section {
+                margin-bottom: 1rem;
+                padding: 0.5rem;
+                border: 1px solid #000;
+                page-break-inside: avoid;
+                background: #f5f5f5 !important;
+            }
 
-    // PWA Install Prompt
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      // You can show an install button here if desired
-    });
+            .section-title {
+                font-size: 1rem;
+                color: #000 !important;
+                border-bottom: 1px solid #000;
+            }
 
-    // Add script to copy input values to spans for print
-    function syncInfoFields() {
-      const fields = [
-        'FirstName', 'LastName', 'Street', 'State', 'ZipCode', 'Email', 'Phone', 'job-address', 'site-contact', 'estimate-attendance'
-      ];
-      fields.forEach(id => {
-        const input = document.getElementById(id);
-        const span = document.getElementById(id + '-span');
-        if (input && span) {
-          span.textContent = input.value;
-        }
-      });
-      
-      // Generate fence images for print
-      generateFenceImages();
-    }
-    
-    function generateFenceImages() {
-      const displayContainer = document.getElementById('fence-images-display');
-      if (!displayContainer) return;
-      
-      displayContainer.innerHTML = '';
-      
-      document.querySelectorAll('.product-type-wrapper').forEach(wrapper => {
-        const materialSelect = wrapper.querySelector('.fence-material-select');
-        const styleSelect = wrapper.querySelector('.fence-style-select');
-        const linearFootageInput = wrapper.querySelector('input[placeholder="Write Here"]');
-        
-        if (materialSelect && styleSelect && materialSelect.value !== '0' && styleSelect.value !== '0') {
-          const material = materialSelect.value;
-          const style = styleSelect.value;
-          const linearFootage = linearFootageInput ? linearFootageInput.value : '';
-          
-          const imageItem = document.createElement('div');
-          imageItem.className = 'fence-image-item';
-          
-          const img = document.createElement('img');
-          img.src = getFenceImageSrc(material, style);
-          img.alt = `${material} ${style} fence`;
-          
-          const details = document.createElement('div');
-          details.className = 'fence-details';
-          details.innerHTML = `
-            <div><strong>Material:</strong> ${material.charAt(0).toUpperCase() + material.slice(1)}</div>
-            <div><strong>Style:</strong> ${styleSelect.options[styleSelect.selectedIndex].text}</div>
-            <div><strong>Linear Footage:</strong> ${linearFootage}</div>
-          `;
-          
-          imageItem.appendChild(img);
-          imageItem.appendChild(details);
-          displayContainer.appendChild(imageItem);
-        }
-      });
-    }
-    
-    // Drawing functionality
-    let isDrawing = false;
-    let currentTool = 'pen';
-    let currentColor = '#000000';
-    let currentLineWidth = 2;
-    let startX, startY;
-    let previewCanvas, previewCtx;
-   
-   // Signature canvas functionality (pen only)
-   function initializeSignatureCanvas(canvasId) {
-     const canvas = document.getElementById(canvasId);
-     if (!canvas) return;
-     const ctx = canvas.getContext('2d');
-     
-     let isSignatureDrawing = false;
-     
-     canvas.addEventListener('mousedown', startSignatureDrawing);
-     canvas.addEventListener('mousemove', drawSignature);
-     canvas.addEventListener('mouseup', stopSignatureDrawing);
-     canvas.addEventListener('mouseout', stopSignatureDrawing);
-     
-     function startSignatureDrawing(e) {
-       isSignatureDrawing = true;
-       const rect = canvas.getBoundingClientRect();
-       const startX = e.clientX - rect.left;
-       const startY = e.clientY - rect.top;
-       
-       ctx.beginPath();
-       ctx.moveTo(startX, startY);
-     }
-     
-     function drawSignature(e) {
-       if (!isSignatureDrawing) return;
-       
-       const rect = canvas.getBoundingClientRect();
-       const currentX = e.clientX - rect.left;
-       const currentY = e.clientY - rect.top;
-       
-       ctx.lineWidth = 2;
-       ctx.lineCap = 'round';
-       ctx.strokeStyle = '#000000';
-       ctx.lineTo(currentX, currentY);
-       ctx.stroke();
-       ctx.beginPath();
-       ctx.moveTo(currentX, currentY);
-     }
-     
-     function stopSignatureDrawing() {
-       if (!isSignatureDrawing) return;
-       isSignatureDrawing = false;
-       ctx.beginPath();
-     }
-   }
-   
-   function updatePreviewPosition() {
-     if (!previewCanvas) return;
-     const canvas = document.getElementById('first-page-drawing-canvas');
-     if (!canvas) return;
-     
-     const rect = canvas.getBoundingClientRect();
-     previewCanvas.style.position = 'absolute';
-     previewCanvas.style.top = (rect.top + window.scrollY) + 'px';
-     previewCanvas.style.left = (rect.left + window.scrollX) + 'px';
-     previewCanvas.style.width = canvas.offsetWidth + 'px';
-     previewCanvas.style.height = canvas.offsetHeight + 'px';
-     previewCanvas.width = canvas.width;
-     previewCanvas.height = canvas.height;
-   }
-    
-   // Project drawing canvas functionality (all tools)
-   function initializeProjectDrawingCanvas(canvasId) {
-      const canvas = document.getElementById(canvasId);
-     if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      
-      // Create preview canvas for real-time drawing feedback (only for drawing canvas)
-      if (canvasId === 'drawing-canvas') {
-        previewCanvas = document.createElement('canvas');
-        previewCanvas.style.pointerEvents = 'none';
-       previewCanvas.style.zIndex = '9999';
-        previewCanvas.style.background = 'transparent';
-       previewCanvas.style.border = '1px solid rgba(255,0,0,0.3)'; // Subtle red border for debugging
-        
-        // Add preview canvas to body with fixed positioning
-        document.body.appendChild(previewCanvas);
-       previewCtx = previewCanvas.getContext('2d');
-        
-        // Update preview canvas size when main canvas size changes
-        const updatePreviewSize = () => {
-          const rect = canvas.getBoundingClientRect();
-          previewCanvas.width = canvas.width;
-          previewCanvas.height = canvas.height;
-          previewCanvas.style.top = rect.top + window.scrollY + 'px';
-          previewCanvas.style.left = rect.left + window.scrollX + 'px';
-          previewCanvas.style.width = canvas.offsetWidth + 'px';
-          previewCanvas.style.height = canvas.offsetHeight + 'px';
-        };
-        
-        // Update size initially and on resize
-        updatePreviewSize();
-        window.addEventListener('resize', updatePreviewSize);
-        window.addEventListener('scroll', updatePreviewSize);
-        
-        previewCtx = previewCanvas.getContext('2d');
-      }
-      
-      canvas.addEventListener('mousedown', startDrawing);
-      canvas.addEventListener('mousemove', draw);
-      canvas.addEventListener('mouseup', stopDrawing);
-      canvas.addEventListener('mouseout', stopDrawing);
-      
-      function startDrawing(e) {
-        isDrawing = true;
-        const rect = canvas.getBoundingClientRect();
-        startX = e.clientX - rect.left;
-        startY = e.clientY - rect.top;
-        
-       if (currentTool === 'pen' || currentTool === 'eraser') {
-          ctx.beginPath();
-          ctx.moveTo(startX, startY);
-        }
-      }
-      
-      function draw(e) {
-        const rect = canvas.getBoundingClientRect();
-        const currentX = e.clientX - rect.left;
-        const currentY = e.clientY - rect.top;
-        
-        if (!isDrawing) return;
-        
-        ctx.lineWidth = currentLineWidth;
-        ctx.lineCap = 'round';
-       ctx.strokeStyle = currentTool === 'eraser' ? '#ffffff' : currentColor;
-        
-       if (currentTool === 'pen' || currentTool === 'eraser') {
-          ctx.lineTo(currentX, currentY);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.moveTo(currentX, currentY);
-       } else if (currentTool === 'line' || currentTool === 'rectangle') {
-         // Show preview for line and rectangle tools
-         if (previewCtx && previewCanvas) {
-           // Clear preview canvas
-           previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-           
-           // Draw preview
-           previewCtx.lineWidth = currentLineWidth;
-           previewCtx.strokeStyle = currentColor;
-           previewCtx.lineCap = 'round';
-           previewCtx.globalAlpha = 0.8; // Make preview slightly transparent
-           
-           if (currentTool === 'line') {
-             previewCtx.beginPath();
-             previewCtx.moveTo(startX, startY);
-             previewCtx.lineTo(currentX, currentY);
-             previewCtx.stroke();
-           } else if (currentTool === 'rectangle') {
-             previewCtx.beginPath();
-             previewCtx.rect(startX, startY, currentX - startX, currentY - startY);
-             previewCtx.stroke();
-           }
-           
-           previewCtx.globalAlpha = 1.0; // Reset alpha
-         }
-        }
-      }
-      
-      function stopDrawing() {
-        if (!isDrawing) return;
-        isDrawing = false;
-        
-        // Clear preview
-       if (previewCtx && previewCanvas) {
-          previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-        }
-        
-       if (currentTool === 'line' || currentTool === 'rectangle') {
-          const rect = canvas.getBoundingClientRect();
-          const lastEvent = window.event || event;
-          const endX = lastEvent ? lastEvent.clientX - rect.left : startX;
-          const endY = lastEvent ? lastEvent.clientY - rect.top : startY;
-          
-          ctx.lineWidth = currentLineWidth;
-          ctx.strokeStyle = currentColor;
-          ctx.lineCap = 'round';
-          
-         if (currentTool === 'line') {
-            ctx.beginPath();
-            ctx.moveTo(startX, startY);
-            ctx.lineTo(endX, endY);
-            ctx.stroke();
-         } else if (currentTool === 'rectangle') {
-            ctx.beginPath();
-            ctx.rect(startX, startY, endX - startX, endY - startY);
-            ctx.stroke();
-          }
-        }
-        
-        ctx.beginPath();
-      }
-    }
-    
-    function setDrawingTool(tool) {
-      currentTool = tool;
-    }
-    
-    function setDrawingColor(color) {
-      currentColor = color;
-    }
-    
-    function clearCanvas(canvasId) {
-      const canvas = document.getElementById(canvasId);
-      const ctx = canvas.getContext('2d');
-     // Create preview canvas for real-time drawing feedback
-     previewCanvas = document.createElement('canvas');
-     previewCanvas.style.pointerEvents = 'none';
-     previewCanvas.style.zIndex = '9999';
-     previewCanvas.style.background = 'transparent';
-     previewCanvas.style.border = '1px solid rgba(255,0,0,0.3)'; // Subtle red border for debugging
-     
-     // Add preview canvas to body with fixed positioning
-     document.body.appendChild(previewCanvas);
-     previewCtx = previewCanvas.getContext('2d');
-     
-     // Update preview canvas size when main canvas size changes
-     const updatePreviewSize = () => {
-       const rect = canvas.getBoundingClientRect();
-       previewCanvas.width = canvas.width;
-       previewCanvas.height = canvas.height;
-       previewCanvas.style.top = rect.top + window.scrollY + 'px';
-       previewCanvas.style.left = rect.left + window.scrollX + 'px';
-       previewCanvas.style.width = canvas.offsetWidth + 'px';
-       previewCanvas.style.height = canvas.offsetHeight + 'px';
-     };
-     
-     // Update size initially and on resize
-     updatePreviewSize();
-     window.addEventListener('resize', updatePreviewSize);
-     window.addEventListener('scroll', updatePreviewSize);
-     
-     previewCtx = previewCanvas.getContext('2d');
-       
-       // Initial positioning
-       updatePreviewPosition();
-      canvas.height = height;
-       // Update position on scroll and resize
-       window.addEventListener('resize', updatePreviewPosition);
-       window.addEventListener('scroll', updatePreviewPosition);
-    }
-    
-    // Update drawing size when cards are added/removed
-   
-   // Call adjustDrawingSize when cards are added or removed
-   function addProductType() {
-     const grid = document.getElementById('product-type-grid');
-     const tpl = grid.querySelector('.product-type-wrapper');
-     const clone = tpl.cloneNode(true);
+            .drawing-toolbar {
+                display: none !important;
+            }
 
-     clone.querySelectorAll('input[type=text], select').forEach(el => {
-       if (el.tagName === 'SELECT') { el.selectedIndex = 0; } 
-       else { el.value = ''; }
-     });
-     clone.querySelector('.card-total').textContent = formatCurrency(0);
-     clone.querySelector('.delete-btn').classList.add('show');
-     grid.insertBefore(clone, document.getElementById('plus-btn-wrapper'));
-     initializeProjectDrawingCanvas('first-page-drawing-canvas');
-     initializeSignatureCanvas('signature-below-total-canvas');
-     generateFenceImages();
-   }
-  </script>
+            .signature-clear {
+                display: none !important;
+            }
+
+            .submit-btn {
+                display: none !important;
+            }
+
+            input, select, textarea {
+                border: 1px solid #000;
+                padding: 0.25rem;
+                font-size: 11px;
+                background: white !important;
+            }
+
+            .canvas-container, .signature-canvas-container {
+                border: 1px solid #000;
+                background: white !important;
+            }
+
+            .fence-option {
+                border: 1px solid #000;
+                padding: 0.5rem;
+                background: white !important;
+            }
+
+            .fence-option img {
+                height: 100px;
+            }
+
+            .total-amount {
+                font-size: 1.2rem;
+                color: #000 !important;
+            }
+
+            .checkbox-item {
+                border: 1px solid #000;
+                background: white !important;
+            }
+
+            @page {
+                margin: 0.5in;
+                size: letter;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
+        }
+    </style>
 </head>
 <body>
-  <button onclick="window.print()" id="print-btn" style="position:fixed;top:20px;right:30px;z-index:1000;padding:12px 28px;background:linear-gradient(135deg, #2c3e50 0%, #34495e 100%);color:#fff;border:none;border-radius:12px;font-size:1em;box-shadow:0 4px 16px rgba(44,62,80,0.3);cursor:pointer;transition:all 0.3s ease;font-weight:600;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(44,62,80,0.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 16px rgba(44,62,80,0.3)'">Print Quote</button>
-  <div class="container">
-    <div class="professional-header">
-      <div class="header-content">
-        <div class="left-section">
-          <img src="logo.jpg" alt="Company Logo" class="company-logo">
-          <div class="company-info">
-            <div class="company-tagline">Professional Fence Solutions</div>
-            <div class="company-details">
-              <div class="address-line">374. CAMBRIDGE ST BURLINGTON MA-01803</div>
-              <div class="contact-line">(781) 757-2525; <a href="https://www.bluebirdfence.com" target="_blank" class="website-link">www.bluebirdfence.com</a></div>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <img src="logo.jpg" alt="Bluebird Fence Logo" class="logo">
+                <h1 class="company-name">Bluebird Fence</h1>
+                <p class="tagline">Building Quality Fences Since 1985</p>
             </div>
-          </div>
         </div>
-        <div class="right-section">
-          <h2 class="quote-title">Client Quote Form</h2>
-          <div class="quote-total-display">
-            <label style="font-family: 'Montserrat', Arial, sans-serif; font-weight: 600; color: #333333; margin-right: 12px; font-size: 1.2em;">Total Amount:</label>
-            <div id="grand-total-box">$0.00</div>
-          </div>
-          <div class="signature-below-total">
-            <h3>Customer Signature</h3>
-            <canvas id="signature-below-total-canvas" width="250" height="60" style="cursor:crosshair;background:white;"></canvas>
-          </div>
+
+        <div class="form-container">
+            <form id="quoteForm">
+                <!-- Customer Information -->
+                <div class="section">
+                    <h2 class="section-title">Customer Information</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Property Address *</label>
+                        <textarea id="address" name="address" required placeholder="Enter the complete address where the fence will be installed"></textarea>
+                    </div>
+                </div>
+
+                <!-- Project Details -->
+                <div class="section">
+                    <h2 class="section-title">Project Details</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fenceHeight">Fence Height *</label>
+                            <select id="fenceHeight" name="fenceHeight" required>
+                                <option value="">Select Height</option>
+                                <option value="3ft">3 feet</option>
+                                <option value="4ft">4 feet</option>
+                                <option value="5ft">5 feet</option>
+                                <option value="6ft">6 feet</option>
+                                <option value="8ft">8 feet</option>
+                                <option value="custom">Custom Height</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="linearFeet">Estimated Linear Feet *</label>
+                            <input type="number" id="linearFeet" name="linearFeet" required min="1" placeholder="e.g., 150">
+                        </div>
+                    </div>
+                    <div class="form-row three-col">
+                        <div class="form-group">
+                            <label for="gates">Number of Gates</label>
+                            <input type="number" id="gates" name="gates" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="gateWidth">Gate Width (if applicable)</label>
+                            <select id="gateWidth" name="gateWidth">
+                                <option value="">Select Width</option>
+                                <option value="3ft">3 feet</option>
+                                <option value="4ft">4 feet</option>
+                                <option value="5ft">5 feet</option>
+                                <option value="6ft">6 feet</option>
+                                <option value="8ft">8 feet (Double)</option>
+                                <option value="10ft">10 feet (Double)</option>
+                                <option value="12ft">12 feet (Double)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="corners">Number of Corners</label>
+                            <input type="number" id="corners" name="corners" min="0" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fence Style Selection -->
+                <div class="section">
+                    <h2 class="section-title">Fence Style Selection</h2>
+                    <div class="fence-styles">
+                        <!-- Wood Options -->
+                        <div class="fence-option" onclick="selectFenceStyle('wood-privacy')">
+                            <img src="images/wood-stockade.png" alt="Wood Privacy Fence">
+                            <h4>Wood Privacy - Stockade</h4>
+                            <p>Classic cedar stockade privacy fence</p>
+                            <input type="radio" name="fenceStyle" value="wood-privacy" id="wood-privacy">
+                        </div>
+                        
+                        <div class="fence-option" onclick="selectFenceStyle('wood-tongue-groove')">
+                            <img src="images/wood-tongue-groove.png" alt="Wood Tongue & Groove">
+                            <h4>Wood Tongue & Groove</h4>
+                            <p>Premium tongue and groove privacy</p>
+                            <input type="radio" name="fenceStyle" value="wood-tongue-groove" id="wood-tongue-groove">
+                        </div>
+
+                        <div class="fence-option" onclick="selectFenceStyle('wood-horizontal')">
+                            <img src="images/wood-horizontal-boards.png" alt="Wood Horizontal Boards">
+                            <h4>Wood Horizontal Boards</h4>
+                            <p>Modern horizontal board design</p>
+                            <input type="radio" name="fenceStyle" value="wood-horizontal" id="wood-horizontal">
+                        </div>
+
+                        <div class="fence-option" onclick="selectFenceStyle('wood-universal-privacy')">
+                            <img src="images/wood-universal-privacy.png" alt="Wood Universal Privacy">
+                            <h4>Wood Universal Privacy</h4>
+                            <p>Versatile privacy fence design</p>
+                            <input type="radio" name="fenceStyle" value="wood-universal-privacy" id="wood-universal-privacy">
+                        </div>
+
+                        <div class="fence-option" onclick="selectFenceStyle('wood-privacy-lattice')">
+                            <img src="images/wood-privacy-lattice.png" alt="Wood Privacy with Lattice">
+                            <h4>Wood Privacy with Lattice</h4>
+                            <p>Privacy fence with decorative lattice top</p>
+                            <input type="radio" name="fenceStyle" value="wood-privacy-lattice" id="wood-privacy-lattice">
+                        </div>
+
+                        <div class="fence-option" onclick="selectFenceStyle('wood-lattice')">
+                            <img src="images/wood-lattice.png" alt="Wood Lattice">
+                            <h4>Wood Lattice</h4>
+                            <p>Full lattice design for partial privacy</p>
+                            <input type="radio" name="fenceStyle" value="wood-lattice" id="wood-lattice">
+                        </div>
+
+                        <div class="fence-option" onclick="selectFenceStyle('wood-closed-baluster')">
+                            <img src="images/wood-closed-top-baluster.png" alt="Wood Closed Top Baluster">
+                            <h4>Wood Closed Top Baluster</h4>
+                            <p>Traditional baluster with closed top rail</p>
+                            <input type="radio" name="fenceStyle" value="wood-closed-baluster" id="wood-closed-baluster">
+                        </div>
+
+                        <div class="fence-option" onclick="selectFenceStyle('wood-open-baluster')">
+                            <img src="images/wood-open-top-baluster.png" alt="Wood Open Top Baluster">
+                            <h4>Wood Open Top Baluster</h4>
+                            <p>Open baluster design with top rail</p>
+                            <input type="radio" name="fenceStyle" value="wood-open-baluster" id="wood-open-baluster">
+                        </div>
+
+                        <div class="fence-option" onclick="selectFenceStyle('wood-scalloped')">
+                            <img src="images/wood-traditional-scalloped.png" alt="Wood Traditional Scalloped">
+                            <h4>Wood Traditional Scalloped</h4>
+                            <p>Classic scalloped picket fence</p>
+                            <input type="radio" name="fenceStyle" value="wood-scalloped" id="wood-scalloped">
+                        </div>
+
+                        <!-- Vinyl Options -->
+                        <div class="fence-option" onclick="selectFenceStyle('vinyl-solid-privacy')">
+                            <img src="images/vinyl-solid-privacy.png" alt="Vinyl Solid Privacy">
+                            <h4>Vinyl Solid Privacy</h4>
+                            <p>Maintenance-free solid privacy fence</p>
+                            <input type="radio" name="fenceStyle" value="vinyl-solid-privacy" id="vinyl-solid-privacy">
+                        </div>
+
+                        <div class="fence-option" onclick="selectFenceStyle('vinyl-semi-privacy')">
+                            <img src="images/vinyl-semi-privacy.png" alt="Vinyl Semi-Privacy">
+                            <h4>Vinyl Semi-Privacy</h4>
+                            <p>Semi-private vinyl with spacing</p>
+                            <input type="radio" name="fenceStyle" value="vinyl-semi-privacy" id="vinyl-semi-privacy">
+                        </div>
+
+                        <div class="fence-option" onclick="selectFenceStyle('vinyl-privacy-lattice')">
+                            <img src="images/vinyl-privacy-lattice.png" alt="Vinyl Privacy with Lattice">
+                            <h4>Vinyl Privacy with Lattice</h4>
+                            <p>Privacy fence with lattice accent</p>
+                            <input type="radio" name="fenceStyle" value="vinyl-privacy-lattice" id="vinyl-privacy-lattice">
+                        </div>
+
+                        <div class="fence-option" onclick="selectFenceStyle('vinyl-privacy-mini-lattice')">
+                            <img src="images/vinyl-privacy-mini-lattice.png" alt="Vinyl Privacy Mini Lattice">
+                            <h4>Vinyl Privacy Mini Lattice</h4>
+                            <p>Privacy with mini lattice detail</p>
+                            <input type="radio" name="fenceStyle" value="vinyl-privacy-mini-lattice" id="vinyl-privacy-mini-lattice">
+                        </div>
+
+                        <div class="fence-option" onclick="selectFenceStyle('vinyl-privacy-baluster')">
+                            <img src="images/vinyl-privacy-baluster.png" alt="Vinyl Privacy Baluster">
+                            <h4>Vinyl Privacy Baluster</h4>
+                            <p>Privacy fence with baluster accent</p>
+                            <input type="radio" name="fenceStyle" value="vinyl-privacy-baluster" id="vinyl-privacy-baluster">
+                        </div>
+
+                        <div class="fence-option" onclick="selectFenceStyle('vinyl-lattice')">
+                            <img src="images/vinyl-lattice.png" alt="Vinyl Lattice">
+                            <h4>Vinyl Lattice</h4>
+                            <p>Full vinyl lattice design</p>
+                            <input type="radio" name="fenceStyle" value="vinyl-lattice" id="vinyl-lattice">
+                        </div>
+
+                        <div class="fence-option" onclick="selectFenceStyle('vinyl-closed-baluster')">
+                            <img src="images/vinyl-closed-top-baluster.png" alt="Vinyl Closed Top Baluster">
+                            <h4>Vinyl Closed Top Baluster</h4>
+                            <p>Closed top baluster design</p>
+                            <input type="radio" name="fenceStyle" value="vinyl-closed-baluster" id="vinyl-closed-baluster">
+                        </div>
+
+                        <div class="fence-option" onclick="selectFenceStyle('vinyl-scalloped-baluster')">
+                            <img src="images/vinyl-scalloped-baluster.png" alt="Vinyl Scalloped Baluster">
+                            <h4>Vinyl Scalloped Baluster</h4>
+                            <p>Decorative scalloped baluster</p>
+                            <input type="radio" name="fenceStyle" value="vinyl-scalloped-baluster" id="vinyl-scalloped-baluster">
+                        </div>
+
+                        <div class="fence-option" onclick="selectFenceStyle('vinyl-straight-baluster-arbor')">
+                            <img src="images/vinyl-straight-top-baluster-arbor.png" alt="Vinyl Straight Top Baluster Arbor">
+                            <h4>Vinyl Straight Baluster Arbor</h4>
+                            <p>Straight baluster with arbor accent</p>
+                            <input type="radio" name="fenceStyle" value="vinyl-straight-baluster-arbor" id="vinyl-straight-baluster-arbor">
+                        </div>
+
+                        <div class="fence-option" onclick="selectFenceStyle('vinyl-pergola')">
+                            <img src="images/vinyl-pergola.png" alt="Vinyl Pergola">
+                            <h4>Vinyl Pergola</h4>
+                            <p>Decorative pergola structure</p>
+                            <input type="radio" name="fenceStyle" value="vinyl-pergola" id="vinyl-pergola">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Services -->
+                <div class="section">
+                    <h2 class="section-title">Additional Services</h2>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="removal" name="services" value="removal">
+                            <label for="removal">Old Fence Removal</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="staining" name="services" value="staining">
+                            <label for="staining">Staining/Sealing</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="concrete" name="services" value="concrete">
+                            <label for="concrete">Concrete Footings</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="grading" name="services" value="grading">
+                            <label for="grading">Site Grading</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="permits" name="services" value="permits">
+                            <label for="permits">Permit Assistance</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="warranty" name="services" value="warranty">
+                            <label for="warranty">Extended Warranty</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Drawing -->
+                <div class="section drawing-section">
+                    <h2 class="section-title">Project Drawing</h2>
+                    <p>Please draw a rough sketch of your property layout, including the fence location, gates, and any obstacles:</p>
+                    
+                    <div class="drawing-toolbar">
+                        <button type="button" class="tool-btn active" onclick="setProjectTool('pen')">Pen</button>
+                        <button type="button" class="tool-btn" onclick="setProjectTool('eraser')">Eraser</button>
+                        <button type="button" class="tool-btn" onclick="setProjectTool('line')">Line</button>
+                        <button type="button" class="tool-btn" onclick="setProjectTool('rectangle')">Rectangle</button>
+                        <input type="color" class="color-picker" id="project-color-picker" value="#000000" onchange="setProjectColor(this.value)">
+                        <div class="line-width-control">
+                            <label for="project-line-width">Width:</label>
+                            <input type="range" id="project-line-width" min="1" max="10" value="2" onchange="setProjectLineWidth(this.value)">
+                            <span id="project-width-display">2</span>
+                        </div>
+                        <button type="button" class="tool-btn" onclick="clearProjectCanvas()">Clear</button>
+                    </div>
+                    
+                    <div class="canvas-container">
+                        <canvas id="first-page-drawing-canvas" width="760" height="400"></canvas>
+                    </div>
+                </div>
+
+                <!-- Special Instructions -->
+                <div class="section">
+                    <h2 class="section-title">Special Instructions</h2>
+                    <div class="form-group">
+                        <label for="instructions">Additional Notes or Special Requirements</label>
+                        <textarea id="instructions" name="instructions" placeholder="Please include any special requirements, access issues, preferred installation dates, or other important details..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Signature Section -->
+                <div class="section signature-section">
+                    <h2 class="section-title">Customer Signature</h2>
+                    <p>Please sign below to confirm the accuracy of the information provided:</p>
+                    <div class="signature-canvas-container">
+                        <canvas id="signature-below-total-canvas" width="760" height="150"></canvas>
+                    </div>
+                    <button type="button" class="signature-clear" onclick="clearSignatureCanvas()">Clear Signature</button>
+                </div>
+
+                <!-- Total Section -->
+                <div class="section total-section">
+                    <h2 class="section-title">Estimated Total</h2>
+                    <div class="total-amount" id="totalAmount">$0.00</div>
+                    <p><em>*This is a preliminary estimate. Final pricing will be provided after site inspection.</em></p>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Quote Request</button>
+            </form>
         </div>
-      </div>
     </div>
-  </div>
 
-  <!-- Customer & Project Information -->
-  <div class="container">
-    <h2>Customer & Project Information</h2>
-    <div class="info-grid">
-      <div><label>First Name:</label><input type="text" id="FirstName" /><span id="FirstName-span"></span></div>
-      <div><label>Last Name:</label><input type="text" id="LastName" /><span id="LastName-span"></span></div>
-      <div><label>Street:</label><input type="text" id="Street" /><span id="Street-span"></span></div>
-      <div><label>State:</label><input type="text" id="State" /><span id="State-span"></span></div>
-      <div><label>Zip Code:</label><input type="text" id="ZipCode" /><span id="ZipCode-span"></span></div>
-      <div><label>Email:</label><input type="text" id="Email" /><span id="Email-span"></span></div>
-      <div><label>Phone:</label><input type="text" id="Phone" /><span id="Phone-span"></span></div>
-      <div><label>Job Address:</label><input type="text" id="job-address" /><span id="job-address-span"></span></div>
-      <div><label>Site Contact:</label><input type="text" id="site-contact" /><span id="site-contact-span"></span></div>
-      <div><label>Estimate Attendance:</label><input type="text" id="estimate-attendance" /><span id="estimate-attendance-span"></span></div>
-    </div>
-  </div>
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
 
-  <!-- Fence Images Section - Visible in both HTML and Print -->
-  <div class="container">
-    <h2>Selected Fence Options</h2>
-    <div id="fence-images-display" class="fence-images-display"></div>
-    
-    <!-- Project Drawing on First Page -->
-    <div class="first-page-drawing">
-      <h2>Project Drawing</h2>
-      <div class="drawing-tools">
-        <button onclick="setDrawingTool('pen')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Pen</button>
-        <button onclick="setDrawingTool('line')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Line</button>
-        <button onclick="setDrawingTool('rectangle')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Rectangle</button>
-        <button onclick="setDrawingTool('eraser')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Eraser</button>
-        <input type="color" value="#000000" onchange="setDrawingColor(this.value)" style="margin-right:10px;">
-        <button onclick="clearCanvas('first-page-drawing-canvas')" style="background:#666;color:white;border:none;padding:8px 16px;cursor:pointer;">Clear</button>
-      </div>
-      <div style="position:relative;margin-top:15px;">
-        <canvas id="first-page-drawing-canvas" class="first-page-drawing-canvas" width="800" height="250" style="cursor:crosshair;"></canvas>
-      </div>
-    </div>
-  </div>
+        // Project Drawing Canvas Variables
+        let projectCanvas, projectCtx, projectPreviewCanvas, projectPreviewCtx;
+        let projectIsDrawing = false;
+        let projectCurrentTool = 'pen';
+        let projectCurrentColor = '#000000';
+        let projectCurrentLineWidth = 2;
+        let projectStartX, projectStartY;
 
-  <!-- Drawing and Signature Sections - Visible in HTML -->
+        // Signature Canvas Variables
+        let signatureCanvas, signatureCtx;
+        let signatureIsDrawing = false;
 
-  <div class="product-type-grid" id="product-type-grid">
-    <div class="product-type-wrapper">
-      <div class="product-type-container">
-        <button class="delete-btn">✕</button>
-        <div class="card-header">
-          <h2>Product Type</h2>
-          <div class="card-total">$0.00</div>
-        </div>
-        <hr class="blue-line">
-        <div class="dropdown-container"><label>Fence Material:</label><select class="fence-material-select"><option value="0">Please Select</option><option value="wood">Wood</option><option value="vinyl">Vinyl</option></select></div>
-        <div class="dropdown-container"><label>Fence Height:</label><select><option value="0">Please Select</option><option value="6H">6'H</option><option value="4H">4'H</option></select></div>
-        <div class="dropdown-container"><label>Fence Style:</label><select class="fence-style-select">
-          <option value="0">Please Select</option>
-        </select></div>
-        <div class="input-row"><label>Linear Footage:</label><input type="text" placeholder="Write Here"></div>
-        <div class="input-row"><label>Single Gates N.:</label><input type="text" placeholder="Write Here"></div>
-        <div class="input-row"><label>Double Gates N.:</label><input type="text" placeholder="Write Here"></div>
-        <div class="input-row"><label>Gate Style:</label><input type="text" placeholder="Write Here"></div>
-        <div class="input-row"><label>Gate Size:</label><input type="text" placeholder="Write Here"></div>
-        <div class="input-row"><label>Labor, # of Days:</label><input type="text" placeholder="Write Here"></div>
-        <div class="fence-image-wrapper" style="text-align:center; margin-top:20px;">
-          <img class="fence-preview-image" src="" alt="Fence Preview" style="max-width:100%; max-height:200px; display:none; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.1); border:2px solid rgba(255,255,255,0.3);">
-        </div>
-      </div>
-      <div class="resize-controls">
-        <button class="resize-plus">+</button>
-        <button class="resize-minus">−</button>
-      </div>
-    </div>
-    <!-- ADD BUTTON MOVED OUTSIDE THE REPEATING GRID -->
-    <div id="plus-btn-wrapper">
-      <button class="plus-btn" id="add-card-btn">+</button>
-    </div>
-  </div>
+        // Initialize Project Drawing Canvas
+        function initializeProjectDrawingCanvas() {
+            projectCanvas = document.getElementById('first-page-drawing-canvas');
+            projectCtx = projectCanvas.getContext('2d');
+            
+            // Create preview canvas for real-time drawing feedback
+            projectPreviewCanvas = document.createElement('canvas');
+            projectPreviewCanvas.width = projectCanvas.width;
+            projectPreviewCanvas.height = projectCanvas.height;
+            projectPreviewCanvas.style.position = 'absolute';
+            projectPreviewCanvas.style.top = '0';
+            projectPreviewCanvas.style.left = '0';
+            projectPreviewCanvas.style.pointerEvents = 'none';
+            projectCanvas.parentNode.appendChild(projectPreviewCanvas);
+            projectPreviewCtx = projectPreviewCanvas.getContext('2d');
 
+            // Set up canvas properties
+            projectCtx.lineCap = 'round';
+            projectCtx.lineJoin = 'round';
+            projectCtx.lineWidth = projectCurrentLineWidth;
+            projectCtx.strokeStyle = projectCurrentColor;
+
+            projectPreviewCtx.lineCap = 'round';
+            projectPreviewCtx.lineJoin = 'round';
+
+            // Add event listeners
+            projectCanvas.addEventListener('mousedown', startProjectDrawing);
+            projectCanvas.addEventListener('mousemove', projectDraw);
+            projectCanvas.addEventListener('mouseup', stopProjectDrawing);
+            projectCanvas.addEventListener('mouseout', stopProjectDrawing);
+
+            // Touch events for mobile
+            projectCanvas.addEventListener('touchstart', handleProjectTouch);
+            projectCanvas.addEventListener('touchmove', handleProjectTouch);
+            projectCanvas.addEventListener('touchend', stopProjectDrawing);
+        }
+
+        // Initialize Signature Canvas
+        function initializeSignatureCanvas() {
+            signatureCanvas = document.getElementById('signature-below-total-canvas');
+            signatureCtx = signatureCanvas.getContext('2d');
+
+            // Set up canvas properties for signature (pen only, black ink)
+            signatureCtx.lineCap = 'round';
+            signatureCtx.lineJoin = 'round';
+            signatureCtx.lineWidth = 2;
+            signatureCtx.strokeStyle = '#000000';
+
+            // Add event listeners
+            signatureCanvas.addEventListener('mousedown', startSignatureDrawing);
+            signatureCanvas.addEventListener('mousemove', signatureDraw);
+            signatureCanvas.addEventListener('mouseup', stopSignatureDrawing);
+            signatureCanvas.addEventListener('mouseout', stopSignatureDrawing);
+
+            // Touch events for mobile
+            signatureCanvas.addEventListener('touchstart', handleSignatureTouch);
+            signatureCanvas.addEventListener('touchmove', handleSignatureTouch);
+            signatureCanvas.addEventListener('touchend', stopSignatureDrawing);
+        }
+
+        // Project Drawing Functions
+        function startProjectDrawing(e) {
+            projectIsDrawing = true;
+            const rect = projectCanvas.getBoundingClientRect();
+            projectStartX = e.clientX - rect.left;
+            projectStartY = e.clientY - rect.top;
+
+            if (projectCurrentTool === 'pen' || projectCurrentTool === 'eraser') {
+                projectCtx.beginPath();
+                projectCtx.moveTo(projectStartX, projectStartY);
+            }
+        }
+
+        function projectDraw(e) {
+            if (!projectIsDrawing) return;
+
+            const rect = projectCanvas.getBoundingClientRect();
+            const currentX = e.clientX - rect.left;
+            const currentY = e.clientY - rect.top;
+
+            if (projectCurrentTool === 'pen') {
+                projectCtx.globalCompositeOperation = 'source-over';
+                projectCtx.strokeStyle = projectCurrentColor;
+                projectCtx.lineWidth = projectCurrentLineWidth;
+                projectCtx.lineTo(currentX, currentY);
+                projectCtx.stroke();
+            } else if (projectCurrentTool === 'eraser') {
+                projectCtx.globalCompositeOperation = 'destination-out';
+                projectCtx.lineWidth = projectCurrentLineWidth * 2;
+                projectCtx.lineTo(currentX, currentY);
+                projectCtx.stroke();
+            } else if (projectCurrentTool === 'line' || projectCurrentTool === 'rectangle') {
+                // Clear preview canvas
+                projectPreviewCtx.clearRect(0, 0, projectPreviewCanvas.width, projectPreviewCanvas.height);
+                
+                // Set preview properties
+                projectPreviewCtx.strokeStyle = projectCurrentColor;
+                projectPreviewCtx.lineWidth = projectCurrentLineWidth;
+                projectPreviewCtx.globalCompositeOperation = 'source-over';
+
+                if (projectCurrentTool === 'line') {
+                    projectPreviewCtx.beginPath();
+                    projectPreviewCtx.moveTo(projectStartX, projectStartY);
+                    projectPreviewCtx.lineTo(currentX, currentY);
+                    projectPreviewCtx.stroke();
+                } else if (projectCurrentTool === 'rectangle') {
+                    const width = currentX - projectStartX;
+                    const height = currentY - projectStartY;
+                    projectPreviewCtx.strokeRect(projectStartX, projectStartY, width, height);
+                }
+            }
+        }
+
+        function stopProjectDrawing(e) {
+            if (!projectIsDrawing) return;
+            projectIsDrawing = false;
+
+            if (projectCurrentTool === 'line' || projectCurrentTool === 'rectangle') {
+                const rect = projectCanvas.getBoundingClientRect();
+                const currentX = e.clientX - rect.left;
+                const currentY = e.clientY - rect.top;
+
+                // Draw final shape on main canvas
+                projectCtx.globalCompositeOperation = 'source-over';
+                projectCtx.strokeStyle = projectCurrentColor;
+                projectCtx.lineWidth = projectCurrentLineWidth;
+
+                if (projectCurrentTool === 'line') {
+                    projectCtx.beginPath();
+                    projectCtx.moveTo(projectStartX, projectStartY);
+                    projectCtx.lineTo(currentX, currentY);
+                    projectCtx.stroke();
+                } else if (projectCurrentTool === 'rectangle') {
+                    const width = currentX - projectStartX;
+                    const height = currentY - projectStartY;
+                    projectCtx.strokeRect(projectStartX, projectStartY, width, height);
+                }
+
+                // Clear preview canvas
+                projectPreviewCtx.clearRect(0, 0, projectPreviewCanvas.width, projectPreviewCanvas.height);
+            }
+        }
+
+        function handleProjectTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 
+                                            e.type === 'touchmove' ? 'mousemove' : 'mouseup', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            projectCanvas.dispatchEvent(mouseEvent);
+        }
+
+        // Signature Drawing Functions
+        function startSignatureDrawing(e) {
+            signatureIsDrawing = true;
+            const rect = signatureCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            signatureCtx.beginPath();
+            signatureCtx.moveTo(x, y);
+        }
+
+        function signatureDraw(e) {
+            if (!signatureIsDrawing) return;
+
+            const rect = signatureCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            signatureCtx.lineTo(x, y);
+            signatureCtx.stroke();
+        }
+
+        function stopSignatureDrawing() {
+            signatureIsDrawing = false;
+        }
+
+        function handleSignatureTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 
+                                            e.type === 'touchmove' ? 'mousemove' : 'mouseup', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            signatureCanvas.dispatchEvent(mouseEvent);
+        }
+
+        // Project Drawing Tool Functions
+        function setProjectTool(tool) {
+            projectCurrentTool = tool;
+            
+            // Update active button
+            document.querySelectorAll('.drawing-toolbar .tool-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update cursor
+            if (tool === 'eraser') {
+                projectCanvas.style.cursor = 'grab';
+            } else {
+                projectCanvas.style.cursor = 'crosshair';
+            }
+        }
+
+        function setProjectColor(color) {
+            projectCurrentColor = color;
+        }
+
+        function setProjectLineWidth(width) {
+            projectCurrentLineWidth = parseInt(width);
+            document.getElementById('project-width-display').textContent = width;
+        }
+
+        function clearProjectCanvas() {
+            projectCtx.clearRect(0, 0, projectCanvas.width, projectCanvas.height);
+            projectPreviewCtx.clearRect(0, 0, projectPreviewCanvas.width, projectPreviewCanvas.height);
+        }
+
+        // Signature Functions
+        function clearSignatureCanvas() {
+            signatureCtx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+        }
+
+        // Fence style selection
+        function selectFenceStyle(styleId) {
+            // Remove selected class from all options
+            document.querySelectorAll('.fence-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            event.currentTarget.classList.add('selected');
+            
+            // Check the radio button
+            document.getElementById(styleId).checked = true;
+            
+            // Update pricing
+            updatePricing();
+        }
+
+        // Pricing calculation
+        function updatePricing() {
+            const linearFeet = parseInt(document.getElementById('linearFeet').value) || 0;
+            const gates = parseInt(document.getElementById('gates').value) || 0;
+            const corners = parseInt(document.getElementById('corners').value) || 0;
+            const selectedStyle = document.querySelector('input[name="fenceStyle"]:checked');
+            
+            let basePrice = 0;
+            let gatePrice = 150;
+            let cornerPrice = 25;
+            
+            if (selectedStyle) {
+                const style = selectedStyle.value;
+                
+                // Base pricing per linear foot
+                if (style.includes('wood')) {
+                    if (style.includes('tongue-groove') || style.includes('horizontal')) {
+                        basePrice = 35; // Premium wood styles
+                    } else if (style.includes('privacy') || style.includes('stockade')) {
+                        basePrice = 28; // Standard privacy
+                    } else {
+                        basePrice = 25; // Basic wood styles
+                    }
+                } else if (style.includes('vinyl')) {
+                    if (style.includes('privacy')) {
+                        basePrice = 45; // Vinyl privacy
+                    } else {
+                        basePrice = 40; // Standard vinyl
+                    }
+                }
+            }
+            
+            // Calculate additional services
+            let servicesPrice = 0;
+            const services = document.querySelectorAll('input[name="services"]:checked');
+            services.forEach(service => {
+                switch(service.value) {
+                    case 'removal': servicesPrice += linearFeet * 5; break;
+                    case 'staining': servicesPrice += linearFeet * 3; break;
+                    case 'concrete': servicesPrice += linearFeet * 8; break;
+                    case 'grading': servicesPrice += 500; break;
+                    case 'permits': servicesPrice += 200; break;
+                    case 'warranty': servicesPrice += linearFeet * 2; break;
+                }
+            });
+            
+            const total = (linearFeet * basePrice) + (gates * gatePrice) + (corners * cornerPrice) + servicesPrice;
+            document.getElementById('totalAmount').textContent = `$${total.toLocaleString()}.00`;
+        }
+
+        // Event listeners for pricing updates
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize canvases
+            initializeProjectDrawingCanvas();
+            initializeSignatureCanvas();
+            
+            // Add event listeners for pricing updates
+            document.getElementById('linearFeet').addEventListener('input', updatePricing);
+            document.getElementById('gates').addEventListener('input', updatePricing);
+            document.getElementById('corners').addEventListener('input', updatePricing);
+            
+            // Add event listeners for service checkboxes
+            document.querySelectorAll('input[name="services"]').forEach(checkbox => {
+                checkbox.addEventListener('change', updatePricing);
+            });
+            
+            // Form submission
+            document.getElementById('quoteForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(this);
+                
+                // Get canvas data
+                const projectDrawing = projectCanvas.toDataURL();
+                const signature = signatureCanvas.toDataURL();
+                
+                // Add canvas data to form
+                formData.append('projectDrawing', projectDrawing);
+                formData.append('signature', signature);
+                
+                // Here you would typically send the data to your server
+                alert('Quote request submitted successfully! We will contact you within 24 hours.');
+                
+                // For demo purposes, log the data
+                console.log('Form submitted with data:', Object.fromEntries(formData));
+            });
+        });
+    </script>
 </body>
 </html>
