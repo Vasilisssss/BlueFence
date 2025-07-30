@@ -810,6 +810,8 @@
                         <button type="button" class="tool-btn" onclick="setProjectTool('eraser')">Eraser</button>
                         <button type="button" class="tool-btn" onclick="setProjectTool('line')">Line</button>
                         <button type="button" class="tool-btn" onclick="setProjectTool('rectangle')">Rectangle</button>
+                        <button type="button" class="tool-btn" onclick="setProjectTool('line')">Line</button>
+                        <button type="button" class="tool-btn" onclick="setProjectTool('rectangle')">Rectangle</button>
                         <input type="color" class="color-picker" id="project-color-picker" value="#000000" onchange="setProjectColor(this.value)">
                         <div class="line-width-control">
                             <label for="project-line-width">Width:</label>
@@ -991,12 +993,56 @@
                     const height = currentY - projectStartY;
                     projectPreviewCtx.strokeRect(projectStartX, projectStartY, width, height);
                 }
+            } else if (projectCurrentTool === 'line' || projectCurrentTool === 'rectangle') {
+                // Clear preview canvas
+                projectPreviewCtx.clearRect(0, 0, projectPreviewCanvas.width, projectPreviewCanvas.height);
+                
+                // Set preview properties
+                projectPreviewCtx.strokeStyle = projectCurrentColor;
+                projectPreviewCtx.lineWidth = projectCurrentLineWidth;
+                projectPreviewCtx.globalCompositeOperation = 'source-over';
+
+                if (projectCurrentTool === 'line') {
+                    projectPreviewCtx.beginPath();
+                    projectPreviewCtx.moveTo(projectStartX, projectStartY);
+                    projectPreviewCtx.lineTo(currentX, currentY);
+                    projectPreviewCtx.stroke();
+                } else if (projectCurrentTool === 'rectangle') {
+                    const width = currentX - projectStartX;
+                    const height = currentY - projectStartY;
+                    projectPreviewCtx.strokeRect(projectStartX, projectStartY, width, height);
+                }
             }
         }
 
         function stopProjectDrawing(e) {
             if (!projectIsDrawing) return;
             projectIsDrawing = false;
+
+            if (projectCurrentTool === 'line' || projectCurrentTool === 'rectangle') {
+                const rect = projectCanvas.getBoundingClientRect();
+                const currentX = e.clientX - rect.left;
+                const currentY = e.clientY - rect.top;
+
+                // Draw final shape on main canvas
+                projectCtx.globalCompositeOperation = 'source-over';
+                projectCtx.strokeStyle = projectCurrentColor;
+                projectCtx.lineWidth = projectCurrentLineWidth;
+
+                if (projectCurrentTool === 'line') {
+                    projectCtx.beginPath();
+                    projectCtx.moveTo(projectStartX, projectStartY);
+                    projectCtx.lineTo(currentX, currentY);
+                    projectCtx.stroke();
+                } else if (projectCurrentTool === 'rectangle') {
+                    const width = currentX - projectStartX;
+                    const height = currentY - projectStartY;
+                    projectCtx.strokeRect(projectStartX, projectStartY, width, height);
+                }
+
+                // Clear preview canvas
+                projectPreviewCtx.clearRect(0, 0, projectPreviewCanvas.width, projectPreviewCanvas.height);
+            }
 
             if (projectCurrentTool === 'line' || projectCurrentTool === 'rectangle') {
                 const rect = projectCanvas.getBoundingClientRect();
