@@ -1309,10 +1309,11 @@
         startX = e.clientX - rect.left;
         startY = e.clientY - rect.top;
         
-        // Get the current tool for this specific canvas
-       const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
+        // Force pen tool for signature canvas, use current tool for others
+        const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
         
-        if (activeTool === 'pen' || activeTool === 'eraser') {
+        // Always allow drawing on signature canvas (force pen), check tool for other canvases
+        if (canvasId === 'signature-below-total-canvas' || activeTool === 'pen' || activeTool === 'eraser') {
           ctx.beginPath();
           ctx.moveTo(startX, startY);
         }
@@ -1325,14 +1326,15 @@
         
         if (!isDrawing) return;
         
-        // Get the current tool for this specific canvas
-        const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
+        // Force pen tool for signature canvas, use current tool for others
+        const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
         
         ctx.lineWidth = currentLineWidth;
         ctx.lineCap = 'round';
         ctx.strokeStyle = activeTool === 'eraser' ? '#ffffff' : currentColor;
         
-        if (activeTool === 'pen' || activeTool === 'eraser') {
+        // Always allow drawing on signature canvas (force pen), check tool for other canvases
+        if (canvasId === 'signature-below-total-canvas' || activeTool === 'pen' || activeTool === 'eraser') {
           ctx.lineTo(currentX, currentY);
           ctx.stroke();
           ctx.beginPath();
@@ -1369,7 +1371,7 @@
         if (!isDrawing) return;
         isDrawing = false;
         
-        // Get the current tool for this specific canvas
+        // Force pen tool for signature canvas, use current tool for others
        const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
         
         // Clear preview
@@ -1459,7 +1461,7 @@
    function addProductType() {
      const grid = document.getElementById('product-type-grid');
      const tpl = grid.querySelector('.product-type-wrapper');
-       const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
+     const clone = tpl.cloneNode(true);
 
      clone.querySelectorAll('input[type=text], select').forEach(el => {
        if (el.tagName === 'SELECT') { el.selectedIndex = 0; } 
