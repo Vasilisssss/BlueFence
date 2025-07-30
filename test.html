@@ -1268,7 +1268,7 @@
       const ctx = canvas.getContext('2d');
       
       // Create preview canvas for real-time drawing feedback (only for drawing canvas)
-     if (canvasId === 'first-page-drawing-canvas') {
+      if (canvasId === 'drawing-canvas') {
         previewCanvas = document.createElement('canvas');
         previewCanvas.style.pointerEvents = 'none';
        previewCanvas.style.zIndex = '9999';
@@ -1310,7 +1310,7 @@
         startY = e.clientY - rect.top;
         
         // Get the current tool for this specific canvas
-       const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
+        const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
         
         if (activeTool === 'pen' || activeTool === 'eraser') {
           ctx.beginPath();
@@ -1407,7 +1407,7 @@
     
     function setDrawingColor(color) {
       currentColor = color;
-       } else if (activeTool === 'line' || activeTool === 'rectangle' && canvasId !== 'signature-below-total-canvas') {
+    }
     
     function clearCanvas(canvasId) {
       const canvas = document.getElementById(canvasId);
@@ -1425,8 +1425,6 @@
       initializeCanvas('first-page-drawing-canvas');
       initializeCanvas('signature-below-total-canvas');
       generateFenceImages();
-             previewCtx.beginPath();
-             previewCtx.rect(startX, startY, currentX - startX, currentY - startY);
       adjustDrawingSize();
     }
     
@@ -1440,14 +1438,14 @@
       let height;
      if (fenceCount <= 1) {
        height = 350; // Largest for single fence
-       const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
+       height = 280; // Large for few fences
      } else {
        height = 230; // Minimal for many fences
      }
        
        // Initial positioning
        updatePreviewPosition();
-       if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-below-total-canvas') {
+      canvas.height = height;
        // Update position on scroll and resize
        window.addEventListener('resize', updatePreviewPosition);
        window.addEventListener('scroll', updatePreviewPosition);
@@ -1459,7 +1457,7 @@
    function addProductType() {
      const grid = document.getElementById('product-type-grid');
      const tpl = grid.querySelector('.product-type-wrapper');
-       const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
+     const clone = tpl.cloneNode(true);
 
      clone.querySelectorAll('input[type=text], select').forEach(el => {
        if (el.tagName === 'SELECT') { el.selectedIndex = 0; } 
