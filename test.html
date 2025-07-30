@@ -1310,7 +1310,7 @@
         startY = e.clientY - rect.top;
         
         // Get the current tool for this specific canvas
-        const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
+       const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
         
         if (activeTool === 'pen' || activeTool === 'eraser') {
           ctx.beginPath();
@@ -1337,7 +1337,7 @@
           ctx.stroke();
           ctx.beginPath();
           ctx.moveTo(currentX, currentY);
-        } else if (activeTool === 'line' || activeTool === 'rectangle' && canvasId !== 'signature-canvas') {
+       } else if (activeTool === 'line' || activeTool === 'rectangle' && canvasId !== 'signature-below-total-canvas') {
           // Only show preview for first page drawing canvas
          if (canvasId === 'first-page-drawing-canvas' && previewCtx && previewCanvas) {
             // Clear preview canvas
@@ -1355,6 +1355,8 @@
               previewCtx.lineTo(currentX, currentY);
               previewCtx.stroke();
             } else if (activeTool === 'rectangle') {
+             previewCtx.beginPath();
+             previewCtx.rect(startX, startY, currentX - startX, currentY - startY);
               previewCtx.stroke();
             }
            
@@ -1368,14 +1370,14 @@
         isDrawing = false;
         
         // Get the current tool for this specific canvas
-        const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
+       const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
         
         // Clear preview
        if (previewCtx && previewCanvas && canvasId === 'first-page-drawing-canvas') {
           previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
         }
         
-        if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-canvas') {
+       if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-below-total-canvas') {
           const rect = canvas.getBoundingClientRect();
           const lastEvent = window.event || event;
           const endX = lastEvent ? lastEvent.clientX - rect.left : startX;
@@ -1457,7 +1459,7 @@
    function addProductType() {
      const grid = document.getElementById('product-type-grid');
      const tpl = grid.querySelector('.product-type-wrapper');
-     const clone = tpl.cloneNode(true);
+       const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
 
      clone.querySelectorAll('input[type=text], select').forEach(el => {
        if (el.tagName === 'SELECT') { el.selectedIndex = 0; } 
