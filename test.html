@@ -1246,8 +1246,6 @@
     let currentLineWidth = 2;
     let startX, startY;
     let previewCanvas, previewCtx;
-    let textInput = null;
-    let textCanvas = null;
    
    function updatePreviewPosition() {
      if (!previewCanvas) return;
@@ -1317,75 +1315,11 @@
         // Force black color for signature canvas
         const activeColor = canvasId === 'signature-below-total-canvas' ? '#000000' : currentColor;
         
-        // Handle text tool
-        if (activeTool === 'text' && canvasId !== 'signature-below-total-canvas') {
-            createTextInput(canvas, startX, startY);
-            return;
-        }
-
         // Always allow drawing on signature canvas (force pen), check tool for other canvases
         if (canvasId === 'signature-below-total-canvas' || activeTool === 'pen' || activeTool === 'eraser') {
           ctx.beginPath();
           ctx.moveTo(startX, startY);
         }
-      }
-
-      // Create text input at clicked position
-      function createTextInput(canvas, x, y) {
-          // Remove any existing text input
-          if (textInput) {
-              textInput.remove();
-          }
-
-          textCanvas = canvas;
-          const rect = canvas.getBoundingClientRect();
-          
-          // Create text input element
-          textInput = document.createElement('input');
-          textInput.type = 'text';
-          textInput.style.position = 'absolute';
-          textInput.style.left = (rect.left + x) + 'px';
-          textInput.style.top = (rect.top + y) + 'px';
-          textInput.style.fontSize = '16px';
-          textInput.style.fontFamily = 'Arial, sans-serif';
-          textInput.style.border = '1px solid #ccc';
-          textInput.style.padding = '2px 4px';
-          textInput.style.zIndex = '1000';
-          textInput.style.backgroundColor = 'white';
-          
-          document.body.appendChild(textInput);
-          textInput.focus();
-
-          // Handle text input completion
-          function completeTextInput() {
-              if (textInput && textInput.value.trim()) {
-                  const ctx = textCanvas.getContext('2d');
-                  ctx.font = '16px Arial';
-                  ctx.fillStyle = currentColor;
-                  ctx.textBaseline = 'top';
-                  ctx.fillText(textInput.value, x, y);
-              }
-              
-              if (textInput) {
-                  textInput.remove();
-                  textInput = null;
-              }
-              textCanvas = null;
-          }
-
-          // Complete on Enter key or blur
-          textInput.addEventListener('keydown', (e) => {
-              if (e.key === 'Enter') {
-                  completeTextInput();
-              }
-              if (e.key === 'Escape') {
-                  textInput.remove();
-                  textInput = null;
-                  textCanvas = null;
-              }
-          });
-
-          textInput.addEventListener('blur', completeTextInput);
       }
       
       function draw(e) {
@@ -1610,7 +1544,6 @@
         <button onclick="setDrawingTool('pen')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Pen</button>
         <button onclick="setDrawingTool('line')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Line</button>
         <button onclick="setDrawingTool('rectangle')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Rectangle</button>
-        <button onclick="setDrawingTool('text')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Text</button>
         <button onclick="setDrawingTool('eraser')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Eraser</button>
         <input type="color" value="#000000" onchange="setDrawingColor(this.value)" style="margin-right:10px;">
         <button onclick="clearCanvas('first-page-drawing-canvas')" style="background:#666;color:white;border:none;padding:8px 16px;cursor:pointer;">Clear</button>
