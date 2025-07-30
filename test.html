@@ -1309,8 +1309,8 @@
         startX = e.clientX - rect.left;
         startY = e.clientY - rect.top;
         
-        if (canvasId === 'signature-below-total-canvas') {
-          // Signature canvas always uses pen
+        // Signature canvas always uses pen, other canvases use selected tool
+        const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
           ctx.beginPath();
           ctx.moveTo(startX, startY);
         } else {
@@ -1329,16 +1329,17 @@
         
         if (!isDrawing) return;
         
-        if (canvasId === 'signature-below-total-canvas') {
-          // Signature canvas always uses pen with black color
-          ctx.lineWidth = 2;
+        // Signature canvas always uses pen with black color, other canvases use selected tool/color
+        const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
+        const activeColor = canvasId === 'signature-below-total-canvas' ? '#000000' : currentColor;
+        ctx.strokeStyle = activeTool === 'eraser' ? '#ffffff' : activeColor;
           ctx.lineCap = 'round';
           ctx.strokeStyle = '#000000';
           ctx.lineTo(currentX, currentY);
           ctx.stroke();
           ctx.beginPath();
           ctx.moveTo(startX, startY);
-        } else {
+        } else if (activeTool === 'line' || activeTool === 'rectangle' && canvasId !== 'signature-below-total-canvas') {
           // Drawing canvas uses selected tool and settings
           ctx.lineWidth = currentLineWidth;
           ctx.lineCap = 'round';
@@ -1358,7 +1359,7 @@
               // Draw preview
               previewCtx.lineWidth = currentLineWidth;
               previewCtx.strokeStyle = currentColor;
-              previewCtx.lineCap = 'round';
+            previewCtx.strokeStyle = activeColor;
               previewCtx.globalAlpha = 0.8; // Make preview slightly transparent
               
               if (currentTool === 'line') {
@@ -1380,8 +1381,9 @@
         if (!isDrawing) return;
         isDrawing = false;
         
-        if (canvasId !== 'signature-below-total-canvas') {
-          // Clear preview
+        // Signature canvas always uses pen, other canvases use selected tool
+        const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
+        const activeColor = canvasId === 'signature-below-total-canvas' ? '#000000' : currentColor;
           if (previewCtx && previewCanvas && canvasId === 'first-page-drawing-canvas') {
             previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
           }
@@ -1394,7 +1396,7 @@
             
             ctx.lineWidth = currentLineWidth;
             ctx.strokeStyle = currentColor;
-            ctx.lineCap = 'round';
+          ctx.strokeStyle = activeColor;
             
             if (currentTool === 'line') {
               ctx.beginPath();
@@ -1414,7 +1416,7 @@
     }
     
     function setDrawingTool(tool) {
-      currentTool = tool;
+        if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-below-total-canvas') {
     }
     
     function setDrawingColor(color) {
