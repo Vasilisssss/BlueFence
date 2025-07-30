@@ -1247,52 +1247,6 @@
     let startX, startY;
     let previewCanvas, previewCtx;
    
-   // Signature canvas functionality (pen only)
-   function initializeSignatureCanvas(canvasId) {
-     const canvas = document.getElementById(canvasId);
-     if (!canvas) return;
-     const ctx = canvas.getContext('2d');
-     
-     let isSignatureDrawing = false;
-     
-     canvas.addEventListener('mousedown', startSignatureDrawing);
-     canvas.addEventListener('mousemove', drawSignature);
-     canvas.addEventListener('mouseup', stopSignatureDrawing);
-     canvas.addEventListener('mouseout', stopSignatureDrawing);
-     
-     function startSignatureDrawing(e) {
-       isSignatureDrawing = true;
-       const rect = canvas.getBoundingClientRect();
-       const startX = e.clientX - rect.left;
-       const startY = e.clientY - rect.top;
-       
-       ctx.beginPath();
-       ctx.moveTo(startX, startY);
-     }
-     
-     function drawSignature(e) {
-       if (!isSignatureDrawing) return;
-       
-       const rect = canvas.getBoundingClientRect();
-       const currentX = e.clientX - rect.left;
-       const currentY = e.clientY - rect.top;
-       
-       ctx.lineWidth = 2;
-       ctx.lineCap = 'round';
-       ctx.strokeStyle = '#000000';
-       ctx.lineTo(currentX, currentY);
-       ctx.stroke();
-       ctx.beginPath();
-       ctx.moveTo(currentX, currentY);
-     }
-     
-     function stopSignatureDrawing() {
-       if (!isSignatureDrawing) return;
-       isSignatureDrawing = false;
-       ctx.beginPath();
-     }
-   }
-   
    function updatePreviewPosition() {
      if (!previewCanvas) return;
      const canvas = document.getElementById('first-page-drawing-canvas');
@@ -1308,8 +1262,7 @@
      previewCanvas.height = canvas.height;
    }
     
-   // Project drawing canvas functionality (all tools)
-   function initializeProjectDrawingCanvas(canvasId) {
+    function initializeCanvas(canvasId) {
       const canvas = document.getElementById(canvasId);
      if (!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -1356,7 +1309,10 @@
         startX = e.clientX - rect.left;
         startY = e.clientY - rect.top;
         
-       if (currentTool === 'pen' || currentTool === 'eraser') {
+        // Get the current tool for this specific canvas
+        const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
+        
+        if (activeTool === 'pen' || activeTool === 'eraser') {
           ctx.beginPath();
           ctx.moveTo(startX, startY);
         }
@@ -1369,40 +1325,41 @@
         
         if (!isDrawing) return;
         
+        // Get the current tool for this specific canvas
+        const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
+        
         ctx.lineWidth = currentLineWidth;
         ctx.lineCap = 'round';
-       ctx.strokeStyle = currentTool === 'eraser' ? '#ffffff' : currentColor;
+        ctx.strokeStyle = activeTool === 'eraser' ? '#ffffff' : currentColor;
         
-       if (currentTool === 'pen' || currentTool === 'eraser') {
+        if (activeTool === 'pen' || activeTool === 'eraser') {
           ctx.lineTo(currentX, currentY);
           ctx.stroke();
           ctx.beginPath();
           ctx.moveTo(currentX, currentY);
-       } else if (currentTool === 'line' || currentTool === 'rectangle') {
-         // Show preview for line and rectangle tools
-         if (previewCtx && previewCanvas) {
-           // Clear preview canvas
-           previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-           
-           // Draw preview
-           previewCtx.lineWidth = currentLineWidth;
-           previewCtx.strokeStyle = currentColor;
-           previewCtx.lineCap = 'round';
+        } else if (activeTool === 'line' || activeTool === 'rectangle' && canvasId !== 'signature-canvas') {
+          // Only show preview for first page drawing canvas
+         if (canvasId === 'first-page-drawing-canvas' && previewCtx && previewCanvas) {
+            // Clear preview canvas
+            previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+            
+            // Draw preview
+            previewCtx.lineWidth = currentLineWidth;
+            previewCtx.strokeStyle = currentColor;
+            previewCtx.lineCap = 'round';
            previewCtx.globalAlpha = 0.8; // Make preview slightly transparent
-           
-           if (currentTool === 'line') {
-             previewCtx.beginPath();
-             previewCtx.moveTo(startX, startY);
-             previewCtx.lineTo(currentX, currentY);
-             previewCtx.stroke();
-           } else if (currentTool === 'rectangle') {
-             previewCtx.beginPath();
-             previewCtx.rect(startX, startY, currentX - startX, currentY - startY);
-             previewCtx.stroke();
-           }
+            
+            if (activeTool === 'line') {
+              previewCtx.beginPath();
+              previewCtx.moveTo(startX, startY);
+              previewCtx.lineTo(currentX, currentY);
+              previewCtx.stroke();
+            } else if (activeTool === 'rectangle') {
+              previewCtx.stroke();
+            }
            
            previewCtx.globalAlpha = 1.0; // Reset alpha
-         }
+          }
         }
       }
       
@@ -1410,12 +1367,15 @@
         if (!isDrawing) return;
         isDrawing = false;
         
+        // Get the current tool for this specific canvas
+        const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
+        
         // Clear preview
-       if (previewCtx && previewCanvas) {
+       if (previewCtx && previewCanvas && canvasId === 'first-page-drawing-canvas') {
           previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
         }
         
-       if (currentTool === 'line' || currentTool === 'rectangle') {
+        if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-canvas') {
           const rect = canvas.getBoundingClientRect();
           const lastEvent = window.event || event;
           const endX = lastEvent ? lastEvent.clientX - rect.left : startX;
@@ -1425,12 +1385,12 @@
           ctx.strokeStyle = currentColor;
           ctx.lineCap = 'round';
           
-         if (currentTool === 'line') {
+          if (activeTool === 'line') {
             ctx.beginPath();
             ctx.moveTo(startX, startY);
             ctx.lineTo(endX, endY);
             ctx.stroke();
-         } else if (currentTool === 'rectangle') {
+          } else if (activeTool === 'rectangle') {
             ctx.beginPath();
             ctx.rect(startX, startY, endX - startX, endY - startY);
             ctx.stroke();
@@ -1452,34 +1412,36 @@
     function clearCanvas(canvasId) {
       const canvas = document.getElementById(canvasId);
       const ctx = canvas.getContext('2d');
-     // Create preview canvas for real-time drawing feedback
-     previewCanvas = document.createElement('canvas');
-     previewCanvas.style.pointerEvents = 'none';
-     previewCanvas.style.zIndex = '9999';
-     previewCanvas.style.background = 'transparent';
-     previewCanvas.style.border = '1px solid rgba(255,0,0,0.3)'; // Subtle red border for debugging
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    
+    window.addEventListener('beforeprint', syncInfoFields);
+    document.querySelectorAll('input[type="text"]').forEach(inp => {
+      inp.addEventListener('input', syncInfoFields);
+    });
+    
+    // Initialize drawing canvases when page loads
+    function initializeDrawing() {
+      initializeCanvas('first-page-drawing-canvas');
+      initializeCanvas('signature-below-total-canvas');
+      generateFenceImages();
+      adjustDrawingSize();
+    }
+    
+    // Function to adjust drawing canvas size based on number of fence options
+    function adjustDrawingSize() {
+      const canvas = document.getElementById('first-page-drawing-canvas');
+     if (!canvas) return;
      
-     // Add preview canvas to body with fixed positioning
-     document.body.appendChild(previewCanvas);
-     previewCtx = previewCanvas.getContext('2d');
-     
-     // Update preview canvas size when main canvas size changes
-     const updatePreviewSize = () => {
-       const rect = canvas.getBoundingClientRect();
-       previewCanvas.width = canvas.width;
-       previewCanvas.height = canvas.height;
-       previewCanvas.style.top = rect.top + window.scrollY + 'px';
-       previewCanvas.style.left = rect.left + window.scrollX + 'px';
-       previewCanvas.style.width = canvas.offsetWidth + 'px';
-       previewCanvas.style.height = canvas.offsetHeight + 'px';
-     };
-     
-     // Update size initially and on resize
-     updatePreviewSize();
-     window.addEventListener('resize', updatePreviewSize);
-     window.addEventListener('scroll', updatePreviewSize);
-     
-     previewCtx = previewCanvas.getContext('2d');
+      const fenceCount = document.querySelectorAll('.product-type-wrapper').length;
+      
+      let height;
+     if (fenceCount <= 1) {
+       height = 350; // Largest for single fence
+       height = 280; // Large for few fences
+     } else {
+       height = 230; // Minimal for many fences
+     }
        
        // Initial positioning
        updatePreviewPosition();
@@ -1504,8 +1466,8 @@
      clone.querySelector('.card-total').textContent = formatCurrency(0);
      clone.querySelector('.delete-btn').classList.add('show');
      grid.insertBefore(clone, document.getElementById('plus-btn-wrapper'));
-     initializeProjectDrawingCanvas('first-page-drawing-canvas');
-     initializeSignatureCanvas('signature-below-total-canvas');
+     bindCardLogic(clone);
+     adjustDrawingSize(); // Adjust canvas size when adding
      generateFenceImages();
    }
   </script>
