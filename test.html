@@ -602,6 +602,16 @@
       background: white;
     }
     @media print {
+      /* Make all backgrounds light grey */
+      * {
+        background: #f5f5f5 !important;
+      }
+      
+      /* Keep specific elements white for readability */
+      canvas, .signature-canvas, .drawing-canvas, input, select, textarea {
+        background: white !important;
+      }
+      
       body {
         background: #f5f5f5 !important;
         padding: 0 !important;
