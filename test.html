@@ -1369,6 +1369,66 @@
             }
            
            previewCtx.globalAlpha = 1.0; // Reset alpha
+        function handleTextClick(e, canvasId) {
+            // Only handle text clicks for project drawing canvas
+            if (canvasId !== 'drawing-canvas' || currentTool !== 'text') {
+                return;
+            }
+
+            const canvas = document.getElementById(canvasId);
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Remove existing text input if any
+            if (textInput) {
+                textInput.remove();
+                textInput = null;
+            }
+
+            // Create text input
+            textInput = document.createElement('input');
+            textInput.type = 'text';
+            textInput.style.position = 'absolute';
+            textInput.style.left = (rect.left + x) + 'px';
+            textInput.style.top = (rect.top + y) + 'px';
+            textInput.style.border = '1px solid #ccc';
+            textInput.style.padding = '4px';
+            textInput.style.fontSize = '16px';
+            textInput.style.fontFamily = 'Arial, sans-serif';
+            textInput.style.backgroundColor = 'white';
+            textInput.style.zIndex = '1000';
+            textInput.placeholder = 'Enter text...';
+
+            document.body.appendChild(textInput);
+            textInput.focus();
+
+            // Handle text input completion
+            function completeTextInput() {
+                const text = textInput.value.trim();
+                if (text) {
+                    const ctx = canvas.getContext('2d');
+                    ctx.font = '16px Arial';
+                    ctx.fillStyle = currentColor;
+                    ctx.fillText(text, x, y);
+                }
+                textInput.remove();
+                textInput = null;
+            }
+
+            textInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    completeTextInput();
+                }
+                if (e.key === 'Escape') {
+                    textInput.remove();
+                    textInput = null;
+                }
+            });
+
+            textInput.addEventListener('blur', completeTextInput);
+        }
+
           }
         }
       }
