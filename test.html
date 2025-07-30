@@ -1264,18 +1264,8 @@
     
     function initializeCanvas(canvasId) {
       const canvas = document.getElementById(canvasId);
-      if (!canvas) return;
+     if (!canvas) return;
       const ctx = canvas.getContext('2d');
-      
-      // Add click handler for text tool
-      canvas.addEventListener('click', function(e) {
-          if (currentTool === 'text' && canvasId === 'drawing-canvas') {
-              const rect = canvas.getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const y = e.clientY - rect.top;
-              addTextInput(canvas, x, y);
-          }
-      });
       
       // Create preview canvas for real-time drawing feedback (only for drawing canvas)
       if (canvasId === 'drawing-canvas') {
@@ -1312,6 +1302,53 @@
       canvas.addEventListener('mousemove', draw);
       canvas.addEventListener('mouseup', stopDrawing);
       canvas.addEventListener('mouseout', stopDrawing);
+        
+        function addTextInput(canvas, x, y) {
+            const container = canvas.parentElement;
+            const rect = canvas.getBoundingClientRect();
+            
+            // Create text input
+            const textInput = document.createElement('textarea');
+            textInput.className = 'text-input';
+            textInput.style.left = (rect.left + x - container.offsetLeft) + 'px';
+            textInput.style.top = (rect.top + y - container.offsetTop) + 'px';
+            textInput.style.color = currentColor;
+            textInput.placeholder = 'Type text here...';
+            textInput.rows = 1;
+            
+            container.appendChild(textInput);
+            textInput.focus();
+            
+            // Auto-resize textarea
+            textInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = this.scrollHeight + 'px';
+            });
+            
+            // Handle Enter key and blur to finalize text
+            function finalizeText() {
+                if (textInput.value.trim()) {
+                    const ctx = canvas.getContext('2d');
+                    ctx.font = '16px Arial';
+                    ctx.fillStyle = currentColor;
+                    ctx.textBaseline = 'top';
+                    
+                    // Split text by lines and draw each line
+                    const lines = textInput.value.split('\n');
+                    lines.forEach((line, index) => {
+                        ctx.fillText(line, x, y + (index * 20));
+                    });
+                }
+                container.removeChild(textInput);
+            }
+            
+            textInput.addEventListener('blur', finalizeText);
+            textInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    container.removeChild(textInput);
+                }
+            });
+        }
       
       function startDrawing(e) {
         isDrawing = true;
