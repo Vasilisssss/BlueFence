@@ -603,7 +603,7 @@
     }
     @media print {
       body {
-        background: #fff !important;
+        background: #f5f5f5 !important;
         padding: 0 !important;
         margin: 0 !important;
       }
@@ -620,7 +620,7 @@
         display: none !important;
       }
       .container {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+        background: #f5f5f5 !important;
         margin: 0 !important;
         padding: 10px !important;
         width: 100% !important;
@@ -628,7 +628,7 @@
         page-break-inside: avoid;
       }
       .professional-header {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+        background: #f5f5f5 !important;
         padding: 12px !important;
         margin: -15px -15px 12px -15px !important;
       }
@@ -828,7 +828,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        background: white !important;
+        background: #f5f5f5 !important;
         padding: 15px !important;
         border-radius: 8px !important;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
@@ -843,10 +843,26 @@
       .signature-canvas {
         width: 280px !important;
         height: 80px !important;
-        background: white !important;
+        background: #f5f5f5 !important;
       }
       .blue-line {
         display: none !important;
+      }
+      
+      /* Override all white backgrounds to light grey */
+      * {
+        background-color: #f5f5f5 !important;
+      }
+      
+      /* Keep canvas backgrounds white for drawing visibility */
+      canvas {
+        background: white !important;
+      }
+      
+      /* Keep text inputs and form elements readable */
+      input[type="text"], select, textarea {
+        background: white !important;
+        border: 1px solid #ccc !important;
       }
       @page {
         size: A4 portrait;
