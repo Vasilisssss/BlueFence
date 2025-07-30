@@ -600,8 +600,8 @@
         font-size: 9px;
       }
     }
-
-    /* Mobile Styles (320px - 480px) */
+    
+    /* Mobile (320px - 480px) */
     @media (min-width: 320px) and (max-width: 480px) {
       body {
         padding: 10px;
@@ -674,6 +674,40 @@
         flex-wrap: wrap;
         justify-content: center;
       }
+      .drawing-tools button {
+        padding: 6px 12px;
+        font-size: 0.8em;
+        min-height: 36px;
+        min-width: 36px;
+      }
+      .first-page-drawing-canvas {
+        max-width: 100%;
+        height: 250px;
+      }
+      .fence-images-display {
+        gap: 8px;
+        max-height: 300px;
+      }
+      .fence-image-item {
+        flex: 0 1 calc(50% - 8px);
+        max-width: calc(50% - 8px);
+        min-width: 120px;
+      }
+      .fence-image-item img {
+        max-width: 100px;
+        max-height: 80px;
+      }
+      .fence-details {
+        font-size: 8px;
+      }
+      .info-grid {
+        gap: 8px 16px;
+        font-size: 0.9em;
+      }
+      .info-grid input[type="text"] {
+        padding: 6px 10px;
+        font-size: 0.9em;
+      }
     }
     
     /* Very Small Mobile (320px and below) */
@@ -739,71 +773,6 @@
       }
     }
     
-    /* Landscape Mobile */
-    @media (max-width: 768px) and (orientation: landscape) {
-      .drawing-tools button {
-        padding: 6px 12px;
-        font-size: 0.8em;
-        min-height: 36px;
-        min-width: 36px;
-      }
-      .first-page-drawing-canvas {
-        max-width: 100%;
-        height: 250px;
-      }
-      .fence-images-display {
-        gap: 8px;
-        max-height: 300px;
-      }
-      .fence-image-item {
-        flex: 0 1 calc(50% - 8px);
-        max-width: calc(50% - 8px);
-        min-width: 120px;
-      }
-      .fence-image-item img {
-        max-width: 100px;
-        max-height: 80px;
-      }
-      .fence-details {
-        font-size: 8px;
-      }
-      .info-grid {
-        gap: 8px 16px;
-        font-size: 0.9em;
-      }
-      .info-grid input[type="text"] {
-        padding: 6px 10px;
-        font-size: 0.9em;
-      }
-    }
-
-    /* Large Desktop Styles */
-    @media (min-width: 1200px) {
-      .container, .half-container {
-        max-width: 1100px;
-        padding: 50px 40px;
-      }
-      .professional-header {
-        margin: -50px -40px 30px -40px;
-      }
-      .product-type-container {
-        max-width: 800px;
-      }
-      h1 {
-        font-size: 2.8em;
-      }
-      h2 {
-        font-size: 1.7em;
-      }
-      p.title {
-        font-size: 2.2em;
-      }
-      #grand-total-box {
-        font-size: 1.9em;
-        padding: 0px 5px;
-      }
-    }
-
     /* Landscape Mobile */
     @media (max-width: 768px) and (orientation: landscape) {
       body {
@@ -921,7 +890,55 @@
         min-width: 32px !important;
       }
     }
-    
+
+    /* Large Desktop Styles */
+    @media (min-width: 1200px) {
+      .container, .half-container {
+        max-width: 1100px;
+        padding: 50px 40px;
+      }
+      .professional-header {
+        margin: -50px -40px 30px -40px;
+      }
+      .product-type-container {
+        max-width: 800px;
+      }
+      h1 {
+        font-size: 2.8em;
+      }
+      h2 {
+        font-size: 1.7em;
+      }
+      p.title {
+        font-size: 2.2em;
+      }
+      #grand-total-box {
+        font-size: 1.9em;
+        padding: 0px 5px;
+      }
+    }
+
+    /* Landscape Mobile */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .header-content {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .left-section {
+        flex-direction: row;
+        text-align: left;
+      }
+      .right-section {
+        text-align: center;
+      }
+      .right-section {
+        flex-direction: row;
+        align-items: baseline;
+      }
+      .quote-title {
+        text-align: left;
+      }
+    }
     .bordered-info {
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       margin-bottom: 24px;
@@ -1276,18 +1293,9 @@
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
-      box-sizing: border-box;
-    }
-    
-    /* Responsive canvas container */
-    .canvas-container {
+      cursor: crosshair;
       position: relative;
-      margin-top: 15px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
     }
-    
     
     .signature-below-total {
       margin-top: 15px;
@@ -1302,9 +1310,15 @@
     }
     
     .signature-below-total canvas {
-      
       background: white;
       border-radius: 4px;
+      touch-action: none; /* Prevent scrolling on mobile */
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
     
     /* Text input styles for drawing canvas */
@@ -1716,13 +1730,21 @@
         previewCtx = previewCanvas.getContext('2d');
       }
       
-      canvas.addEventListener('mousedown', startDrawing);
-      canvas.addEventListener('mousemove', draw);
-      canvas.addEventListener('mouseup', stopDrawing);
-      canvas.addEventListener('mouseout', stopDrawing);
+      // For mouse events (desktop)
+      canvas.addEventListener('mousedown', onStart);
+      canvas.addEventListener('mousemove', onMove);
+      canvas.addEventListener('mouseup', onEnd);
+      canvas.addEventListener('mouseout', onEnd);
+      
+      // For touch events (mobile)
+      canvas.addEventListener('touchstart', onTouchStart, { passive: false });
+      canvas.addEventListener('touchmove', onTouchMove, { passive: false });
+      canvas.addEventListener('touchend', onEnd, { passive: false });
+      canvas.addEventListener('touchcancel', onEnd, { passive: false });
       
       // Add click handler for text tool
       canvas.addEventListener('click', handleCanvasClick);
+      canvas.addEventListener('touchend', handleCanvasTouch, { passive: false });
         
         function handleCanvasClick(e) {
             // Only handle text tool clicks on the drawing canvas
@@ -1734,71 +1756,171 @@
             }
         }
         
-        function addTextInput(canvas, x, y) {
-            const container = canvas.parentElement;
-            
-            // Create text input
-            const textInput = document.createElement('textarea');
-            textInput.className = 'text-input';
-            textInput.style.left = x + 'px';
-            textInput.style.top = y + 'px';
-            textInput.style.color = currentColor;
-            textInput.placeholder = 'Type text here...';
-            textInput.rows = 1;
-            
-            container.appendChild(textInput);
-            textInput.focus();
-            
-            // Auto-resize textarea
-            textInput.addEventListener('input', function() {
-                this.style.height = 'auto';
-                this.style.height = this.scrollHeight + 'px';
-            });
-            
-            // Handle Enter key and blur to finalize text
-            function finalizeText() {
-                if (textInput.value.trim()) {
-                    const ctx = canvas.getContext('2d');
-                    ctx.font = '16px Arial';
-                    ctx.fillStyle = currentColor;
-                    ctx.textBaseline = 'top';
-                    
-                    // Split text by lines and draw each line
-                    const lines = textInput.value.split('\n');
-                    lines.forEach((line, index) => {
-                        ctx.fillText(line, x, y + (index * 20));
-                    });
-                }
-                container.removeChild(textInput);
-            }
-            
-            textInput.addEventListener('blur', finalizeText);
-            textInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    container.removeChild(textInput);
-                } else if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    finalizeText();
-                }
-            });
-        }
+
       
-      function startDrawing(e) {
+
+      
+    }
+    
+    // Mouse event handlers (desktop)
+    function onStart(e) {
+      const canvas = e.target;
+      const rect = canvas.getBoundingClientRect();
+      const ctx = canvas.getContext('2d');
+      const canvasId = canvas.id;
+      
+      // Don't start drawing if text tool is selected (except for signature canvas)
+      if (canvasId !== 'signature-below-total-canvas' && currentTool === 'text') {
+        return;
+      }
+      
+      isDrawing = true;
+      startX = e.clientX - rect.left;
+      startY = e.clientY - rect.top;
+      
+      // Force pen tool for signature canvas, use current tool for others
+      const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
+      
+      // Always allow drawing on signature canvas (force pen), check tool for other canvases
+      if (canvasId === 'signature-below-total-canvas' || activeTool === 'pen' || activeTool === 'eraser') {
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+      }
+    }
+    
+    function onMove(e) {
+      const canvas = e.target;
+      const rect = canvas.getBoundingClientRect();
+      const ctx = canvas.getContext('2d');
+      const canvasId = canvas.id;
+      
+      const currentX = e.clientX - rect.left;
+      const currentY = e.clientY - rect.top;
+      
+      if (!isDrawing) return;
+      
+      // Don't draw if text tool is selected (except for signature canvas)
+      if (canvasId !== 'signature-below-total-canvas' && currentTool === 'text') {
+        return;
+      }
+      
+      // Force pen tool for signature canvas, use current tool for others
+      const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
+      
+      // Force black color for signature canvas
+      const activeColor = canvasId === 'signature-below-total-canvas' ? '#000000' : currentColor;
+      
+      ctx.lineWidth = currentLineWidth;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = activeTool === 'eraser' ? '#ffffff' : activeColor;
+      
+      // Always allow drawing on signature canvas (force pen), check tool for other canvases
+      if (canvasId === 'signature-below-total-canvas' || activeTool === 'pen' || activeTool === 'eraser') {
+        ctx.lineTo(currentX, currentY);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(currentX, currentY);
+      } else if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-below-total-canvas') {
+        // Only show preview for first page drawing canvas
+        if (canvasId === 'first-page-drawing-canvas' && previewCtx && previewCanvas) {
+          // Clear preview canvas
+          previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+          
+          // Draw preview
+          previewCtx.lineWidth = currentLineWidth;
+          previewCtx.strokeStyle = activeColor;
+          previewCtx.lineCap = 'round';
+          previewCtx.globalAlpha = 0.8; // Make preview slightly transparent
+          
+          if (activeTool === 'line') {
+            previewCtx.beginPath();
+            previewCtx.moveTo(startX, startY);
+            previewCtx.lineTo(currentX, currentY);
+            previewCtx.stroke();
+          } else if (activeTool === 'rectangle') {
+            previewCtx.beginPath();
+            previewCtx.rect(startX, startY, currentX - startX, currentY - startY);
+            previewCtx.stroke();
+          }
+          
+          previewCtx.globalAlpha = 1.0; // Reset alpha
+        }
+      }
+    }
+    
+    function onEnd(e) {
+      const canvas = e.target;
+      const ctx = canvas.getContext('2d');
+      const canvasId = canvas.id;
+      
+      if (!isDrawing) return;
+      isDrawing = false;
+      
+      // Don't process drawing if text tool is selected (except for signature canvas)
+      if (canvasId !== 'signature-below-total-canvas' && currentTool === 'text') {
+        return;
+      }
+      
+      // Force pen tool for signature canvas, use current tool for others
+      const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
+      
+      // Force black color for signature canvas
+      const activeColor = canvasId === 'signature-below-total-canvas' ? '#000000' : currentColor;
+      
+      // Clear preview
+      if (previewCtx && previewCanvas && canvasId === 'first-page-drawing-canvas') {
+        previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+      }
+      
+      if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-below-total-canvas') {
+        const rect = canvas.getBoundingClientRect();
+        const endX = e.clientX - rect.left;
+        const endY = e.clientY - rect.top;
+        
+        ctx.lineWidth = currentLineWidth;
+        ctx.strokeStyle = activeColor;
+        ctx.lineCap = 'round';
+        
+        if (activeTool === 'line') {
+          ctx.beginPath();
+          ctx.moveTo(startX, startY);
+          ctx.lineTo(endX, endY);
+          ctx.stroke();
+        } else if (activeTool === 'rectangle') {
+          ctx.beginPath();
+          ctx.rect(startX, startY, endX - startX, endY - startY);
+          ctx.stroke();
+        }
+      }
+      
+      ctx.beginPath();
+    }
+    
+    // Touch event handlers (mobile)
+    function onTouchStart(e) {
+      e.preventDefault(); // Prevent scrolling
+      
+      if (e.touches.length > 0) {
+        const canvas = e.target;
+        const touch = e.touches[0];
+        const ctx = canvas.getContext('2d');
+        const canvasId = canvas.id;
+        
+        // Convert pageX/pageY to canvas coordinates
+        let x = touch.pageX - canvas.offsetLeft;
+        let y = touch.pageY - canvas.offsetTop;
+        
         // Don't start drawing if text tool is selected (except for signature canvas)
         if (canvasId !== 'signature-below-total-canvas' && currentTool === 'text') {
           return;
         }
         
         isDrawing = true;
-        const rect = canvas.getBoundingClientRect();
-        startX = e.clientX - rect.left;
-        startY = e.clientY - rect.top;
+        startX = x;
+        startY = y;
         
         // Force pen tool for signature canvas, use current tool for others
         const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
-        
-        // Force black color for signature canvas
-        const activeColor = canvasId === 'signature-below-total-canvas' ? '#000000' : currentColor;
         
         // Always allow drawing on signature canvas (force pen), check tool for other canvases
         if (canvasId === 'signature-below-total-canvas' || activeTool === 'pen' || activeTool === 'eraser') {
@@ -1806,11 +1928,19 @@
           ctx.moveTo(startX, startY);
         }
       }
+    }
+    
+    function onTouchMove(e) {
+      e.preventDefault(); // Prevent scrolling
       
-      function draw(e) {
-        const rect = canvas.getBoundingClientRect();
-        const currentX = e.clientX - rect.left;
-        const currentY = e.clientY - rect.top;
+      if (e.touches.length > 0) {
+        const canvas = e.target;
+        const touch = e.touches[0];
+        const ctx = canvas.getContext('2d');
+        const canvasId = canvas.id;
+        
+        let x = touch.pageX - canvas.offsetLeft;
+        let y = touch.pageY - canvas.offsetTop;
         
         if (!isDrawing) return;
         
@@ -1831,13 +1961,13 @@
         
         // Always allow drawing on signature canvas (force pen), check tool for other canvases
         if (canvasId === 'signature-below-total-canvas' || activeTool === 'pen' || activeTool === 'eraser') {
-          ctx.lineTo(currentX, currentY);
+          ctx.lineTo(x, y);
           ctx.stroke();
           ctx.beginPath();
-          ctx.moveTo(currentX, currentY);
-       } else if (activeTool === 'line' || activeTool === 'rectangle' && canvasId !== 'signature-below-total-canvas') {
+          ctx.moveTo(x, y);
+        } else if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-below-total-canvas') {
           // Only show preview for first page drawing canvas
-         if (canvasId === 'first-page-drawing-canvas' && previewCtx && previewCanvas) {
+          if (canvasId === 'first-page-drawing-canvas' && previewCtx && previewCanvas) {
             // Clear preview canvas
             previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
             
@@ -1845,68 +1975,85 @@
             previewCtx.lineWidth = currentLineWidth;
             previewCtx.strokeStyle = activeColor;
             previewCtx.lineCap = 'round';
-           previewCtx.globalAlpha = 0.8; // Make preview slightly transparent
+            previewCtx.globalAlpha = 0.8; // Make preview slightly transparent
             
             if (activeTool === 'line') {
               previewCtx.beginPath();
               previewCtx.moveTo(startX, startY);
-              previewCtx.lineTo(currentX, currentY);
+              previewCtx.lineTo(x, y);
               previewCtx.stroke();
             } else if (activeTool === 'rectangle') {
-             previewCtx.beginPath();
-             previewCtx.rect(startX, startY, currentX - startX, currentY - startY);
+              previewCtx.beginPath();
+              previewCtx.rect(startX, startY, x - startX, y - startY);
               previewCtx.stroke();
             }
-           
-           previewCtx.globalAlpha = 1.0; // Reset alpha
+            
+            previewCtx.globalAlpha = 1.0; // Reset alpha
           }
         }
       }
-      
-      function stopDrawing() {
-        if (!isDrawing) return;
-        isDrawing = false;
-        
-        // Don't process drawing if text tool is selected (except for signature canvas)
-        if (canvasId !== 'signature-below-total-canvas' && currentTool === 'text') {
-          return;
-        }
-        
-        // Force pen tool for signature canvas, use current tool for others
-       const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
-        
-        // Force black color for signature canvas
-        const activeColor = canvasId === 'signature-below-total-canvas' ? '#000000' : currentColor;
-        
-        // Clear preview
-       if (previewCtx && previewCanvas && canvasId === 'first-page-drawing-canvas') {
-          previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-        }
-        
-       if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-below-total-canvas') {
-          const rect = canvas.getBoundingClientRect();
-          const lastEvent = window.event || event;
-          const endX = lastEvent ? lastEvent.clientX - rect.left : startX;
-          const endY = lastEvent ? lastEvent.clientY - rect.top : startY;
-          
-          ctx.lineWidth = currentLineWidth;
-          ctx.strokeStyle = activeColor;
-          ctx.lineCap = 'round';
-          
-          if (activeTool === 'line') {
-            ctx.beginPath();
-            ctx.moveTo(startX, startY);
-            ctx.lineTo(endX, endY);
-            ctx.stroke();
-          } else if (activeTool === 'rectangle') {
-            ctx.beginPath();
-            ctx.rect(startX, startY, endX - startX, endY - startY);
-            ctx.stroke();
-          }
-        }
-        
-        ctx.beginPath();
+    }
+    
+    function handleCanvasTouch(e) {
+      // Only handle text tool touches on the drawing canvas
+      if (e.target.id === 'first-page-drawing-canvas' && currentTool === 'text') {
+        e.preventDefault();
+        const touch = e.changedTouches[0];
+        const rect = e.target.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+        addTextInput(e.target, x, y);
       }
+    }
+    
+    // Global function for adding text input
+    function addTextInput(canvas, x, y) {
+        const container = canvas.parentElement;
+        
+        // Create text input
+        const textInput = document.createElement('textarea');
+        textInput.className = 'text-input';
+        textInput.style.left = x + 'px';
+        textInput.style.top = y + 'px';
+        textInput.style.color = currentColor;
+        textInput.placeholder = 'Type text here...';
+        textInput.rows = 1;
+        
+        container.appendChild(textInput);
+        textInput.focus();
+        
+        // Auto-resize textarea
+        textInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+        
+        // Handle Enter key and blur to finalize text
+        function finalizeText() {
+            if (textInput.value.trim()) {
+                const ctx = canvas.getContext('2d');
+                ctx.font = '16px Arial';
+                ctx.fillStyle = currentColor;
+                ctx.textBaseline = 'top';
+                
+                // Split text by lines and draw each line
+                const lines = textInput.value.split('\n');
+                lines.forEach((line, index) => {
+                    ctx.fillText(line, x, y + (index * 20));
+                });
+            }
+            container.removeChild(textInput);
+        }
+        
+        textInput.addEventListener('blur', finalizeText);
+        textInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                container.removeChild(textInput);
+            } else if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                finalizeText();
+            }
+        });
     }
     
     function setDrawingTool(tool) {
@@ -1934,6 +2081,24 @@
       initializeCanvas('signature-below-total-canvas');
       generateFenceImages();
       adjustDrawingSize();
+      
+      // Debug: Check if touch events are working
+      console.log('Drawing initialized with touch support');
+      
+      // Test touch detection
+      const canvas = document.getElementById('first-page-drawing-canvas');
+      if (canvas) {
+        canvas.addEventListener('touchstart', function(e) {
+          console.log('Touch detected on drawing canvas');
+        }, { passive: false });
+      }
+      
+      const signatureCanvas = document.getElementById('signature-below-total-canvas');
+      if (signatureCanvas) {
+        signatureCanvas.addEventListener('touchstart', function(e) {
+          console.log('Touch detected on signature canvas');
+        }, { passive: false });
+      }
     }
     
     // Function to adjust drawing canvas size based on number of fence options
@@ -1991,7 +2156,7 @@
 
 </head>
 <body>
-  <button onclick="window.print()" id="print-btn" style="position:fixed;top:20px;right:30px;z-index:1000;padding:12px 28px;background:linear-gradient(135deg, #2c3e50 0%, #34495e 100%);color:#fff;border:none;border-radius:12px;font-size:1em;box-shadow:0 4px 16px rgba(44,62,80,0.3);cursor:pointer;transition:all 0.3s ease;font-weight:600;min-height:44px;min-width:44px;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(44,62,80,0.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 16px rgba(44,62,80,0.3)'">Print as PDF</button>
+  <button onclick="window.print()" id="print-btn" style="position:fixed;top:20px;right:30px;z-index:1000;padding:12px 28px;background:linear-gradient(135deg, #2c3e50 0%, #34495e 100%);color:#fff;border:none;border-radius:12px;font-size:1em;box-shadow:0 4px 16px rgba(44,62,80,0.3);cursor:pointer;transition:all 0.3s ease;font-weight:600;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(44,62,80,0.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 16px rgba(44,62,80,0.3)'">Print as PDF</button>
   <div class="container">
     <div class="professional-header">
       <div class="header-content">
@@ -2046,13 +2211,13 @@
     <div class="first-page-drawing">
       <h2>Draft Preview</h2>
       <div class="drawing-tools">
-        <button onclick="setDrawingTool('pen')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Pen</button>
-        <button onclick="setDrawingTool('line')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Line</button>
-        <button onclick="setDrawingTool('rectangle')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Rectangle</button>
-        <button onclick="setDrawingTool('text')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Text</button>
-        <button onclick="setDrawingTool('eraser')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Eraser</button>
-        <input type="color" value="#000000" onchange="setDrawingColor(this.value)" style="margin-right:10px;">
-        <button onclick="clearCanvas('first-page-drawing-canvas')" style="background:#666;color:white;border:none;padding:8px 16px;cursor:pointer;">Clear</button>
+        <button onclick="setDrawingTool('pen')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;min-height:44px;min-width:44px;">Pen</button>
+        <button onclick="setDrawingTool('line')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;min-height:44px;min-width:44px;">Line</button>
+        <button onclick="setDrawingTool('rectangle')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;min-height:44px;min-width:44px;">Rectangle</button>
+        <button onclick="setDrawingTool('text')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;min-height:44px;min-width:44px;">Text</button>
+        <button onclick="setDrawingTool('eraser')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;min-height:44px;min-width:44px;">Eraser</button>
+        <input type="color" value="#000000" onchange="setDrawingColor(this.value)" style="margin-right:10px;min-height:44px;min-width:44px;">
+        <button onclick="clearCanvas('first-page-drawing-canvas')" style="background:#666;color:white;border:none;padding:8px 16px;cursor:pointer;min-height:44px;min-width:44px;">Clear</button>
       </div>
       <div style="position:relative;margin-top:15px;">
         <canvas id="first-page-drawing-canvas" class="first-page-drawing-canvas" width="800" height="250" style="cursor:crosshair;"></canvas>
