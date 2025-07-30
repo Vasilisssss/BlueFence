@@ -1268,7 +1268,7 @@
       const ctx = canvas.getContext('2d');
       
       // Create preview canvas for real-time drawing feedback (only for drawing canvas)
-      if (canvasId === 'first-page-drawing-canvas') {
+      if (canvasId === 'drawing-canvas') {
         previewCanvas = document.createElement('canvas');
         previewCanvas.style.pointerEvents = 'none';
        previewCanvas.style.zIndex = '9999';
