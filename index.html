@@ -1293,6 +1293,8 @@
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
+      cursor: crosshair;
+      position: relative;
     }
     
     .signature-below-total {
@@ -1883,39 +1885,146 @@
       
     }
     
-    // Touch event handlers for mobile and iPad - Global functions
+    // Touch event handlers for mobile and iPad - Direct implementation
     function handleTouchStart(e) {
       e.preventDefault(); // Prevent scrolling
       const touch = e.touches[0];
-      const rect = e.target.getBoundingClientRect();
-      const mouseEvent = new MouseEvent('mousedown', {
-        clientX: touch.clientX,
-        clientY: touch.clientY,
-        bubbles: true,
-        cancelable: true
-      });
-      e.target.dispatchEvent(mouseEvent);
+      const canvas = e.target;
+      const rect = canvas.getBoundingClientRect();
+      
+      // Set up drawing context
+      const ctx = canvas.getContext('2d');
+      const canvasId = canvas.id;
+      
+      // Don't start drawing if text tool is selected (except for signature canvas)
+      if (canvasId !== 'signature-below-total-canvas' && currentTool === 'text') {
+        return;
+      }
+      
+      isDrawing = true;
+      startX = touch.clientX - rect.left;
+      startY = touch.clientY - rect.top;
+      
+      // Force pen tool for signature canvas, use current tool for others
+      const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
+      
+      // Always allow drawing on signature canvas (force pen), check tool for other canvases
+      if (canvasId === 'signature-below-total-canvas' || activeTool === 'pen' || activeTool === 'eraser') {
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+      }
     }
     
     function handleTouchMove(e) {
       e.preventDefault(); // Prevent scrolling
       const touch = e.touches[0];
-      const mouseEvent = new MouseEvent('mousemove', {
-        clientX: touch.clientX,
-        clientY: touch.clientY,
-        bubbles: true,
-        cancelable: true
-      });
-      e.target.dispatchEvent(mouseEvent);
+      const canvas = e.target;
+      const rect = canvas.getBoundingClientRect();
+      const ctx = canvas.getContext('2d');
+      const canvasId = canvas.id;
+      
+      const currentX = touch.clientX - rect.left;
+      const currentY = touch.clientY - rect.top;
+      
+      if (!isDrawing) return;
+      
+      // Don't draw if text tool is selected (except for signature canvas)
+      if (canvasId !== 'signature-below-total-canvas' && currentTool === 'text') {
+        return;
+      }
+      
+      // Force pen tool for signature canvas, use current tool for others
+      const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
+      
+      // Force black color for signature canvas
+      const activeColor = canvasId === 'signature-below-total-canvas' ? '#000000' : currentColor;
+      
+      ctx.lineWidth = currentLineWidth;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = activeTool === 'eraser' ? '#ffffff' : activeColor;
+      
+      // Always allow drawing on signature canvas (force pen), check tool for other canvases
+      if (canvasId === 'signature-below-total-canvas' || activeTool === 'pen' || activeTool === 'eraser') {
+        ctx.lineTo(currentX, currentY);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(currentX, currentY);
+      } else if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-below-total-canvas') {
+        // Only show preview for first page drawing canvas
+        if (canvasId === 'first-page-drawing-canvas' && previewCtx && previewCanvas) {
+          // Clear preview canvas
+          previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+          
+          // Draw preview
+          previewCtx.lineWidth = currentLineWidth;
+          previewCtx.strokeStyle = activeColor;
+          previewCtx.lineCap = 'round';
+          previewCtx.globalAlpha = 0.8; // Make preview slightly transparent
+          
+          if (activeTool === 'line') {
+            previewCtx.beginPath();
+            previewCtx.moveTo(startX, startY);
+            previewCtx.lineTo(currentX, currentY);
+            previewCtx.stroke();
+          } else if (activeTool === 'rectangle') {
+            previewCtx.beginPath();
+            previewCtx.rect(startX, startY, currentX - startX, currentY - startY);
+            previewCtx.stroke();
+          }
+          
+          previewCtx.globalAlpha = 1.0; // Reset alpha
+        }
+      }
     }
     
     function handleTouchEnd(e) {
       e.preventDefault(); // Prevent scrolling
-      const mouseEvent = new MouseEvent('mouseup', {
-        bubbles: true,
-        cancelable: true
-      });
-      e.target.dispatchEvent(mouseEvent);
+      const canvas = e.target;
+      const ctx = canvas.getContext('2d');
+      const canvasId = canvas.id;
+      
+      if (!isDrawing) return;
+      isDrawing = false;
+      
+      // Don't process drawing if text tool is selected (except for signature canvas)
+      if (canvasId !== 'signature-below-total-canvas' && currentTool === 'text') {
+        return;
+      }
+      
+      // Force pen tool for signature canvas, use current tool for others
+      const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
+      
+      // Force black color for signature canvas
+      const activeColor = canvasId === 'signature-below-total-canvas' ? '#000000' : currentColor;
+      
+      // Clear preview
+      if (previewCtx && previewCanvas && canvasId === 'first-page-drawing-canvas') {
+        previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+      }
+      
+      if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-below-total-canvas') {
+        const rect = canvas.getBoundingClientRect();
+        const touch = e.changedTouches[0];
+        const endX = touch ? touch.clientX - rect.left : startX;
+        const endY = touch ? touch.clientY - rect.top : startY;
+        
+        ctx.lineWidth = currentLineWidth;
+        ctx.strokeStyle = activeColor;
+        ctx.lineCap = 'round';
+        
+        if (activeTool === 'line') {
+          ctx.beginPath();
+          ctx.moveTo(startX, startY);
+          ctx.lineTo(endX, endY);
+          ctx.stroke();
+        } else if (activeTool === 'rectangle') {
+          ctx.beginPath();
+          ctx.rect(startX, startY, endX - startX, endY - startY);
+          ctx.stroke();
+        }
+      }
+      
+      ctx.beginPath();
     }
     
     function handleCanvasTouch(e) {
@@ -2005,6 +2114,24 @@
       initializeCanvas('signature-below-total-canvas');
       generateFenceImages();
       adjustDrawingSize();
+      
+      // Debug: Check if touch events are working
+      console.log('Drawing initialized with touch support');
+      
+      // Test touch detection
+      const canvas = document.getElementById('first-page-drawing-canvas');
+      if (canvas) {
+        canvas.addEventListener('touchstart', function(e) {
+          console.log('Touch detected on drawing canvas');
+        }, { passive: false });
+      }
+      
+      const signatureCanvas = document.getElementById('signature-below-total-canvas');
+      if (signatureCanvas) {
+        signatureCanvas.addEventListener('touchstart', function(e) {
+          console.log('Touch detected on signature canvas');
+        }, { passive: false });
+      }
     }
     
     // Function to adjust drawing canvas size based on number of fence options
