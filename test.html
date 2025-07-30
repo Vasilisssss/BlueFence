@@ -1312,6 +1312,9 @@
         // Force pen tool for signature canvas, use current tool for others
         const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
         
+        // Force black color for signature canvas
+        const activeColor = canvasId === 'signature-below-total-canvas' ? '#000000' : currentColor;
+        
         // Always allow drawing on signature canvas (force pen), check tool for other canvases
         if (canvasId === 'signature-below-total-canvas' || activeTool === 'pen' || activeTool === 'eraser') {
           ctx.beginPath();
@@ -1329,9 +1332,12 @@
         // Force pen tool for signature canvas, use current tool for others
         const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
         
+        // Force black color for signature canvas
+        const activeColor = canvasId === 'signature-below-total-canvas' ? '#000000' : currentColor;
+        
         ctx.lineWidth = currentLineWidth;
         ctx.lineCap = 'round';
-        ctx.strokeStyle = activeTool === 'eraser' ? '#ffffff' : currentColor;
+        ctx.strokeStyle = activeTool === 'eraser' ? '#ffffff' : activeColor;
         
         // Always allow drawing on signature canvas (force pen), check tool for other canvases
         if (canvasId === 'signature-below-total-canvas' || activeTool === 'pen' || activeTool === 'eraser') {
@@ -1347,7 +1353,7 @@
             
             // Draw preview
             previewCtx.lineWidth = currentLineWidth;
-            previewCtx.strokeStyle = currentColor;
+            previewCtx.strokeStyle = activeColor;
             previewCtx.lineCap = 'round';
            previewCtx.globalAlpha = 0.8; // Make preview slightly transparent
             
@@ -1374,6 +1380,9 @@
         // Force pen tool for signature canvas, use current tool for others
        const activeTool = canvasId === 'signature-below-total-canvas' ? 'pen' : currentTool;
         
+        // Force black color for signature canvas
+        const activeColor = canvasId === 'signature-below-total-canvas' ? '#000000' : currentColor;
+        
         // Clear preview
        if (previewCtx && previewCanvas && canvasId === 'first-page-drawing-canvas') {
           previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
@@ -1386,7 +1395,7 @@
           const endY = lastEvent ? lastEvent.clientY - rect.top : startY;
           
           ctx.lineWidth = currentLineWidth;
-          ctx.strokeStyle = currentColor;
+          ctx.strokeStyle = activeColor;
           ctx.lineCap = 'round';
           
           if (activeTool === 'line') {
