@@ -1246,6 +1246,8 @@
     let currentLineWidth = 2;
     let startX, startY;
     let previewCanvas, previewCtx;
+    let isAddingText = false;
+    let textInput = null;
    
    function updatePreviewPosition() {
      if (!previewCanvas) return;
@@ -1266,6 +1268,9 @@
       const canvas = document.getElementById(canvasId);
      if (!canvas) return;
       const ctx = canvas.getContext('2d');
+      
+      // Force black color for signature canvas
+      const drawingColor = canvasId === 'signature-below-total-canvas' ? '#000000' : currentColor;
       
       // Create preview canvas for real-time drawing feedback (only for drawing canvas)
       if (canvasId === 'first-page-drawing-canvas') {
@@ -1303,6 +1308,13 @@
       canvas.addEventListener('mouseup', stopDrawing);
       canvas.addEventListener('mouseout', stopDrawing);
       
+      // Add click event for text tool
+      canvas.addEventListener('click', function(e) {
+          if (currentTool === 'text' && canvasId === 'first-page-drawing-canvas' && !isAddingText) {
+              addTextAtPosition(canvas, e);
+          }
+      });
+      
       function startDrawing(e) {
         isDrawing = true;
         const rect = canvas.getBoundingClientRect();
@@ -1331,7 +1343,7 @@
         
         ctx.lineWidth = currentLineWidth;
         ctx.lineCap = 'round';
-        ctx.strokeStyle = activeTool === 'eraser' ? '#ffffff' : currentColor;
+        ctx.strokeStyle = activeTool === 'eraser' ? '#ffffff' : drawingColor;
         
         // Always allow drawing on signature canvas (force pen), check tool for other canvases
         if (canvasId === 'signature-below-total-canvas' || activeTool === 'pen' || activeTool === 'eraser') {
@@ -1347,7 +1359,7 @@
             
             // Draw preview
             previewCtx.lineWidth = currentLineWidth;
-            previewCtx.strokeStyle = currentColor;
+            previewCtx.strokeStyle = drawingColor;
             previewCtx.lineCap = 'round';
            previewCtx.globalAlpha = 0.8; // Make preview slightly transparent
             
@@ -1386,7 +1398,7 @@
           const endY = lastEvent ? lastEvent.clientY - rect.top : startY;
           
           ctx.lineWidth = currentLineWidth;
-          ctx.strokeStyle = currentColor;
+          ctx.strokeStyle = drawingColor;
           ctx.lineCap = 'round';
           
           if (activeTool === 'line') {
@@ -1403,6 +1415,50 @@
         
         ctx.beginPath();
       }
+    }
+
+    function addTextAtPosition(canvas, e) {
+        if (isAddingText) return;
+        
+        isAddingText = true;
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // Create text input
+        textInput = document.createElement('input');
+        textInput.type = 'text';
+        textInput.style.position = 'absolute';
+        textInput.style.left = (rect.left + x) + 'px';
+        textInput.style.top = (rect.top + y - 10) + 'px';
+        textInput.style.fontSize = '16px';
+        textInput.style.border = '1px solid #ccc';
+        textInput.style.padding = '2px';
+        textInput.style.zIndex = '1000';
+        textInput.style.backgroundColor = 'white';
+        
+        document.body.appendChild(textInput);
+        textInput.focus();
+        
+        // Handle text input completion
+        function completeTextInput() {
+            const text = textInput.value.trim();
+            if (text) {
+                const ctx = canvas.getContext('2d');
+                ctx.font = '16px Arial';
+                ctx.fillStyle = currentColor;
+                ctx.fillText(text, x, y);
+            }
+            
+            document.body.removeChild(textInput);
+            textInput = null;
+            isAddingText = false;
+        }
+        
+        textInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') completeTextInput();
+        });
+        textInput.addEventListener('blur', completeTextInput);
     }
     
     function setDrawingTool(tool) {
@@ -1535,6 +1591,7 @@
         <button onclick="setDrawingTool('pen')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Pen</button>
         <button onclick="setDrawingTool('line')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Line</button>
         <button onclick="setDrawingTool('rectangle')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Rectangle</button>
+        <button onclick="setDrawingTool('text')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Text</button>
         <button onclick="setDrawingTool('eraser')" style="background:#666;color:white;border:none;padding:8px 16px;margin-right:10px;cursor:pointer;">Eraser</button>
         <input type="color" value="#000000" onchange="setDrawingColor(this.value)" style="margin-right:10px;">
         <button onclick="clearCanvas('first-page-drawing-canvas')" style="background:#666;color:white;border:none;padding:8px 16px;cursor:pointer;">Clear</button>
