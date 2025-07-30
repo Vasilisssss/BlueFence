@@ -362,9 +362,122 @@
       text-align: left;
     }
 
-    /* Responsive Design */
-    /* Tablet Styles */
-    @media (max-width: 768px) {
+    /* Responsive Design - Enhanced for all devices */
+    
+    /* Large Desktop (1200px+) */
+    @media (min-width: 1200px) {
+      .container, .half-container {
+        max-width: 1100px;
+        padding: 50px 40px;
+      }
+      .professional-header {
+        margin: -50px -40px 30px -40px;
+      }
+      .product-type-container {
+        max-width: 800px;
+      }
+      h1 {
+        font-size: 2.8em;
+      }
+      h2 {
+        font-size: 1.7em;
+      }
+      p.title {
+        font-size: 2.2em;
+      }
+      #grand-total-box {
+        font-size: 1.9em;
+        padding: 0px 5px;
+      }
+      .drawing-tools {
+        gap: 15px;
+      }
+      .drawing-tools button {
+        padding: 12px 20px;
+        font-size: 1.1em;
+      }
+    }
+    
+    /* Desktop (992px - 1199px) */
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .container, .half-container {
+        max-width: 950px;
+        padding: 45px 35px;
+      }
+      .professional-header {
+        margin: -45px -35px 25px -35px;
+      }
+      .product-type-container {
+        max-width: 750px;
+      }
+    }
+    
+    /* Tablet Landscape (768px - 991px) */
+    @media (min-width: 768px) and (max-width: 991px) {
+      body {
+        padding: 15px;
+      }
+      .container, .half-container {
+        padding: 30px 20px;
+        margin-bottom: 20px;
+      }
+      .professional-header {
+        padding: 20px 16px;
+        margin: -30px -20px 20px -20px;
+      }
+      .header-content {
+        flex-direction: row;
+        gap: 20px;
+      }
+      .left-section {
+        flex-direction: row;
+        gap: 15px;
+      }
+      .company-logo {
+        height: 55px;
+      }
+      .company-tagline {
+        font-size: 1.1em;
+      }
+      .company-details {
+        font-size: 0.85em;
+      }
+      .right-section {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+      }
+      .quote-title {
+        font-size: 1.2em;
+      }
+      #grand-total-box {
+        font-size: 1.3em;
+        padding: 0px 5px;
+        min-width: 80px;
+      }
+      .product-type-container {
+        width: 100%;
+        max-width: 700px;
+        padding: 25px;
+      }
+      .drawing-tools {
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .drawing-tools button {
+        padding: 10px 16px;
+        font-size: 0.9em;
+        min-height: 40px;
+        min-width: 40px;
+      }
+      .first-page-drawing-canvas {
+        max-width: 700px;
+        height: 300px;
+      }
+    }
+    
+    /* Tablet Portrait (481px - 767px) */
+    @media (min-width: 481px) and (max-width: 767px) {
       body {
         padding: 15px;
       }
@@ -379,83 +492,117 @@
       .header-content {
         flex-direction: column;
         text-align: center;
-        gap: 12px;
+        gap: 15px;
         margin-bottom: 0;
       }
       .left-section {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        gap: 12px;
+        gap: 15px;
       }
       .company-logo {
-        height: 60px;
+        height: 65px;
       }
       .company-tagline {
-        font-size: 1.2em;
+        font-size: 1.3em;
       }
       .company-details {
-        font-size: 0.9em;
+        font-size: 0.95em;
       }
       .right-section {
         flex-direction: column;
         align-items: center;
-        gap: 12px;
+        gap: 15px;
       }
       .quote-title {
-        font-size: 1.4em;
+        font-size: 1.5em;
         text-align: center;
       }
       #grand-total-box {
-        font-size: 1.4em;
-        padding: 0px 5px;
-        min-width: 60px;
+        font-size: 1.5em;
+        padding: 0px 8px;
+        min-width: 80px;
       }
       input[type="text"], textarea {
-        min-width: 250px;
+        min-width: 280px;
         max-width: 100%;
+        font-size: 1em;
+        padding: 10px 12px;
       }
       #estimate-attendance, #site-contact, #job-address, #Name, #Billing-Address, #Email, #Phone {
         width: 100%;
-        max-width: 400px;
+        max-width: 450px;
       }
       .half-container .input-row {
         flex-direction: column;
         align-items: flex-start;
-        gap: 8px;
+        gap: 10px;
       }
       .product-type-container {
         width: 100%;
-        max-width: 600px;
-        padding: 20px;
+        max-width: 650px;
+        padding: 25px;
       }
       .card-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 12px;
+        gap: 15px;
       }
       .card-total {
         align-self: flex-end;
-        font-size: 1.1em;
-        padding: 6px 12px;
+        font-size: 1.2em;
+        padding: 8px 16px;
       }
       .product-type-container .dropdown-container, .product-type-container .input-row {
         flex-direction: column;
         align-items: flex-start;
-        gap: 8px;
+        gap: 10px;
       }
       .product-type-container select, .product-type-container input[type="text"] {
         width: 100%;
         max-width: 100%;
+        font-size: 1em;
+        padding: 10px 12px;
       }
       .resize-controls {
         justify-content: center;
-        margin-top: 10px;
+        margin-top: 15px;
+      }
+      .drawing-tools {
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .drawing-tools button {
+        padding: 8px 14px;
+        font-size: 0.9em;
+        min-height: 38px;
+        min-width: 38px;
+      }
+      .first-page-drawing-canvas {
+        max-width: 600px;
+        height: 280px;
+      }
+      .fence-images-display {
+        gap: 12px;
+      }
+      .fence-image-item {
+        flex: 0 1 calc(33.333% - 12px);
+        max-width: calc(33.333% - 12px);
+        min-width: 140px;
+      }
+      .fence-image-item img {
+        max-width: 120px;
+        max-height: 90px;
+      }
+      .fence-details {
+        font-size: 9px;
       }
     }
-
-    /* Mobile Styles */
-    @media (max-width: 480px) {
+    
+    /* Mobile (320px - 480px) */
+    @media (min-width: 320px) and (max-width: 480px) {
       body {
         padding: 10px;
       }
@@ -498,29 +645,249 @@
         padding: 8px 10px;
       }
       .product-type-container {
-        padding: 15px;
+        padding: 18px;
         border-radius: 8px;
       }
       .card-total {
-        font-size: 1em;
-        padding: 5px 10px;
-        min-width: 80px;
+        font-size: 1.1em;
+        padding: 6px 12px;
+        min-width: 90px;
       }
       .product-type-container select {
-        font-size: 0.85em;
-        padding: 8px 10px;
+        font-size: 0.9em;
+        padding: 10px 12px;
       }
       .plus-btn {
-        width: 35px;
-        height: 35px;
-        font-size: 1.6em;
+        width: 40px;
+        height: 40px;
+        font-size: 1.8em;
       }
       .resize-controls button {
-        padding: 6px 10px;
-        font-size: 0.8em;
+        padding: 8px 12px;
+        font-size: 0.9em;
       }
       .fence-preview-image {
-        max-height: 150px !important;
+        max-height: 160px !important;
+      }
+      .drawing-tools {
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .drawing-tools button {
+        padding: 6px 12px;
+        font-size: 0.8em;
+        min-height: 36px;
+        min-width: 36px;
+      }
+      .first-page-drawing-canvas {
+        max-width: 100%;
+        height: 250px;
+      }
+      .fence-images-display {
+        gap: 8px;
+        max-height: 300px;
+      }
+      .fence-image-item {
+        flex: 0 1 calc(50% - 8px);
+        max-width: calc(50% - 8px);
+        min-width: 120px;
+      }
+      .fence-image-item img {
+        max-width: 100px;
+        max-height: 80px;
+      }
+      .fence-details {
+        font-size: 8px;
+      }
+      .info-grid {
+        gap: 8px 16px;
+        font-size: 0.9em;
+      }
+      .info-grid input[type="text"] {
+        padding: 6px 10px;
+        font-size: 0.9em;
+      }
+    }
+    
+    /* Very Small Mobile (320px and below) */
+    @media (max-width: 320px) {
+      body {
+        padding: 8px;
+      }
+      .container, .half-container {
+        padding: 15px 10px;
+        margin-bottom: 10px;
+      }
+      .professional-header {
+        padding: 12px 8px;
+        margin: -15px -10px 10px -10px;
+      }
+      .header-content {
+        gap: 8px;
+      }
+      .company-logo {
+        height: 45px;
+      }
+      .company-tagline {
+        font-size: 1em;
+      }
+      .company-details {
+        font-size: 0.8em;
+      }
+      .quote-title {
+        font-size: 1.2em;
+      }
+      #grand-total-box {
+        font-size: 1em;
+        padding: 0px 4px;
+        min-width: 70px;
+      }
+      input[type="text"], textarea {
+        min-width: 180px;
+        font-size: 0.8em;
+        padding: 6px 8px;
+      }
+      .product-type-container {
+        padding: 12px;
+      }
+      .drawing-tools {
+        gap: 4px;
+      }
+      .drawing-tools button {
+        padding: 4px 8px;
+        font-size: 0.7em;
+        min-height: 32px;
+        min-width: 32px;
+      }
+      .first-page-drawing-canvas {
+        height: 200px;
+      }
+      .fence-image-item {
+        flex: 0 1 calc(100% - 4px);
+        max-width: calc(100% - 4px);
+      }
+      .info-grid {
+        grid-template-columns: 1fr;
+        gap: 6px 0px;
+      }
+    }
+    
+    /* Landscape Mobile */
+    @media (max-width: 768px) and (orientation: landscape) {
+      body {
+        padding: 8px;
+      }
+      .container, .half-container {
+        padding: 20px 15px;
+        margin-bottom: 15px;
+      }
+      .professional-header {
+        padding: 15px 12px;
+        margin: -20px -15px 15px -15px;
+      }
+      .header-content {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 15px;
+      }
+      .left-section {
+        flex-direction: row;
+        text-align: left;
+        gap: 12px;
+      }
+      .company-logo {
+        height: 50px;
+      }
+      .company-tagline {
+        font-size: 1.1em;
+      }
+      .company-details {
+        font-size: 0.85em;
+      }
+      .right-section {
+        flex-direction: column;
+        align-items: flex-end;
+        text-align: right;
+        gap: 8px;
+      }
+      .quote-title {
+        font-size: 1.2em;
+        text-align: right;
+      }
+      #grand-total-box {
+        font-size: 1.2em;
+        padding: 0px 6px;
+        min-width: 75px;
+      }
+      .product-type-container {
+        padding: 20px;
+      }
+      .drawing-tools {
+        gap: 8px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 5px 0;
+      }
+      .drawing-tools button {
+        padding: 8px 12px;
+        font-size: 0.8em;
+        min-height: 35px;
+        min-width: 35px;
+        flex-shrink: 0;
+      }
+      .first-page-drawing-canvas {
+        height: 200px;
+      }
+      .fence-images-display {
+        gap: 10px;
+        max-height: 200px;
+      }
+      .fence-image-item {
+        flex: 0 1 calc(25% - 10px);
+        max-width: calc(25% - 10px);
+        min-width: 100px;
+      }
+      .fence-image-item img {
+        max-width: 80px;
+        max-height: 60px;
+      }
+      .info-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px 12px;
+      }
+      
+      /* Responsive print button */
+      #print-btn {
+        top: 10px !important;
+        right: 15px !important;
+        padding: 8px 16px !important;
+        font-size: 0.9em !important;
+        min-height: 40px !important;
+        min-width: 40px !important;
+      }
+    }
+    
+    /* Print button responsive adjustments */
+    @media (max-width: 480px) {
+      #print-btn {
+        top: 8px !important;
+        right: 10px !important;
+        padding: 6px 12px !important;
+        font-size: 0.8em !important;
+        min-height: 36px !important;
+        min-width: 36px !important;
+      }
+    }
+    
+    @media (max-width: 320px) {
+      #print-btn {
+        top: 5px !important;
+        right: 8px !important;
+        padding: 4px 8px !important;
+        font-size: 0.7em !important;
+        min-height: 32px !important;
+        min-width: 32px !important;
       }
     }
 
@@ -1387,54 +1754,7 @@
             }
         }
         
-        function addTextInput(canvas, x, y) {
-            const container = canvas.parentElement;
-            
-            // Create text input
-            const textInput = document.createElement('textarea');
-            textInput.className = 'text-input';
-            textInput.style.left = x + 'px';
-            textInput.style.top = y + 'px';
-            textInput.style.color = currentColor;
-            textInput.placeholder = 'Type text here...';
-            textInput.rows = 1;
-            
-            container.appendChild(textInput);
-            textInput.focus();
-            
-            // Auto-resize textarea
-            textInput.addEventListener('input', function() {
-                this.style.height = 'auto';
-                this.style.height = this.scrollHeight + 'px';
-            });
-            
-            // Handle Enter key and blur to finalize text
-            function finalizeText() {
-                if (textInput.value.trim()) {
-                    const ctx = canvas.getContext('2d');
-                    ctx.font = '16px Arial';
-                    ctx.fillStyle = currentColor;
-                    ctx.textBaseline = 'top';
-                    
-                    // Split text by lines and draw each line
-                    const lines = textInput.value.split('\n');
-                    lines.forEach((line, index) => {
-                        ctx.fillText(line, x, y + (index * 20));
-                    });
-                }
-                container.removeChild(textInput);
-            }
-            
-            textInput.addEventListener('blur', finalizeText);
-            textInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    container.removeChild(textInput);
-                } else if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    finalizeText();
-                }
-            });
-        }
+
       
       function startDrawing(e) {
         // Don't start drawing if text tool is selected (except for signature canvas)
@@ -1561,44 +1881,103 @@
         ctx.beginPath();
       }
       
-      // Touch event handlers for mobile and iPad
-      function handleTouchStart(e) {
-        e.preventDefault(); // Prevent scrolling
-        const touch = e.touches[0];
-        const mouseEvent = new MouseEvent('mousedown', {
-          clientX: touch.clientX,
-          clientY: touch.clientY
+    }
+    
+    // Touch event handlers for mobile and iPad - Global functions
+    function handleTouchStart(e) {
+      e.preventDefault(); // Prevent scrolling
+      const touch = e.touches[0];
+      const rect = e.target.getBoundingClientRect();
+      const mouseEvent = new MouseEvent('mousedown', {
+        clientX: touch.clientX,
+        clientY: touch.clientY,
+        bubbles: true,
+        cancelable: true
+      });
+      e.target.dispatchEvent(mouseEvent);
+    }
+    
+    function handleTouchMove(e) {
+      e.preventDefault(); // Prevent scrolling
+      const touch = e.touches[0];
+      const mouseEvent = new MouseEvent('mousemove', {
+        clientX: touch.clientX,
+        clientY: touch.clientY,
+        bubbles: true,
+        cancelable: true
+      });
+      e.target.dispatchEvent(mouseEvent);
+    }
+    
+    function handleTouchEnd(e) {
+      e.preventDefault(); // Prevent scrolling
+      const mouseEvent = new MouseEvent('mouseup', {
+        bubbles: true,
+        cancelable: true
+      });
+      e.target.dispatchEvent(mouseEvent);
+    }
+    
+    function handleCanvasTouch(e) {
+      // Only handle text tool touches on the drawing canvas
+      if (e.target.id === 'first-page-drawing-canvas' && currentTool === 'text') {
+        e.preventDefault();
+        const touch = e.changedTouches[0];
+        const rect = e.target.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+        addTextInput(e.target, x, y);
+      }
+    }
+    
+    // Global function for adding text input
+    function addTextInput(canvas, x, y) {
+        const container = canvas.parentElement;
+        
+        // Create text input
+        const textInput = document.createElement('textarea');
+        textInput.className = 'text-input';
+        textInput.style.left = x + 'px';
+        textInput.style.top = y + 'px';
+        textInput.style.color = currentColor;
+        textInput.placeholder = 'Type text here...';
+        textInput.rows = 1;
+        
+        container.appendChild(textInput);
+        textInput.focus();
+        
+        // Auto-resize textarea
+        textInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
         });
-        startDrawing(mouseEvent);
-      }
-      
-      function handleTouchMove(e) {
-        e.preventDefault(); // Prevent scrolling
-        const touch = e.touches[0];
-        const mouseEvent = new MouseEvent('mousemove', {
-          clientX: touch.clientX,
-          clientY: touch.clientY
-        });
-        draw(mouseEvent);
-      }
-      
-      function handleTouchEnd(e) {
-        e.preventDefault(); // Prevent scrolling
-        const mouseEvent = new MouseEvent('mouseup', {});
-        stopDrawing(mouseEvent);
-      }
-      
-      function handleCanvasTouch(e) {
-        // Only handle text tool touches on the drawing canvas
-        if (canvasId === 'first-page-drawing-canvas' && currentTool === 'text') {
-          e.preventDefault();
-          const touch = e.changedTouches[0];
-          const rect = canvas.getBoundingClientRect();
-          const x = touch.clientX - rect.left;
-          const y = touch.clientY - rect.top;
-          addTextInput(canvas, x, y);
+        
+        // Handle Enter key and blur to finalize text
+        function finalizeText() {
+            if (textInput.value.trim()) {
+                const ctx = canvas.getContext('2d');
+                ctx.font = '16px Arial';
+                ctx.fillStyle = currentColor;
+                ctx.textBaseline = 'top';
+                
+                // Split text by lines and draw each line
+                const lines = textInput.value.split('\n');
+                lines.forEach((line, index) => {
+                    ctx.fillText(line, x, y + (index * 20));
+                });
+            }
+            container.removeChild(textInput);
         }
-      }
+        
+        textInput.addEventListener('blur', finalizeText);
+        textInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                container.removeChild(textInput);
+            } else if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                finalizeText();
+            }
+        });
     }
     
     function setDrawingTool(tool) {
