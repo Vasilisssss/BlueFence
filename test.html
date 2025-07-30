@@ -1309,12 +1309,16 @@
         startX = e.clientX - rect.left;
         startY = e.clientY - rect.top;
         
-        // Get the current tool for this specific canvas
-        const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
-        
-        if (activeTool === 'pen' || activeTool === 'eraser') {
+        if (canvasId === 'signature-below-total-canvas') {
+          // Signature canvas always uses pen
           ctx.beginPath();
           ctx.moveTo(startX, startY);
+        } else {
+          // Drawing canvas uses selected tool
+          if (currentTool === 'pen' || currentTool === 'eraser') {
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+          }
         }
       }
       
@@ -1325,40 +1329,49 @@
         
         if (!isDrawing) return;
         
-        // Get the current tool for this specific canvas
-        const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
-        
-        ctx.lineWidth = currentLineWidth;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = activeTool === 'eraser' ? '#ffffff' : currentColor;
-        
-        if (activeTool === 'pen' || activeTool === 'eraser') {
+        if (canvasId === 'signature-below-total-canvas') {
+          // Signature canvas always uses pen with black color
+          ctx.lineWidth = 2;
+          ctx.lineCap = 'round';
+          ctx.strokeStyle = '#000000';
           ctx.lineTo(currentX, currentY);
           ctx.stroke();
           ctx.beginPath();
-          ctx.moveTo(currentX, currentY);
-        } else if (activeTool === 'line' || activeTool === 'rectangle' && canvasId !== 'signature-canvas') {
-          // Only show preview for first page drawing canvas
-         if (canvasId === 'first-page-drawing-canvas' && previewCtx && previewCanvas) {
-            // Clear preview canvas
-            previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-            
-            // Draw preview
-            previewCtx.lineWidth = currentLineWidth;
-            previewCtx.strokeStyle = currentColor;
-            previewCtx.lineCap = 'round';
-           previewCtx.globalAlpha = 0.8; // Make preview slightly transparent
-            
-            if (activeTool === 'line') {
-              previewCtx.beginPath();
-              previewCtx.moveTo(startX, startY);
-              previewCtx.lineTo(currentX, currentY);
-              previewCtx.stroke();
-            } else if (activeTool === 'rectangle') {
-              previewCtx.stroke();
+          ctx.moveTo(startX, startY);
+        } else {
+          // Drawing canvas uses selected tool and settings
+          ctx.lineWidth = currentLineWidth;
+          ctx.lineCap = 'round';
+          ctx.strokeStyle = currentTool === 'eraser' ? '#ffffff' : currentColor;
+          
+          if (currentTool === 'pen' || currentTool === 'eraser') {
+            ctx.lineTo(currentX, currentY);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(currentX, currentY);
+          } else if (currentTool === 'line' || currentTool === 'rectangle') {
+            // Only show preview for first page drawing canvas
+            if (canvasId === 'first-page-drawing-canvas' && previewCtx && previewCanvas) {
+              // Clear preview canvas
+              previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+              
+              // Draw preview
+              previewCtx.lineWidth = currentLineWidth;
+              previewCtx.strokeStyle = currentColor;
+              previewCtx.lineCap = 'round';
+              previewCtx.globalAlpha = 0.8; // Make preview slightly transparent
+              
+              if (currentTool === 'line') {
+                previewCtx.beginPath();
+                previewCtx.moveTo(startX, startY);
+                previewCtx.lineTo(currentX, currentY);
+                previewCtx.stroke();
+              } else if (currentTool === 'rectangle') {
+                previewCtx.stroke();
+              }
+              
+              previewCtx.globalAlpha = 1.0; // Reset alpha
             }
-           
-           previewCtx.globalAlpha = 1.0; // Reset alpha
           }
         }
       }
@@ -1367,33 +1380,32 @@
         if (!isDrawing) return;
         isDrawing = false;
         
-        // Get the current tool for this specific canvas
-        const activeTool = canvasId === 'signature-canvas' ? 'pen' : currentTool;
-        
-        // Clear preview
-       if (previewCtx && previewCanvas && canvasId === 'first-page-drawing-canvas') {
-          previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-        }
-        
-        if ((activeTool === 'line' || activeTool === 'rectangle') && canvasId !== 'signature-canvas') {
-          const rect = canvas.getBoundingClientRect();
-          const lastEvent = window.event || event;
-          const endX = lastEvent ? lastEvent.clientX - rect.left : startX;
-          const endY = lastEvent ? lastEvent.clientY - rect.top : startY;
+        if (canvasId !== 'signature-below-total-canvas') {
+          // Clear preview
+          if (previewCtx && previewCanvas && canvasId === 'first-page-drawing-canvas') {
+            previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+          }
           
-          ctx.lineWidth = currentLineWidth;
-          ctx.strokeStyle = currentColor;
-          ctx.lineCap = 'round';
-          
-          if (activeTool === 'line') {
-            ctx.beginPath();
-            ctx.moveTo(startX, startY);
-            ctx.lineTo(endX, endY);
-            ctx.stroke();
-          } else if (activeTool === 'rectangle') {
-            ctx.beginPath();
-            ctx.rect(startX, startY, endX - startX, endY - startY);
-            ctx.stroke();
+          if (currentTool === 'line' || currentTool === 'rectangle') {
+            const rect = canvas.getBoundingClientRect();
+            const lastEvent = window.event || event;
+            const endX = lastEvent ? lastEvent.clientX - rect.left : startX;
+            const endY = lastEvent ? lastEvent.clientY - rect.top : startY;
+            
+            ctx.lineWidth = currentLineWidth;
+            ctx.strokeStyle = currentColor;
+            ctx.lineCap = 'round';
+            
+            if (currentTool === 'line') {
+              ctx.beginPath();
+              ctx.moveTo(startX, startY);
+              ctx.lineTo(endX, endY);
+              ctx.stroke();
+            } else if (currentTool === 'rectangle') {
+              ctx.beginPath();
+              ctx.rect(startX, startY, endX - startX, endY - startY);
+              ctx.stroke();
+            }
           }
         }
         
