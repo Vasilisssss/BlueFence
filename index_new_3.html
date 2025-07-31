@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#1e3c72" />
-  <meta name="description" content="Bluebird Fence - Professional Fence Quote Form" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="Bluebird Fence" />
-  <meta name="msapplication-TileColor" content="#1e3c72" />
-  <meta name="msapplication-tileimage" content="logo.jpg" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1e3c72">
+  <meta name="description" content="Bluebird Fence - Professional Fence Quote Form">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Bluebird Fence">
+  <meta name="msapplication-TileColor" content="#1e3c72">
+  <meta name="msapplication-tileimage" content="logo.jpg">
   
-  <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="logo.jpg" />
-  <link rel="icon" type="image/jpeg" href="logo.jpg" />
-  <link rel="shortcut icon" href="logo.jpg" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="renderer" content="webkit" />
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="logo.jpg">
+  <link rel="icon" type="image/jpeg" href="logo.jpg">
+  <link rel="shortcut icon" href="logo.jpg">
+  <!-- Render.com optimization -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="renderer" content="webkit">
   <title>Blue Fence</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -367,6 +368,9 @@
       flex-grow: 1;
       text-align: left;
     }
+
+    /* Utility for PDF generation hiding */
+    .hide-for-pdf { visibility: hidden !important; }
 
     /* Responsive Design - Enhanced for all devices */
     
@@ -859,7 +863,7 @@
         max-height: 90px;
       }
       .info-grid {
-        template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
         gap: 6px 12px;
       }
       
@@ -1028,7 +1032,7 @@
         page-break-inside: avoid;
       }
       .professional-header {
-        background: #f5f5f5 !important;
+        background: #f5f7fa !important;
         padding: 5px !important;
         margin: -15px -15px 5px -15px !important;
       }
@@ -1434,10 +1438,8 @@
       border: 2px solid #333;
       background: rgba(255, 255, 255, 0.9);
     }
-
-    .hide-for-pdf { visibility: hidden !important; }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js" integrity="sha512-YcsIPb5eKp3WfM1y6kFdb+q3sFhYmfNP0k5JfZPqfIi6u/6SvaQYH2fCwX7K+2Qa4yyivQZ6pHWx3GVnYwX0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js" integrity="sha512-YcsIP1o+3V4VJf6qVoQvVY/DKq9N4WHzVsonVfqC8EAd5KpfXawNfZAjM5PApW3JrK7G3rOi3VYQXjv4Qm2+Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
     function formatCurrency(value) {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
@@ -1458,6 +1460,7 @@
       }
     }
 
+    // Fence style options by material
     const FENCE_STYLE_OPTIONS = {
       wood: [
         { value: 'lattice', label: 'Lattice' },
@@ -1552,6 +1555,21 @@
       return total;
     }
 
+    // helper to wait until all images have either loaded or errored
+    function waitForAllImages() {
+      const imgs = Array.from(document.images);
+      return Promise.all(imgs.map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(res => {
+          img.addEventListener('load', () => res());
+          img.addEventListener('error', () => {
+            console.warn('Image failed to load (continuing):', img.src);
+            res();
+          });
+        });
+      }));
+    }
+
     function bindCardLogic(wrapper) {
         const selects = wrapper.querySelectorAll('select');
         const cardTotalEl = wrapper.querySelector('.card-total');
@@ -1643,12 +1661,12 @@
         if (resizePlusBtn && resizeMinusBtn) {
             const container = wrapper.querySelector('.product-type-container');
             resizePlusBtn.addEventListener('click', () => {
-                let w = container.offsetWidth + 20;
-                container.style.width = Math.max(300, Math.min(w, 1500)) + 'px';
+                let w = container.offsetWidth + STEP;
+                container.style.width = Math.max(MIN_W, Math.min(w, MAX_W)) + 'px';
             });
             resizeMinusBtn.addEventListener('click', () => {
-                let w = container.offsetWidth - 20;
-                container.style.width = Math.max(300, Math.min(w, 1500)) + 'px';
+                let w = container.offsetWidth - STEP;
+                container.style.width = Math.max(MIN_W, Math.min(w, MAX_W)) + 'px';
             });
         }
         updateCardPrice();
@@ -1672,17 +1690,6 @@
       updateSecondPageSummary();
     }
 
-    function waitForAllImages() {
-      const imgs = Array.from(document.images);
-      return Promise.all(imgs.map(img => {
-        if (img.complete) return Promise.resolve();
-        return new Promise(res => {
-          img.addEventListener('load', () => res());
-          img.addEventListener('error', () => res());
-        });
-      }));
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.product-type-wrapper').forEach(bindCardLogic);
         generateFenceImages();
@@ -1704,6 +1711,11 @@
               if (typeof updateSecondPageSummary === 'function') updateSecondPageSummary();
               await new Promise(r => setTimeout(r, 150));
               await waitForAllImages();
+
+              if (typeof html2pdf !== 'function') {
+                alert('PDF generation library not loaded.');
+                return;
+              }
 
               const printBtn = document.getElementById('print-btn');
               const saveBtnLocal = document.getElementById('save-pdf-btn');
@@ -2324,8 +2336,7 @@
 </head>
 <body>
   <button onclick="window.print()" id="print-btn" style="position:fixed;top:20px;right:30px;z-index:1000;padding:12px 28px;background:linear-gradient(135deg, #2c3e50 0%, #34495e 100%);color:#fff;border:none;border-radius:12px;font-size:1em;box-shadow:0 4px 16px rgba(44,62,80,0.3);cursor:pointer;transition:all 0.3s ease;font-weight:600;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(44,62,80,0.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 16px rgba(44,62,80,0.3)'">Print as PDF</button>
-
-  <button id="save-pdf-btn" style="position:fixed;top:70px;right:30px;z-index:1000;padding:12px 28px;background:#1f7a8c;color:#fff;border:none;border-radius:12px;font-size:1em;box-shadow:0 4px 16px rgba(31,122,140,0.3);cursor:pointer;transition:all 0.3s ease;font-weight:600;">Save to PDF</button>
+  <button id="save-pdf-btn" style="position:fixed;top:70px;right:30px;z-index:1000;padding:12px 28px;background:linear-gradient(135deg,#1f5e99 0%,#256aa5 100%);color:#fff;border:none;border-radius:12px;font-size:1em;box-shadow:0 4px 16px rgba(31,94,153,0.3);cursor:pointer;transition:all 0.3s ease;font-weight:600;">Save to PDF</button>
 
   <div class="container">
     <div class="professional-header">
