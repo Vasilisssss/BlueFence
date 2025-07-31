@@ -1323,13 +1323,13 @@
       .signature-canvas {
         width: 280px !important;
         height: 80px !important;
-        background: #f5f5f5 !important;
+        background: #f5f7fa !important;
       }
       .blue-line {
         display: none !important;
       }
       * {
-        background-color: #f5f5f5 !important;
+        background-color: #f5f7fa !important;
       }
       canvas {
         background: white !important;
@@ -1339,16 +1339,28 @@
         border: 1px solid #ccc !important;
       }
       html, body {
-        background: #f5f5f5 !important;
+        background: #f5f7fa !important;
         min-height: 100vh !important;
       }
       .second-page {
-        background: #f5f5f5 !important;
+        background: #f5f7fa !important;
         min-height: 96vh !important;
       }
       @page {
         size: A4 portrait;
         margin: 0cm;
+      }
+
+      /* OVERRIDE: keep larger fence images in print same as screen */
+      .fence-image-item {
+        max-width: 220px !important;
+        flex: 0 1 auto !important;
+      }
+      .fence-image-item img {
+        max-width: 200px !important;
+        max-height: 150px !important;
+        width: auto !important;
+        height: auto !important;
       }
     }
 
