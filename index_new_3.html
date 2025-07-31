@@ -15,7 +15,6 @@
   <link rel="apple-touch-icon" href="logo.jpg" />
   <link rel="icon" type="image/jpeg" href="logo.jpg" />
   <link rel="shortcut icon" href="logo.jpg" />
-  <!-- Render.com optimization -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="renderer" content="webkit" />
   <title>Blue Fence</title>
@@ -860,7 +859,7 @@
         max-height: 90px;
       }
       .info-grid {
-        grid-template-columns: 1fr 1fr;
+        template-columns: 1fr 1fr;
         gap: 6px 12px;
       }
       
@@ -985,7 +984,7 @@
       body {
         padding: 0 !important;
         margin: 0 !important;
-        background: #f5f7fa !important;
+        background: #f5f5f5 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         color-adjust: exact !important;
@@ -1029,7 +1028,7 @@
         page-break-inside: avoid;
       }
       .professional-header {
-        background: #f5f7fa !important;
+        background: #f5f5f5 !important;
         padding: 5px !important;
         margin: -15px -15px 5px -15px !important;
       }
@@ -1126,7 +1125,7 @@
           page-break-after: always !important;
           break-after: page !important;
           margin-top: 20px !important;
-          background: #f5f7fa !important;
+          background: #f5f5f5 !important;
           padding-bottom: 20px !important;
           position: relative !important;
         }
@@ -1435,7 +1434,10 @@
       border: 2px solid #333;
       background: rgba(255, 255, 255, 0.9);
     }
+
+    .hide-for-pdf { visibility: hidden !important; }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js" integrity="sha512-YcsIPb5eKp3WfM1y6kFdb+q3sFhYmfNP0k5JfZPqfIi6u/6SvaQYH2fCwX7K+2Qa4yyivQZ6pHWx3GVnYwX0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
     function formatCurrency(value) {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
@@ -1456,7 +1458,6 @@
       }
     }
 
-    // Fence style options by material
     const FENCE_STYLE_OPTIONS = {
       wood: [
         { value: 'lattice', label: 'Lattice' },
@@ -1642,12 +1643,12 @@
         if (resizePlusBtn && resizeMinusBtn) {
             const container = wrapper.querySelector('.product-type-container');
             resizePlusBtn.addEventListener('click', () => {
-                let w = container.offsetWidth + STEP;
-                container.style.width = Math.max(MIN_W, Math.min(w, MAX_W)) + 'px';
+                let w = container.offsetWidth + 20;
+                container.style.width = Math.max(300, Math.min(w, 1500)) + 'px';
             });
             resizeMinusBtn.addEventListener('click', () => {
-                let w = container.offsetWidth - STEP;
-                container.style.width = Math.max(MIN_W, Math.min(w, MAX_W)) + 'px';
+                let w = container.offsetWidth - 20;
+                container.style.width = Math.max(300, Math.min(w, 1500)) + 'px';
             });
         }
         updateCardPrice();
@@ -1671,6 +1672,17 @@
       updateSecondPageSummary();
     }
 
+    function waitForAllImages() {
+      const imgs = Array.from(document.images);
+      return Promise.all(imgs.map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(res => {
+          img.addEventListener('load', () => res());
+          img.addEventListener('error', () => res());
+        });
+      }));
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.product-type-wrapper').forEach(bindCardLogic);
         generateFenceImages();
@@ -1684,6 +1696,50 @@
         setTimeout(() => {
             initializeDrawing();
         }, 100);
+
+        const saveBtn = document.getElementById('save-pdf-btn');
+        if (saveBtn) {
+          saveBtn.addEventListener('click', async () => {
+            try {
+              if (typeof updateSecondPageSummary === 'function') updateSecondPageSummary();
+              await new Promise(r => setTimeout(r, 150));
+              await waitForAllImages();
+
+              const printBtn = document.getElementById('print-btn');
+              const saveBtnLocal = document.getElementById('save-pdf-btn');
+              if (printBtn) printBtn.classList.add('hide-for-pdf');
+              if (saveBtnLocal) saveBtnLocal.classList.add('hide-for-pdf');
+
+              const opt = {
+                margin: [0, 0, 0, 0],
+                filename: 'quote.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: {
+                  scale: 2,
+                  useCORS: true,
+                  allowTaint: true,
+                  scrollY: 0
+                },
+                jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['css', 'legacy'] }
+              };
+
+              await html2pdf().set(opt).from(document.body).toPdf().get('pdf').then(pdf => {
+                // no-op
+              }).save();
+
+              if (printBtn) printBtn.classList.remove('hide-for-pdf');
+              if (saveBtnLocal) saveBtnLocal.classList.remove('hide-for-pdf');
+            } catch (err) {
+              const printBtn = document.getElementById('print-btn');
+              const saveBtnLocal = document.getElementById('save-pdf-btn');
+              if (printBtn) printBtn.classList.remove('hide-for-pdf');
+              if (saveBtnLocal) saveBtnLocal.classList.remove('hide-for-pdf');
+              console.error('PDF generation failed:', err);
+              alert('Failed to generate PDF. Check console for details.');
+            }
+          });
+        }
     });
 
     if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
@@ -2436,40 +2492,5 @@
     </div>
   </div>
 
-  <!-- html2pdf library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js" integrity="sha512-YcsIPb5eKp3WfM1y6kFdb+q3sFhYmfNP0k5JfZPqfIi6u/6SvaQYH2fCwX7K+2Qa4yyivQZ6pHWx3GVnYwX0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-  <script>
-    document.getElementById('save-pdf-btn').addEventListener('click', async () => {
-      if (typeof updateSecondPageSummary === 'function') {
-        updateSecondPageSummary();
-      }
-      await new Promise(r => setTimeout(r, 150));
-      const element = document.body;
-
-      const opt = {
-        margin: [0, 0, 0, 0],
-        filename: 'quote.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          scrollY: 0
-        },
-        jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
-        pagebreak: { mode: ['css', 'legacy'] }
-      };
-
-      try {
-        await html2pdf().set(opt).from(element).toPdf().get('pdf').then(function (pdf) {
-          // nothing extra needed
-        }).save();
-      } catch (err) {
-        console.error('PDF generation failed', err);
-        alert('Failed to generate PDF. Check console.');
-      }
-    });
-  </script>
 </body>
 </html>
