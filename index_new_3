@@ -2434,96 +2434,60 @@
     </div>
   </div>
 
-</body>
-</html>
-
-<!-- Add this inside <head> AFTER your existing scripts/styles -->
-<!-- jsPDF with AcroForm support -->
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/plugins/acroform.min.js"></script>
-
-<!-- At the end of <body>, replace or add alongside the existing print button -->
-<button id="export-fillable-pdf-btn" style="position:fixed;top:70px;right:30px;z-index:1000;padding:12px 28px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-size:1em;box-shadow:0 4px 16px rgba(37,99,235,0.3);cursor:pointer;transition:all 0.3s ease;font-weight:600;">
-  Export Fillable PDF
-</button>
-
+<!-- Save to fillable PDF with signature field -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-  // Helper to safely get text content
-  function safeText(el) {
-    return el ? el.textContent.trim() : '';
-  }
+  const { jsPDF } = window.jspdf;
 
-  document.getElementById('export-fillable-pdf-btn').addEventListener('click', async () => {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({
-      unit: 'pt',
-      format: 'a4'
-    });
-
-    // Initialize AcroForm
+  async function saveFillablePDF() {
+    const doc = new jsPDF({ unit: 'pt', format: 'a4' });
     doc.initForm();
-
-    const margin = 40;
-    let y = margin;
 
     // Header
     doc.setFontSize(16);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Bluebird Fence Solutions - Quote Summary', margin, y);
-    y += 25;
+    doc.text("Bluebird Fence Quote", 40, 50);
 
-    // Customer Info
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Customer & Project Information:', margin, y);
-    y += 16;
-
-    const infoPairs = [
-      ['First Name', document.getElementById('FirstName')?.value || ''],
-      ['Last Name', document.getElementById('LastName')?.value || ''],
-      ['Street', document.getElementById('Street')?.value || ''],
-      ['State', document.getElementById('State')?.value || ''],
-      ['Zip Code', document.getElementById('ZipCode')?.value || ''],
-      ['Email', document.getElementById('Email')?.value || ''],
-      ['Phone', document.getElementById('Phone')?.value || ''],
-      ['Job Address', document.getElementById('job-address')?.value || ''],
-      ['Site Contact', document.getElementById('site-contact')?.value || ''],
-      ['Estimate Attendance', document.getElementById('estimate-attendance')?.value || '']
+    // Customer Info fields
+    const infoFields = [
+      { label: "First Name", id: "FirstName" },
+      { label: "Last Name", id: "LastName" },
+      { label: "Street", id: "Street" },
+      { label: "State", id: "State" },
+      { label: "Zip Code", id: "ZipCode" },
+      { label: "Email", id: "Email" },
+      { label: "Phone", id: "Phone" },
+      { label: "Job Address", id: "job-address" },
+      { label: "Site Contact", id: "site-contact" },
+      { label: "Estimate Attendance", id: "estimate-attendance" }
     ];
 
-    infoPairs.forEach(pair => {
-      doc.text(`${pair[0]}: ${pair[1]}`, margin, y);
-      y += 14;
-    });
-
-    y += 10;
-    doc.setFont('helvetica', 'bold');
-    doc.text('Selected Fence Options:', margin, y);
-    y += 18;
-
-    // Summary Table Header
+    let y = 80;
     doc.setFontSize(10);
-    doc.setFont('helvetica', 'bold');
-    const tableX = margin;
-    const colWidths = [30, 80, 100, 60, 60, 70, 70];
-    const headers = ['QTY', 'MATERIAL', 'STYLE', 'HEIGHT', 'LINEAR FT', 'UNIT PRICE', 'AMOUNT'];
-    let x = tableX;
-    headers.forEach((h, i) => {
-      doc.text(h, x + 2, y);
-      x += colWidths[i];
+    infoFields.forEach(f => {
+      const val = document.getElementById(f.id)?.value || "";
+      doc.text(`${f.label}:`, 40, y + 5);
+      doc.textField(f.id, 140, y - 5, 220, 16, {
+        value: val,
+        fontSize: 10,
+        borderColor: [0, 0, 0],
+        textColor: [0, 0, 0]
+      });
+      y += 20;
     });
-    y += 16;
 
-    doc.setFont('helvetica', 'normal');
-    // Populate grouped products
-    const summaryTableBody = document.getElementById('summary-table-body');
-    const rows = [];
-    // Mirror logic from updateSecondPageSummary to build same grouping
+    // Grand Total
+    const total = document.getElementById('grand-total-box')?.textContent || "$0.00";
+    doc.setFontSize(12);
+    doc.text("Total Amount:", 40, y + 10);
+    doc.text(total, 140, y + 10);
+    y += 40;
+
+    // Summary table (grouped products)
     const productMap = new Map();
-    document.querySelectorAll('.product-type-wrapper').forEach((card) => {
-      const selects = card.querySelectorAll('select');
+    document.querySelectorAll('.product-type-wrapper').forEach(card => {
       const materialSelect = card.querySelector('.fence-material-select');
       const styleSelect = card.querySelector('.fence-style-select');
+      const selects = card.querySelectorAll('select');
       const heightSelect = selects[1];
       const linearFootageInput = card.querySelector('input[placeholder="Write Here"]');
       const cardTotal = card.querySelector('.card-total');
@@ -2532,18 +2496,18 @@
         const style = styleSelect.value !== '0' ? styleSelect.options[styleSelect.selectedIndex].text : '';
         const height = heightSelect.value !== '0' ? heightSelect.options[heightSelect.selectedIndex].text : '';
         const linearFootage = linearFootageInput ? linearFootageInput.value : '';
-        const unitPrice = cardTotal ? parseFloat(cardTotal.textContent.replace('$','').replace(',','')) : 0;
-        const productKey = `${material}-${style}-${height}-${linearFootage}`;
-        if (productMap.has(productKey)) {
-          const existing = productMap.get(productKey);
+        const unitPrice = cardTotal ? parseFloat(cardTotal.textContent.replace(/\$|,/g, '')) : 0;
+        const key = `${material}-${style}-${height}-${linearFootage}`;
+        if (productMap.has(key)) {
+          const existing = productMap.get(key);
           existing.quantity += 1;
           existing.totalAmount = existing.unitPrice * existing.quantity;
         } else {
-          productMap.set(productKey, {
+          productMap.set(key, {
             material: material ? material.charAt(0).toUpperCase() + material.slice(1) : '',
-            style: style || '',
-            height: height || '',
-            linearFootage: linearFootage || '',
+            style: style,
+            height: height,
+            linearFootage: linearFootage,
             unitPrice: unitPrice,
             quantity: 1,
             totalAmount: unitPrice
@@ -2552,75 +2516,77 @@
       }
     });
 
+    // Table header
+    doc.setFontSize(11);
+    doc.text("Quote Summary:", 40, y);
+    y += 10;
+
+    // Build table manually (fallback if autoTable not included)
+    const headers = ["QTY", "MATERIAL", "STYLE", "HEIGHT", "LINEAR FT", "UNIT PRICE", "AMOUNT"];
+    const startX = 40;
+    const colWidths = [30, 80, 80, 60, 60, 70, 70];
+    let rowY = y + 10;
+
+    // Header row
+    let x = startX;
+    doc.setFont(undefined, 'bold');
+    headers.forEach((h, i) => {
+      doc.text(h, x + 2, rowY);
+      x += colWidths[i];
+    });
+    doc.setFont(undefined, 'normal');
+    rowY += 18;
+
+    // Data rows
     let grandTotal = 0;
-    productMap.forEach(product => {
-      x = tableX;
-      doc.text(String(product.quantity), x + 2, y); x += colWidths[0];
-      doc.text(product.material, x + 2, y); x += colWidths[1];
-      doc.text(product.style, x + 2, y); x += colWidths[2];
-      doc.text(product.height, x + 2, y); x += colWidths[3];
-      doc.text(product.linearFootage, x + 2, y); x += colWidths[4];
-      doc.text(`$${product.unitPrice.toFixed(2)}`, x + 2, y); x += colWidths[5];
-      doc.text(`$${product.totalAmount.toFixed(2)}`, x + 2, y);
-      y += 14;
-      grandTotal += product.totalAmount;
-      // page break if near bottom
-      if (y > 750) {
+    productMap.forEach(p => {
+      x = startX;
+      const cols = [
+        String(p.quantity),
+        p.material,
+        p.style,
+        p.height,
+        p.linearFootage,
+        `$${p.unitPrice.toFixed(2)}`,
+        `$${p.totalAmount.toFixed(2)}`
+      ];
+      cols.forEach((c, i) => {
+        doc.text(c, x + 2, rowY);
+        x += colWidths[i];
+      });
+      grandTotal += p.totalAmount;
+      rowY += 16;
+      if (rowY > 760) { // new page if overflow
         doc.addPage();
-        y = margin;
+        rowY = 60;
       }
     });
 
-    y += 10;
-    doc.setFont('helvetica', 'bold');
-    doc.text(`TOTAL: $${grandTotal.toFixed(2)}`, margin, y);
-    y += 30;
-
-    // Terms & Conditions (abbreviated)
-    doc.setFontSize(8);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Terms & Conditions:', margin, y);
-    y += 12;
-    const terms = [
-      '50% deposit upon contract signing. Remaining balance due upon completion.',
-      'Material warranty per manufacturer. Workmanship warranty: 1 year.',
-      'Installation scheduled within 2-4 weeks, weather permitting.',
-      'Customer responsible for permits and site prep.',
-      'Changes must be approved in writing and may affect price/timeline.'
-    ];
-    terms.forEach(t => {
-      doc.text('- ' + t, margin + 10, y, { maxWidth: 500 });
-      y += 10;
-    });
+    // Total
+    doc.setFont(undefined, 'bold');
+    doc.text("TOTAL:", startX, rowY + 5);
+    doc.text(`$${grandTotal.toFixed(2)}`, startX + colWidths.slice(0,6).reduce((a,b)=>a+b,0) + 2, rowY + 5);
+    doc.setFont(undefined, 'normal');
 
     // Signature field
-    y += 30;
-    doc.setFont('helvetica', 'bold');
-    doc.text('Customer Signature:', margin, y);
-    // Create AcroForm signature-like text field (name) and separate actual signature widget placeholder
-    const fieldWidth = 250;
-    const fieldHeight = 40;
-    const sigFieldName = 'customer_signature';
-    // Visible border for signing
-    doc.rect(margin, y + 5, fieldWidth, fieldHeight);
-    // Create a real AcroForm text field beneath for typed name (fallback)
-    doc.text('(Typed name field)', margin + fieldWidth + 10, y + 20);
-    doc.text('Sign inside the box above using PDF viewer\'s Fill & Sign or digital signature.', margin, y + fieldHeight + 25);
-    doc.addField({
-      type: 'text',
-      name: sigFieldName,
-      x: margin,
-      y: y + 5 + 5, // slightly inset
-      width: fieldWidth,
-      height: fieldHeight - 10,
-      value: '',
-      fontSize: 12,
-      borderColor: [0, 0, 0],
-      textColor: [0, 0, 0]
+    const sigY = 780;
+    doc.text("Client Signature:", 40, sigY + 5);
+    doc.signatureField("signature", 160, sigY - 5, 280, 60, {
+      borderColor: [0,0,0],
+      backgroundColor: [255,255,255]
     });
 
-    // Finalize and save
     doc.finalizeForm();
-    doc.save('bluebird-fence-quote.pdf');
-  });
+    doc.save("BluebirdFenceQuote.pdf");
+  }
+
+  // Insert the Save button
+  const saveBtn = document.createElement('button');
+  saveBtn.textContent = "Save to PDF";
+  saveBtn.style = "position:fixed;bottom:20px;left:30px;z-index:1000;padding:12px 20px;background:#1e88e5;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;";
+  saveBtn.onclick = saveFillablePDF;
+  document.body.appendChild(saveBtn);
 </script>
+
+</body>
+</html>
